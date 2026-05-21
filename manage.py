@@ -2,7 +2,8 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+import multiprocessing
+multiprocessing.freeze_support()
 
 def main():
     """Run administrative tasks."""

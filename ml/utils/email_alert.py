@@ -1,108 +1,80 @@
-"""Simple, safe email alert helper.
-
-This module reads SMTP/email settings from environment variables:
-
-- EMAIL_HOST
-- EMAIL_PORT
-- EMAIL_USE_TLS (True/False)
-- EMAIL_HOST_USER
-- EMAIL_HOST_PASSWORD
-- ALERT_RECEIVER_EMAIL
-
-If those are not present, the functions will log a warning and return without raising.
 """
-import os
-import logging
-import smtplib
-from email.message import EmailMessage
+Throttled email alerting.
+Usage:
+    alerter = AlertManager()
+    alerter.send_if_needed("Suspicious activity detected in camera feed", frame_jpg_bytes)
+"""
+import os, logging, smtplib, threading
+from datetime import datetime, timedelta
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 
 logger = logging.getLogger(__name__)
 
-
-def _get_smtp_config():
-    # Prefer EMAIL_* vars, but keep compatibility with ALERT_SMTP_* if present
-    host = os.environ.get('EMAIL_HOST') or os.environ.get('ALERT_SMTP_HOST')
-    port = os.environ.get('EMAIL_PORT') or os.environ.get('ALERT_SMTP_PORT') or 587
-    use_tls = os.environ.get('EMAIL_USE_TLS')
-    if use_tls is None:
-        use_tls = os.environ.get('ALERT_SMTP_USE_TLS', 'True')
-    use_tls = str(use_tls).lower() in ('1', 'true', 'yes')
-    user = os.environ.get('EMAIL_HOST_USER') or os.environ.get('ALERT_SMTP_USER')
-    password = os.environ.get('EMAIL_HOST_PASSWORD') or os.environ.get('ALERT_SMTP_PASS')
-    return {
-        'host': host,
-        'port': int(port),
-        'use_tls': use_tls,
-        'user': user,
-        'password': password,
-    }
+# Min time between alerts to prevent spam
+MIN_INTERVAL_SECONDS = 60
 
 
-def send_security_alert(subject: str, message: str) -> bool:
-    """Send a security alert email to the configured receiver.
+class AlertManager:
+    def __init__(self):
+        self._last_sent: datetime | None = None
+        self._lock = threading.Lock()
 
-    Returns True on success, False otherwise. If email settings or receiver
-    are missing, logs a warning and returns False.
-    """
-    cfg = _get_smtp_config()
-    receiver = os.environ.get('ALERT_RECEIVER_EMAIL')
-
-    if not cfg['host'] or not cfg['user'] or not cfg['password']:
-        logger.warning('Email settings missing; cannot send security alert')
-        return False
-    if not receiver:
-        logger.warning('ALERT_RECEIVER_EMAIL not configured; cannot send security alert')
-        return False
-
-    msg = EmailMessage()
-    msg['Subject'] = subject
-    msg['From'] = cfg['user']
-    msg['To'] = receiver
-    msg.set_content(message)
-
-    try:
-        if cfg['use_tls']:
-            smtp = smtplib.SMTP(cfg['host'], cfg['port'], timeout=10)
-            smtp.starttls()
-        else:
-            smtp = smtplib.SMTP(cfg['host'], cfg['port'], timeout=10)
-
-        smtp.login(cfg['user'], cfg['password'])
-        smtp.send_message(msg)
-        smtp.quit()
-        logger.info('Security alert sent to %s', receiver)
-        return True
-    except Exception as e:
-        logger.exception('Failed to send security alert: %s', e)
-        return False
-
-
-# Backwards-compatible helper
-def send_alert(subject, message, to_email=None):
-    """Compatibility wrapper. If `to_email` is provided it sends to that address,
-    otherwise it sends to `ALERT_RECEIVER_EMAIL`.
-    """
-    if to_email:
-        # attempt a direct send using provided recipient
-        cfg = _get_smtp_config()
-        if not cfg['host'] or not cfg['user'] or not cfg['password']:
-            logger.warning('Email settings missing; cannot send alert')
-            return False
-        msg = EmailMessage()
-        msg['Subject'] = subject
-        msg['From'] = cfg['user']
-        msg['To'] = to_email
-        msg.set_content(message)
-        try:
-            smtp = smtplib.SMTP(cfg['host'], cfg['port'], timeout=10)
-            if cfg['use_tls']:
-                smtp.starttls()
-            smtp.login(cfg['user'], cfg['password'])
-            smtp.send_message(msg)
-            smtp.quit()
+    def _cooldown_ok(self) -> bool:
+        if self._last_sent is None:
             return True
-        except Exception:
-            logger.exception('Failed to send alert')
+        return datetime.now() - self._last_sent > timedelta(seconds=MIN_INTERVAL_SECONDS)
+
+    def send_if_needed(self, message: str, image_bytes: bytes | None = None):
+        with self._lock:
+            if not self._cooldown_ok():
+                logger.debug("Alert suppressed (cooldown active)")
+                return False
+
+            success = self._send(message, image_bytes)
+            if success:
+                self._last_sent = datetime.now()
+            return success
+
+    def _send(self, message: str, image_bytes: bytes | None) -> bool:
+        host  = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+        port  = int(os.environ.get("EMAIL_PORT", 587))
+        user  = os.environ.get("EMAIL_HOST_USER", "")
+        pwd   = os.environ.get("EMAIL_HOST_PASSWORD", "")
+        dest  = os.environ.get("ALERT_RECEIVER_EMAIL", user)
+
+        if not user or not pwd:
+            logger.warning("Email credentials not configured. Skipping alert.")
             return False
-    else:
-        return send_security_alert(subject, message)
+
+        try:
+            msg = MIMEMultipart()
+            msg["From"] = user
+            msg["To"] = dest
+            msg["Subject"] = f"[ALERT] Suspicious Activity — {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            msg.attach(MIMEText(message, "plain"))
+
+            if image_bytes:
+                img = MIMEImage(image_bytes, name="alert_frame.jpg")
+                msg.attach(img)
+
+            with smtplib.SMTP(host, port) as server:
+                server.starttls()
+                server.login(user, pwd)
+                server.sendmail(user, dest, msg.as_string())
+
+            logger.info(f"Alert email sent to {dest}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to send alert email: {e}")
+            return False
+
+
+_alerter = None
+
+def get_alerter() -> AlertManager:
+    global _alerter
+    if _alerter is None:
+        _alerter = AlertManager()
+    return _alerter

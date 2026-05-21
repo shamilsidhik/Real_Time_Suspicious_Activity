@@ -1,65 +1,88 @@
 """
-Dataset downloader helpers.
-Supports Kaggle datasets (requires kaggle.json) and Roboflow projects.
-Usage examples:
-- python dataset_downloader.py --kaggle username/dataset-name --out ml/datasets/id_card
-- python dataset_downloader.py --roboflow "workspace/project" --api-key YOUR_KEY --out ml/datasets/id_card
-
-Note: you must configure Kaggle credentials at ~/.kaggle/kaggle.json
-Roboflow usage requires an API key; see https://roboflow.com for instructions.
+Downloads datasets from Kaggle or Roboflow.
+Run: python ml/training/dataset_downloader.py --type activity
+     python ml/training/dataset_downloader.py --type id_card
+     python ml/training/dataset_downloader.py --type both
 """
-import argparse
-import os
-import zipfile
-import shutil
+import argparse, os, subprocess, sys
+from pathlib import Path
 
 
-def download_kaggle(dataset, out_dir):
-    from kaggle.api.kaggle_api_extended import KaggleApi
-    api = KaggleApi()
-    api.authenticate()
-    os.makedirs(out_dir, exist_ok=True)
-    print(f"Downloading Kaggle dataset {dataset} to {out_dir}...")
-    api.dataset_download_files(dataset, path=out_dir, unzip=True)
-    print("Done.")
+ACTIVITY_DATASETS = [
+    # (kaggle_id, destination, description)
+    ("mohamedmustafa/real-life-violence-situations-dataset", "ml/datasets/activity_raw",
+     "Real-life violence vs non-violence videos"),
+    ("rresma7/ucf-crime-dataset-subset", "ml/datasets/activity_raw",
+     "UCF Crime surveillance subset"),
+]
+
+ID_CARD_DATASETS = [
+    ("muhammadehsanansari/national-identity-card-detection", "ml/datasets/id_card",
+     "Pakistani ID card detection with YOLO labels"),
+    ("humansintheloop/id-card-segmentation", "ml/datasets/id_card_raw",
+     "ID card segmentation dataset"),
+]
 
 
-def download_roboflow(project_path, api_key, out_dir, version=None):
-    # This is an example; Roboflow recommends using their Python package or REST API
-    import requests
-    os.makedirs(out_dir, exist_ok=True)
-    workspace, project = project_path.split('/')
-    version_part = f"/versions/{version}" if version else ""
-    url = f"https://api.roboflow.com/dataset/{workspace}/{project}{version_part}/download"
-    params = {'api_key': api_key}
-    print(f"Roboflow downloading from {url} to {out_dir}... (may require manual steps)")
-    # For many projects, Roboflow returns a redirect or link; follow their instructions.
-    print("Please follow Roboflow instructions and export to YOLOv5 format into the target folder.")
+def download_kaggle(dataset_id: str, dest: str):
+    Path(dest).mkdir(parents=True, exist_ok=True)
+    cmd = ["kaggle", "datasets", "download", "-d", dataset_id, "-p", dest, "--unzip"]
+    print(f"\n⬇️  Downloading: {dataset_id}")
+    print(f"   → {dest}")
+    result = subprocess.run(cmd, capture_output=False)
+    if result.returncode != 0:
+        print(f"❌ Failed to download {dataset_id}")
+        print("   Make sure kaggle.json is set up (~/.kaggle/kaggle.json)")
+        return False
+    print(f"✅ Downloaded → {dest}")
+    return True
 
 
-def ensure_yolo_structure(base_dir):
-    """Create id_card dataset structure expected by training scripts."""
-    os.makedirs(os.path.join(base_dir, 'images', 'train'), exist_ok=True)
-    os.makedirs(os.path.join(base_dir, 'images', 'val'), exist_ok=True)
-    os.makedirs(os.path.join(base_dir, 'images', 'test'), exist_ok=True)
-    os.makedirs(os.path.join(base_dir, 'labels', 'train'), exist_ok=True)
-    os.makedirs(os.path.join(base_dir, 'labels', 'val'), exist_ok=True)
-    os.makedirs(os.path.join(base_dir, 'labels', 'test'), exist_ok=True)
+def download_activity():
+    print("\n=== DOWNLOADING ACTIVITY DATASETS ===")
+    success = False
+    for dataset_id, dest, desc in ACTIVITY_DATASETS:
+        print(f"\nTrying: {desc}")
+        if download_kaggle(dataset_id, dest):
+            success = True
+            break  # stop after first successful download
+
+    if not success:
+        print("\n⚠️  All Kaggle downloads failed. Manual alternative:")
+        print("   1. Go to https://universe.roboflow.com")
+        print("   2. Search 'suspicious activity' or 'violence detection'")
+        print("   3. Export in YOLOv5 format")
+        print("   4. Place in ml/datasets/activity/")
 
 
-if __name__ == '__main__':
+def download_id_card():
+    print("\n=== DOWNLOADING ID CARD DATASETS ===")
+    success = False
+    for dataset_id, dest, desc in ID_CARD_DATASETS:
+        print(f"\nTrying: {desc}")
+        if download_kaggle(dataset_id, dest):
+            success = True
+            break
+
+    # Ensure data.yaml exists
+    yaml_path = Path("ml/datasets/id_card/data.yaml")
+    if not yaml_path.exists():
+        yaml_path.parent.mkdir(parents=True, exist_ok=True)
+        yaml_path.write_text(
+            "path: ml/datasets/id_card\n"
+            "train: images/train\nval: images/val\ntest: images/test\n"
+            "nc: 1\nnames: ['id_card']\n"
+        )
+        print(f"✅ Created default data.yaml → {yaml_path}")
+
+
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--kaggle', help='Kaggle dataset identifier (owner/dataset)')
-    parser.add_argument('--roboflow', help='Roboflow workspace/project')
-    parser.add_argument('--api-key', help='Roboflow API key')
-    parser.add_argument('--out', default='ml/datasets/id_card', help='Output dataset folder')
+    parser.add_argument("--type", choices=["activity", "id_card", "both"], default="both")
     args = parser.parse_args()
 
-    if args.kaggle:
-        download_kaggle(args.kaggle, args.out)
-        ensure_yolo_structure(args.out)
-    elif args.roboflow:
-        download_roboflow(args.roboflow, args.api_key, args.out)
-        ensure_yolo_structure(args.out)
-    else:
-        print('Provide --kaggle or --roboflow to download a dataset.')
+    if args.type in ("activity", "both"):
+        download_activity()
+    if args.type in ("id_card", "both"):
+        download_id_card()
+        
