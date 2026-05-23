@@ -1,60 +1,45 @@
-﻿import cv2
-import time
-import threading
+﻿import cv2, time, threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-cap = cv2.VideoCapture(0)
-
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+if not cap.isOpened():
+    cap = cv2.VideoCapture(0)
 
 latest_frame = None
 lock = threading.Lock()
 
 def capture_loop():
     global latest_frame
-
     while True:
         ret, frame = cap.read()
-
         if ret and frame is not None:
-            success, jpg = cv2.imencode(".jpg", frame)
-
-            if success:
-                with lock:
-                    latest_frame = jpg.tobytes()
-        else:
-            print("Failed to read camera")
-
+            _, jpg = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 70])
+            with lock:
+                latest_frame = jpg.tobytes()
         time.sleep(0.033)
 
 threading.Thread(target=capture_loop, daemon=True).start()
+print("Camera started, waiting for first frame...")
+time.sleep(2)
+print("Camera server running on http://localhost:8765")
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
-        self.send_header(
-            "Content-Type",
-            "multipart/x-mixed-replace; boundary=frame"
-        )
-        self.end_headers()
-
-        while True:
-            with lock:
-                frame = latest_frame
-
-            if frame:
-                try:
-                    self.wfile.write(b"--frame\r\n")
-                    self.wfile.write(b"Content-Type: image/jpeg\r\n\r\n")
-                    self.wfile.write(frame)
-                    self.wfile.write(b"\r\n")
-                    time.sleep(0.033)
-                except:
-                    break
-
+        with lock:
+            frame = latest_frame
+        if frame:
+            self.send_response(200)
+            self.send_header("Content-Type", "image/jpeg")
+            self.send_header("Content-Length", str(len(frame)))
+            self.send_header("Connection", "close")
+            self.end_headers()
+            self.wfile.write(frame)
+            self.wfile.flush()
+        else:
+            self.send_response(503)
+            self.end_headers()
     def log_message(self, *args):
         pass
 
-print("Camera server running on http://localhost:8765")
-HTTPServer(("localhost", 8765), Handler).serve_forever()
+server = HTTPServer(("localhost", 8765), Handler)
+server.serve_forever()

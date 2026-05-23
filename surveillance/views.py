@@ -118,7 +118,21 @@ def generate_camera_frames(request_user):
     try:
         while True:
 
-            success, frame = camera.read()
+            # Fetch frame from camera HTTP server
+            frame = None
+            success = False
+            try:
+                import urllib.request, numpy as np
+                _resp = urllib.request.urlopen("http://localhost:8765", timeout=1)
+                _bytes = _resp.read()
+                if len(_bytes) > 5000:
+                    _arr = np.frombuffer(_bytes, dtype=np.uint8)
+                    _f = cv2.imdecode(_arr, cv2.IMREAD_COLOR)
+                    if _f is not None:
+                        frame = _f
+                        success = True
+            except Exception:
+                pass
 
             if not success or frame is None:
 
