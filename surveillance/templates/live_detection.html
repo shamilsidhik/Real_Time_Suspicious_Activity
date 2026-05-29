@@ -1,92 +1,196 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<style>
+    .live-shell {
+        color: #edf2f7;
+    }
+
+    .live-panel {
+        background: #111827;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 8px;
+        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25);
+    }
+
+    .stream-wrap {
+        position: relative;
+        background: #020617;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 8px;
+        overflow: hidden;
+        aspect-ratio: 4 / 3;
+        min-height: 320px;
+    }
+
+    .stream-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        background: #020617;
+    }
+
+    .stream-overlay {
+        position: absolute;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(2, 6, 23, 0.88);
+        color: #cbd5e1;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .metric {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.7rem 0;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+    }
+
+    .metric:last-child {
+        border-bottom: 0;
+    }
+
+    .metric span:first-child {
+        color: #94a3b8;
+    }
+
+    .metric strong {
+        text-align: right;
+        word-break: break-word;
+    }
+
+    .status-dot {
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        display: inline-block;
+        background: #64748b;
+        margin-right: 0.45rem;
+    }
+
+    .status-dot.ok {
+        background: #22c55e;
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.16);
+    }
+
+    .status-dot.warn {
+        background: #f59e0b;
+        box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16);
+    }
+
+    .status-dot.bad {
+        background: #ef4444;
+        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.16);
+    }
+
+    .small-muted {
+        color: #94a3b8;
+        font-size: 0.9rem;
+    }
+
+    .error-box {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.28);
+        color: #fecaca;
+        border-radius: 8px;
+        padding: 0.8rem;
+        min-height: 3rem;
+    }
+</style>
+
+<div class="container live-shell mt-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
-            <h1 class="mb-0">Live Detection</h1>
-            <div class="text-muted">Webcam MJPEG stream with safe overlays</div>
+            <h1 class="mb-1">Live Detection</h1>
+            <div class="small-muted">Direct Django webcam stream with YOLO overlays</div>
         </div>
         <div class="d-flex gap-2">
-            <button id="startBtn" class="btn btn-success">Start Detection</button>
-            <button id="stopBtn" class="btn btn-danger" disabled>Stop Detection</button>
+            <button id="startBtn" class="btn btn-success">Start</button>
+            <button id="stopBtn" class="btn btn-outline-light">Stop</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-light">Dashboard</a>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card bg-dark text-white shadow border-0">
-                <div class="card-body">
-                    <div class="hud-title">
-                        <span class="dot"></span>
-                        <h4 class="mb-0">Camera Stream</h4>
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="live-panel p-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="h5 mb-0">
+                        <span id="cameraDot" class="status-dot"></span>
+                        <span id="cameraStatus">Connecting</span>
                     </div>
+                    <span id="streamState" class="badge bg-secondary">stream on</span>
+                </div>
 
-                    <div class="mt-2">
-                        <span class="pill ok"><span class="icon"></span>Live MJPEG</span>
-                        <span class="pill warn ms-2"><span class="icon"></span>AI Overlays</span>
-                    </div>
-
-                    <div class="mt-3">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span class="text-muted">Camera status:</span>
-                                <span id="cameraStatus" class="ms-2 badge bg-secondary">Running</span>
-                            </div>
+                <div class="stream-wrap">
+                    <img id="liveStream" src="{% url 'video_feed' %}" alt="Live camera stream">
+                    <div id="streamOverlay" class="stream-overlay">
+                        <div>
+                            <div class="h4 mb-2">Stream paused</div>
+                            <div class="small-muted">The backend camera manager stays warm.</div>
                         </div>
-                        <img
-                            id="liveStream"
-                            src="{% url 'video_feed' %}"
-                            alt="Live Camera Stream"
-                            style="width:100%; height:520px; object-fit:cover; background:#000;"
-                        >
-                    </div>
-
-                    <div class="mt-3">
-                        <a href="{% url 'dashboard' %}" class="btn btn-outline-light">Back to Dashboard</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card bg-dark text-white shadow mb-3">
-                <div class="card-body">
-                    <h4 class="mb-2">Model Status</h4>
-                    <div class="d-flex justify-content-between">
-                        <span>Activity Model</span>
-                        {% if activity_model_available %}
-                            <span class="badge bg-success">Available</span>
-                        {% else %}
-                            <span class="badge bg-warning text-dark">Missing</span>
-                        {% endif %}
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <span>ID Card Model</span>
-                        {% if id_card_model_available %}
-                            <span class="badge bg-success">Available</span>
-                        {% else %}
-                            <span class="badge bg-warning text-dark">Missing</span>
-                        {% endif %}
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <span>Weapon Model</span>
-                        <span class="badge bg-warning text-dark">Not trained yet</span>
-                    </div>
+        <div class="col-lg-4">
+            <div class="live-panel p-3 mb-3">
+                <h4 class="mb-3">Live Status</h4>
+                <div class="metric">
+                    <span>FPS</span>
+                    <strong id="fpsValue">0.0</strong>
+                </div>
+                <div class="metric">
+                    <span>Activity</span>
+                    <strong id="activityValue">warming</strong>
+                </div>
+                <div class="metric">
+                    <span>Confidence</span>
+                    <strong id="confidenceValue">0.00</strong>
+                </div>
+                <div class="metric">
+                    <span>ID cards</span>
+                    <strong id="idCountValue">0</strong>
+                </div>
+                <div class="metric">
+                    <span>Reconnects</span>
+                    <strong id="reconnectValue">0</strong>
+                </div>
+                <div class="metric">
+                    <span>Anti-spoof</span>
+                    <strong id="spoofValue">disabled</strong>
                 </div>
             </div>
 
-            <div class="card bg-dark text-white shadow mb-3">
-                <div class="card-body">
-                    <h4 class="mb-2">Detection Status</h4>
-                    <div id="activityStatus" class="badge bg-secondary w-100 text-start">Stopped</div>
-                    <div class="mt-2 text-muted">Last detection: <span id="lastDetection">-</span></div>
-                    <div class="mt-1 text-muted">Confidence: <span id="lastConfidence">0.00</span></div>
+            <div class="live-panel p-3 mb-3">
+                <h4 class="mb-3">Models</h4>
+                <div class="metric">
+                    <span>Activity</span>
+                    <strong id="activityModelValue">
+                        {% if activity_model_available %}Available{% else %}Missing{% endif %}
+                    </strong>
+                </div>
+                <div class="metric">
+                    <span>Activity backend</span>
+                    <strong id="activityBackendValue">unknown</strong>
+                </div>
+                <div class="metric">
+                    <span>ID card</span>
+                    <strong id="idModelValue">
+                        {% if id_card_model_available %}Available{% else %}Missing{% endif %}
+                    </strong>
                 </div>
             </div>
 
-            <div id="alertBanner" class="alert alert-danger d-none" role="alert">
-                <strong>Suspicious / Weapon Event</strong>
+            <div class="live-panel p-3">
+                <h4 class="mb-3">Error</h4>
+                <div id="errorValue" class="error-box">None</div>
             </div>
         </div>
     </div>
@@ -95,79 +199,97 @@
 <script>
     const startBtn = document.getElementById('startBtn');
     const stopBtn = document.getElementById('stopBtn');
-    const cameraStatusEl = document.getElementById('cameraStatus');
-    const activityStatusEl = document.getElementById('activityStatus');
     const liveStreamImg = document.getElementById('liveStream');
-    const lastDetectionEl = document.getElementById('lastDetection');
-    const lastConfidenceEl = document.getElementById('lastConfidence');
-    const alertBanner = document.getElementById('alertBanner');
+    const streamOverlay = document.getElementById('streamOverlay');
+    const streamState = document.getElementById('streamState');
+    const cameraDot = document.getElementById('cameraDot');
+    const cameraStatus = document.getElementById('cameraStatus');
+    const fpsValue = document.getElementById('fpsValue');
+    const activityValue = document.getElementById('activityValue');
+    const confidenceValue = document.getElementById('confidenceValue');
+    const idCountValue = document.getElementById('idCountValue');
+    const reconnectValue = document.getElementById('reconnectValue');
+    const spoofValue = document.getElementById('spoofValue');
+    const activityModelValue = document.getElementById('activityModelValue');
+    const activityBackendValue = document.getElementById('activityBackendValue');
+    const idModelValue = document.getElementById('idModelValue');
+    const errorValue = document.getElementById('errorValue');
+    const streamUrl = "{% url 'video_feed' %}";
 
-    let pollTimer = null;
+    let polling = null;
+    let streamEnabled = true;
 
-    function setCameraStatus(text, variant) {
-        cameraStatusEl.textContent = text;
-        cameraStatusEl.className = 'ms-2 badge ' + variant;
+    function setCamera(open, hasError) {
+        cameraDot.className = 'status-dot ' + (open ? 'ok' : (hasError ? 'bad' : 'warn'));
+        cameraStatus.textContent = open ? 'Camera online' : (hasError ? 'Camera error' : 'Connecting');
     }
 
-    function setActivityStatus(text, variant) {
-        activityStatusEl.textContent = text;
-        activityStatusEl.className = 'badge ' + variant + ' w-100 text-start';
+    function setStreamEnabled(enabled) {
+        streamEnabled = enabled;
+        startBtn.disabled = enabled;
+        stopBtn.disabled = !enabled;
+        streamOverlay.style.display = enabled ? 'none' : 'flex';
+        streamState.textContent = enabled ? 'stream on' : 'stream paused';
+        streamState.className = enabled ? 'badge bg-success' : 'badge bg-secondary';
+        liveStreamImg.src = enabled ? streamUrl + '?t=' + Date.now() : '';
     }
 
-    async function pollDetect() {
+    async function refreshStatus() {
         try {
-            const resp = await fetch('{% url "detection_api" %}');
-            const j = await resp.json();
-            // Phase 1: API may only return model status; keep UI safe.
-            if (j && j.status === 'success' && j.message) {
-                lastDetectionEl.textContent = '-';
-                lastConfidenceEl.textContent = '0.00';
-            }
-        } catch (e) {
-            // ignore
+            const response = await fetch("{% url 'detection_api' %}", { cache: 'no-store' });
+            const data = await response.json();
+            const error = data.last_error || '';
+
+            setCamera(Boolean(data.camera_open), Boolean(error));
+            fpsValue.textContent = Number(data.fps || 0).toFixed(1);
+            activityValue.textContent = data.last_activity_label || 'unknown';
+            confidenceValue.textContent = Number(data.last_activity_confidence || 0).toFixed(2);
+            idCountValue.textContent = data.id_card_count || 0;
+            reconnectValue.textContent = data.reconnect_count || 0;
+            spoofValue.textContent = data.anti_spoof_mode || 'disabled';
+            errorValue.textContent = error || 'None';
+
+            const activityModel = (data.models && data.models.activity) || {};
+            const idModel = (data.models && data.models.id_card) || {};
+            activityModelValue.textContent = activityModel.available ? 'Available' : 'Missing';
+            activityBackendValue.textContent = activityModel.backend || 'unknown';
+            idModelValue.textContent = idModel.available ? 'Available' : 'Missing';
+        } catch (err) {
+            setCamera(false, true);
+            errorValue.textContent = 'Status endpoint unavailable';
         }
+    }
+
+    function startPolling() {
+        if (!polling) {
+            polling = setInterval(refreshStatus, 1000);
+        }
+        refreshStatus();
     }
 
     startBtn.addEventListener('click', () => {
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
-
-        // Start detection: in server MJPEG, stream runs continuously.
-        // UI toggles polling + status.
-        setActivityStatus('Running', 'bg-success');
-        setCameraStatus('Running', 'bg-success');
-        alertBanner.classList.add('d-none');
-
-        if (!pollTimer) {
-            pollTimer = setInterval(pollDetect, 2000);
-        }
-
-        // Force reload stream to reduce stale camera frames.
-        const url = liveStreamImg.src.split('?')[0];
-        liveStreamImg.src = url + '?t=' + Date.now();
+        setStreamEnabled(true);
+        startPolling();
     });
 
     stopBtn.addEventListener('click', () => {
-        startBtn.disabled = false;
-        stopBtn.disabled = true;
-
-        if (pollTimer) {
-            clearInterval(pollTimer);
-            pollTimer = null;
-        }
-
-        setActivityStatus('Stopped', 'bg-secondary');
-        alertBanner.classList.add('d-none');
+        setStreamEnabled(false);
     });
 
-    // Detect camera unavailable by image load error.
     liveStreamImg.addEventListener('error', () => {
-        setCameraStatus('Camera unavailable', 'bg-warning');
-        setActivityStatus('Stopped', 'bg-secondary');
+        if (streamEnabled) {
+            setCamera(false, true);
+            errorValue.textContent = 'MJPEG stream disconnected. Reconnecting from the browser...';
+            window.setTimeout(() => {
+                if (streamEnabled) {
+                    liveStreamImg.src = streamUrl + '?t=' + Date.now();
+                }
+            }, 1500);
+        }
     });
 
-    // Initial state
-    setActivityStatus('Stopped', 'bg-secondary');
-    setCameraStatus('Running', 'bg-success');
+    setStreamEnabled(true);
+    startPolling();
 </script>
 {% endblock %}
+
