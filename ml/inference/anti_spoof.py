@@ -1,13 +1,37 @@
-"""Lightweight liveness helpers for optional live anti-spoof checks.
-
-The direct webcam pipeline disables anti-spoof by default because repeated
-frames can be caused by transport, CPU pressure, or camera driver buffering.
-These helpers are intentionally conservative and never suppress activity
-overlays on their own.
-"""
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
+
+
+def is_model_available() -> bool:
+    return False
+
+
+def model_status() -> dict[str, Any]:
+    return {
+        "available": False,
+        "backend": "disabled_live_mode",
+        "path": "",
+        "last_error": "Anti-spoof is disabled in live mode until a real direct-camera liveness model is installed.",
+    }
+
+
+class AntiSpoofEngine:
+    mode = "disabled"
+
+    def is_model_available(self) -> bool:
+        return False
+
+    def model_status(self) -> dict[str, Any]:
+        return model_status()
+
+    def predict_frame(self, frame) -> dict[str, Any]:
+        return self.evaluate(frame)
+
+    def evaluate(self, frame) -> dict[str, Any]:
+        return {"status": "DISABLED", "spoof": False, "confidence": 0.0}
 
 
 def _as_float_gray(frame):
@@ -20,7 +44,6 @@ def _as_float_gray(frame):
 def frame_difference_score(frames):
     if len(frames) < 2:
         return 0.0
-
     diffs = []
     previous = _as_float_gray(frames[0])
     for frame in frames[1:]:
@@ -33,7 +56,6 @@ def frame_difference_score(frames):
 def repeated_frame_ratio(frames, threshold=0.25):
     if len(frames) < 2:
         return 0.0
-
     repeated = 0
     comparisons = 0
     previous = _as_float_gray(frames[0])
@@ -43,28 +65,13 @@ def repeated_frame_ratio(frames, threshold=0.25):
         if float(np.abs(current - previous).mean()) < threshold:
             repeated += 1
         previous = current
-
     return repeated / comparisons if comparisons else 0.0
 
 
 def is_spoof_sequence(frames):
-    """Return a conservative normalized anti-spoof result."""
-    if len(frames) < 12:
-        return {
-            "status": "warming",
-            "spoof": False,
-            "difference_score": 0.0,
-            "repeated_ratio": 0.0,
-        }
-
-    diff_score = frame_difference_score(frames)
-    repeat_ratio = repeated_frame_ratio(frames)
-
-    spoof = diff_score < 0.35 and repeat_ratio > 0.9
     return {
-        "status": "ok",
-        "spoof": bool(spoof),
-        "difference_score": diff_score,
-        "repeated_ratio": repeat_ratio,
+        "status": "DISABLED",
+        "spoof": False,
+        "difference_score": frame_difference_score(frames) if len(frames) > 1 else 0.0,
+        "repeated_ratio": repeated_frame_ratio(frames) if len(frames) > 1 else 0.0,
     }
-

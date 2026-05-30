@@ -1,141 +1,121 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h2 class="m-0">Dashboard</h2>
-  <div>
-    <a href="{% url 'upload' %}" class="btn btn-outline-light btn-sm me-2">Upload Video</a>
-    <a href="{% url 'stream_page' %}" class="btn btn-outline-light btn-sm me-2">Live Detection</a>
-    <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">View Logs</a>
-    <a href="/admin/" class="btn btn-outline-warning btn-sm">Admin Panel</a>
-  </div>
-</div>
-
-  <div class="row">
-  <div class="col-md-8">
-    <div class="card mb-4">
-      <div class="card bg-dark text-white border-0">
-        <div class="card-body">
-          <div class="hud-title">
-            <span class="dot"></span>
-            <h4 class="mb-0">Live Stream</h4>
-          </div>
-          <div class="mt-2">
-            <span class="pill ok"><span class="icon"></span>Streaming</span>
-            <span class="pill ms-2 warn"><span class="icon"></span>AI Running</span>
-          </div>
-          <img src="{% url 'video_feed' %}" alt="Live stream" style="width:100%; max-height:500px; object-fit:cover;" class="mt-3">
-        </div>
-      </div>
+<section class="space-y-6">
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.32em] text-neon">Security operations</p>
+      <h1 class="mt-2 text-3xl font-semibold text-white">Surveillance Dashboard</h1>
     </div>
-
-
-    <div class="card">
-      <div class="card-body bg-dark text-light">
-        <h5 class="card-title">Recent Logs</h5>
-        <div class="table-responsive">
-          <table class="table table-dark table-striped mb-0">
-            <thead>
-              <tr>
-                <th>Timestamp</th>
-                <th>Type</th>
-                <th>Confidence</th>
-                <th>Message</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-            {% for log in recent_logs %}
-              <tr>
-                <td>{{ log.detected_at|date:"Y-m-d H:i:s" }}</td>
-                <td>{{ log.get_activity_type_display }}</td>
-                <td>{{ log.confidence_score|floatformat:2 }}</td>
-                <td>{{ log.message|default:'-' }}</td>
-                <td>{% if log.activity_type == 'suspicious' %}<span class="text-danger">Alert</span>{% elif log.activity_type == 'id_detected' %}<span class="text-warning">ID</span>{% else %}<span class="text-success">OK</span>{% endif %}</td>
-              </tr>
-            {% empty %}
-              <tr><td colspan="5">No logs yet.</td></tr>
-            {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div class="flex flex-wrap gap-2">
+      <a href="{% url 'stream_page' %}" class="rounded bg-neon px-4 py-2 text-sm font-semibold text-black transition hover:brightness-110">Open Live View</a>
+      <a href="{% url 'upload' %}" class="rounded border border-line px-4 py-2 text-sm text-slate-200 transition hover:border-neon hover:text-neon">Upload Video</a>
+      <a href="/admin/" class="rounded border border-amber-300/50 px-4 py-2 text-sm text-amber-200 transition hover:bg-amber-300/10">Admin</a>
     </div>
   </div>
 
-  <div class="col-md-4">
-    <div class="card mb-4">
-      <div class="card-body">
-        <h5 class="card-title">Model Status</h5>
-        <ul class="list-unstyled mb-0">
-          <li>Activity Model: <span class="{% if activity_model_available %}text-success{% else %}text-warning{% endif %}">{% if activity_model_available %}Available{% else %}Missing{% endif %}</span></li>
-          <li>Class Names: <span class="{% if class_names_available %}text-success{% else %}text-warning{% endif %}">{% if class_names_available %}Available{% else %}Missing{% endif %}</span></li>
-          <li>ID Card Model: <span class="{% if id_card_model_available %}text-success{% else %}text-warning{% endif %}">{% if id_card_model_available %}Available{% else %}Missing{% endif %}</span></li>
-          <li>SQLite Logs: <span class="text-success">{% if sqlite_logs_working %}Working{% else %}Unavailable{% endif %}</span></li>
-          <li>Upload Detection: <span class="text-success">{% if upload_detection_ready %}Ready{% else %}Not Ready{% endif %}</span></li>
-        </ul>
-      </div>
-    </div>
+  <div id="alertBanner" class="hidden rounded border border-alert/50 bg-alert/15 px-4 py-3 text-sm font-semibold text-rose-100">
+    Alert condition detected.
+  </div>
 
-    <div class="card mb-4">
-      <div class="card-body bg-dark text-light">
-        <h5 class="card-title">Summary</h5>
-        <div class="row text-center">
-          <div class="col-6 mb-2">
-            <div class="card bg-secondary text-white">
-              <div class="card-body p-2">
-                <h6>Total Uploads</h6>
-                <strong>{{ total_uploaded_videos }}</strong>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 mb-2">
-            <div class="card bg-secondary text-white">
-              <div class="card-body p-2">
-                <h6>Total Logs</h6>
-                <strong>{{ total_logs }}</strong>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 mb-2">
-            <div class="card bg-danger text-white">
-              <div class="card-body p-2">
-                <h6>Suspicious Alerts</h6>
-                <strong>{{ suspicious_count }}</strong>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 mb-2">
-            <div class="card bg-warning text-dark">
-              <div class="card-body p-2">
-                <h6>ID Detections</h6>
-                <strong>{{ id_card_count }}</strong>
-              </div>
-            </div>
+  <div class="grid gap-4 md:grid-cols-4">
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">Camera FPS</div><div id="fpsValue" class="mt-1 text-3xl font-semibold text-neon">{{ camera.capture_fps|default:"0" }}</div></div>
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">Activity</div><div id="activityValue" class="mt-1 truncate text-2xl font-semibold text-white">{{ camera.overlay.activity_label|default:"unknown" }}</div></div>
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">ID Cards</div><div id="idCountValue" class="mt-1 text-3xl font-semibold text-amber-300">{{ camera.overlay.id_count|default:"0" }}</div></div>
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">Weapons</div><div id="weaponCountValue" class="mt-1 text-3xl font-semibold text-alert">{{ camera.overlay.weapon_count|default:"0" }}</div></div>
+  </div>
+
+  <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+    <div class="overflow-hidden rounded border border-line bg-panel">
+      <div class="flex items-center justify-between border-b border-line px-4 py-3">
+        <div class="flex items-center gap-3">
+          <span id="cameraDot" class="h-3 w-3 rounded-full bg-amber-400"></span>
+          <div>
+            <div id="cameraStatus" class="text-sm font-semibold">Camera status</div>
+            <div id="cameraDetail" class="text-xs text-slate-400">{{ camera.status|default:"connecting" }}</div>
           </div>
         </div>
+        <a href="{% url 'stream_page' %}" class="rounded border border-line px-3 py-1 text-xs text-slate-300 hover:border-neon hover:text-neon">Monitor</a>
+      </div>
+      <div class="aspect-[16/10] bg-black">
+        <img src="{{ stream_url }}" alt="Live stream" class="h-full w-full object-contain">
       </div>
     </div>
 
-    <div class="card mb-4">
-      <div class="card-body">
-        <h5 class="card-title">Upload Video for Analysis</h5>
-        <form id="uploadForm" method="post" action="{% url 'upload' %}" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ upload_form.as_p }}
-          <button type="submit" class="btn btn-primary">Upload</button>
-        </form>
+    <aside class="space-y-5">
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Model status</h2>
+        <div id="modelChips" class="mt-4 flex flex-wrap gap-2"></div>
       </div>
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Totals</h2>
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Uploads</div><div class="text-2xl font-semibold">{{ total_uploaded_videos|default:"0" }}</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Logs</div><div class="text-2xl font-semibold">{{ total_logs|default:"0" }}</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Suspicious</div><div class="text-2xl font-semibold text-alert">{{ suspicious_count|default:"0" }}</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">ID Events</div><div class="text-2xl font-semibold text-amber-300">{{ id_card_count|default:"0" }}</div></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="rounded border border-line bg-panel">
+    <div class="border-b border-line px-4 py-3">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Recent activity</h2>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-left text-sm">
+        <thead class="border-b border-line text-xs uppercase tracking-[0.18em] text-slate-500">
+          <tr><th class="px-4 py-3">Timestamp</th><th class="px-4 py-3">Type</th><th class="px-4 py-3">Confidence</th><th class="px-4 py-3">Message</th><th class="px-4 py-3">Status</th></tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          {% for log in recent_logs %}
+            <tr class="text-slate-300">
+              <td class="px-4 py-3">{{ log.detected_at|date:"Y-m-d H:i:s" }}</td>
+              <td class="px-4 py-3">{{ log.get_activity_type_display }}</td>
+              <td class="px-4 py-3">{{ log.confidence_score|floatformat:2 }}</td>
+              <td class="px-4 py-3">{{ log.message|default:'-' }}</td>
+              <td class="px-4 py-3">{% if log.activity_type == 'suspicious' %}<span class="text-alert">Alert</span>{% elif log.activity_type == 'id_detected' %}<span class="text-amber-300">ID</span>{% else %}<span class="text-neon">OK</span>{% endif %}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="5" class="px-4 py-6 text-slate-400">No logs yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
+</section>
 
 <script>
-const uploadForm = document.getElementById('uploadForm');
-if (uploadForm) {
-  uploadForm.addEventListener('submit', function(event) {
-    // let the form submit normally; server-side handles redirect
-  });
+const statusUrl = "{% url 'detection_api' %}";
+function chip(name, model) {
+  const ok = Boolean(model && model.available);
+  return `<span class="rounded border ${ok ? 'border-neon/40 bg-neon/10 text-neon' : 'border-amber-300/40 bg-amber-300/10 text-amber-200'} px-3 py-1 text-xs font-semibold">${name}: ${ok ? 'ready' : 'missing'}</span>`;
 }
+async function refreshStatus() {
+  try {
+    const res = await fetch(statusUrl, { cache: 'no-store' });
+    const data = await res.json();
+    const overlay = data.overlay || {};
+    const models = data.models || {};
+    const isOpen = Boolean(data.camera_open || data.ok);
+    const weaponCount = Number(overlay.weapon_count || 0);
+    const activity = String(overlay.activity_label || 'unknown');
+    const suspicious = weaponCount > 0 || ['fight', 'violence', 'suspicious', 'weapon'].includes(activity.toLowerCase());
+    document.getElementById('cameraDot').className = `h-3 w-3 rounded-full ${isOpen ? 'bg-neon shadow-[0_0_18px_rgba(0,255,136,0.8)]' : 'bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]'}`;
+    document.getElementById('cameraStatus').textContent = isOpen ? 'Camera online' : 'Camera reconnecting';
+    document.getElementById('cameraDetail').textContent = data.last_error || data.status || 'healthy';
+    document.getElementById('fpsValue').textContent = Number(data.capture_fps || 0).toFixed(1);
+    document.getElementById('activityValue').textContent = activity;
+    document.getElementById('idCountValue').textContent = overlay.id_count || 0;
+    document.getElementById('weaponCountValue').textContent = weaponCount;
+    document.getElementById('modelChips').innerHTML = chip('Activity', models.activity) + chip('ID', models.id_card) + chip('Weapon', models.weapon) + chip('Anti-spoof', models.anti_spoof);
+    document.getElementById('alertBanner').classList.toggle('hidden', !suspicious);
+    document.getElementById('alertBanner').textContent = suspicious ? `Alert: ${weaponCount ? 'weapon detected' : activity}` : '';
+  } catch (err) {
+    document.getElementById('cameraStatus').textContent = 'Camera server unavailable';
+  }
+}
+setInterval(refreshStatus, 1000);
+refreshStatus();
 </script>
-
 {% endblock %}

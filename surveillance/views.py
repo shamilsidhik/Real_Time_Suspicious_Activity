@@ -1,18 +1,52 @@
 from __future__ import annotations
 
+import os
+
+import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import JsonResponse, StreamingHttpResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views import View
+from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView
 
-from .camera import camera_service
 from .forms import UploadForm
 from .models import DetectionLog, UploadedVideo
+
+
+CAMERA_SERVER_URL = os.environ.get("CAMERA_SERVER_URL", "http://127.0.0.1:8765").rstrip("/")
+
+
+def _default_camera_status() -> dict:
+    return {
+        "ok": False,
+        "status": "camera_server_unavailable",
+        "camera_open": False,
+        "capture_fps": 0.0,
+        "last_error": "Camera server is not reachable",
+        "stream_url": f"{CAMERA_SERVER_URL}/stream.mjpg",
+        "snapshot_url": f"{CAMERA_SERVER_URL}/snapshot.jpg",
+        "models": {
+            "activity": {"available": False, "backend": "unknown", "path": "", "last_error": ""},
+            "id_card": {"available": False, "backend": "unknown", "path": "", "last_error": ""},
+            "weapon": {"available": False, "backend": "unknown", "path": "", "last_error": ""},
+            "anti_spoof": {"available": False, "backend": "disabled_live_mode", "path": "", "last_error": ""},
+        },
+        "overlay": {"activity_label": "unknown", "activity_confidence": 0.0, "id_count": 0, "weapon_count": 0},
+    }
+
+
+def get_camera_status() -> dict:
+    try:
+        response = requests.get(f"{CAMERA_SERVER_URL}/status", timeout=0.7)
+        response.raise_for_status()
+        return response.json()
+    except Exception as exc:
+        data = _default_camera_status()
+        data["last_error"] = str(exc)
+        return data
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -21,21 +55,23 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
+        logs_qs = DetectionLog.objects.filter(user=user).order_by("-detected_at")
+        uploads_qs = UploadedVideo.objects.filter(user=user).order_by("-uploaded_at")
+        camera = get_camera_status()
 
-        try:
-            logs_qs = DetectionLog.objects.filter(user=user).order_by("-detected_at")
-            context["logs"] = logs_qs[:10]
-            context["recent_logs"] = logs_qs[:10]
-            context["total_logs"] = logs_qs.count()
-            context["suspicious_count"] = logs_qs.filter(activity_type="suspicious").count()
-            context["id_card_count"] = logs_qs.filter(activity_type="id_detected").count()
-        except Exception:
-            context["logs"] = []
-            context["recent_logs"] = []
-            context["total_logs"] = 0
-            context["suspicious_count"] = 0
-            context["id_card_count"] = 0
-
+        context.update(
+            {
+                "recent_logs": logs_qs[:8],
+                "logs": logs_qs[:8],
+                "total_logs": logs_qs.count(),
+                "suspicious_count": logs_qs.filter(activity_type="suspicious").count(),
+                "id_card_count": logs_qs.filter(activity_type="id_detected").count(),
+                "total_uploaded_videos": uploads_qs.count(),
+                "upload_form": UploadForm(),
+                "camera": camera,
+                "stream_url": camera.get("stream_url", f"{CAMERA_SERVER_URL}/stream.mjpg"),
+            }
+        )
         return context
 
 
@@ -58,55 +94,14 @@ class UploadView(LoginRequiredMixin, FormView):
         return context
 
 
-def _mjpeg_stream():
-    last_frame_id = -1
-
-    try:
-        while True:
-            frame_id, frame_bytes = camera_service.get_jpeg(last_frame_id=last_frame_id, timeout=2.0)
-            last_frame_id = frame_id
-
-            yield (
-                b"--frame\r\n"
-                b"Content-Type: image/jpeg\r\n"
-                b"Cache-Control: no-cache, no-store, must-revalidate\r\n\r\n"
-                + frame_bytes
-                + b"\r\n"
-            )
-    except GeneratorExit:
-        # Client disconnected.
-        return
-
-
-class VideoStreamView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        response = StreamingHttpResponse(
-            _mjpeg_stream(),
-            content_type="multipart/x-mixed-replace; boundary=frame",
-        )
-        response["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        response["Pragma"] = "no-cache"
-        response["Expires"] = "0"
-        response["X-Accel-Buffering"] = "no"
-        return response
-
-
 @login_required
 def video_feed(request):
-    response = StreamingHttpResponse(
-        _mjpeg_stream(),
-        content_type="multipart/x-mixed-replace; boundary=frame",
-    )
-    response["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response["Pragma"] = "no-cache"
-    response["Expires"] = "0"
-    response["X-Accel-Buffering"] = "no"
-    return response
+    return HttpResponseRedirect(f"{CAMERA_SERVER_URL}/stream.mjpg")
 
 
 @login_required
 def detection_api(request):
-    return JsonResponse(camera_service.get_status())
+    return JsonResponse(get_camera_status())
 
 
 class LogsView(LoginRequiredMixin, TemplateView):
@@ -114,35 +109,27 @@ class LogsView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        qs = DetectionLog.objects.filter(user=self.request.user).order_by("-detected_at")
+        paginator = Paginator(qs, 25)
+        page = self.request.GET.get("page", 1)
         try:
-            qs = DetectionLog.objects.filter(user=self.request.user).order_by("-detected_at")
-            paginator = Paginator(qs, 25)
-            page = self.request.GET.get("page", 1)
-
-            try:
-                logs_page = paginator.page(page)
-            except PageNotAnInteger:
-                logs_page = paginator.page(1)
-            except EmptyPage:
-                logs_page = paginator.page(paginator.num_pages)
-
-            context["logs_page"] = logs_page
-        except Exception:
-            context["logs_page"] = []
-
+            context["logs_page"] = paginator.page(page)
+        except PageNotAnInteger:
+            context["logs_page"] = paginator.page(1)
+        except EmptyPage:
+            context["logs_page"] = paginator.page(paginator.num_pages)
         return context
 
 
 @login_required
 def live_detection_view(request):
-    status = camera_service.get_status()
-    context = {
-        "activity_model_available": status["models"]["activity_available"],
-        "id_card_model_available": status["models"]["id_available"],
-        "weapon_model_available": status["models"]["weapon_available"],
-        "anti_spoof_mode": status["models"]["anti_spoof_mode"],
-        "camera_status": status["status"],
-        "camera_fps": status["capture_fps"],
-    }
-    return render(request, "live_detection.html", context)
+    camera = get_camera_status()
+    return render(
+        request,
+        "live_detection.html",
+        {
+            "camera": camera,
+            "stream_url": camera.get("stream_url", f"{CAMERA_SERVER_URL}/stream.mjpg"),
+            "status_api_url": reverse("detection_api"),
+        },
+    )

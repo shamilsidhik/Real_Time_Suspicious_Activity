@@ -1,295 +1,166 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-    .live-shell {
-        color: #edf2f7;
-    }
+<section class="space-y-5">
+  <div id="alertBanner" class="hidden rounded border border-alert/50 bg-alert/15 px-4 py-3 text-sm font-semibold text-rose-100 shadow-lg shadow-alert/10">
+    Alert condition detected in the live feed.
+  </div>
 
-    .live-panel {
-        background: #111827;
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        border-radius: 8px;
-        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25);
-    }
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.32em] text-neon">Live surveillance</p>
+      <h1 class="mt-2 text-3xl font-semibold text-white">Command View</h1>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button id="resumeBtn" class="rounded bg-neon px-4 py-2 text-sm font-semibold text-black transition hover:brightness-110">Resume</button>
+      <button id="pauseBtn" class="rounded border border-line px-4 py-2 text-sm text-slate-200 transition hover:border-alert hover:text-alert">Pause</button>
+      <a href="{% url 'dashboard' %}" class="rounded border border-line px-4 py-2 text-sm text-slate-200 transition hover:border-neon hover:text-neon">Dashboard</a>
+    </div>
+  </div>
 
-    .stream-wrap {
-        position: relative;
-        background: #020617;
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        border-radius: 8px;
-        overflow: hidden;
-        aspect-ratio: 4 / 3;
-        min-height: 320px;
-    }
-
-    .stream-wrap img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        background: #020617;
-    }
-
-    .stream-overlay {
-        position: absolute;
-        inset: 0;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        background: rgba(2, 6, 23, 0.88);
-        color: #cbd5e1;
-        text-align: center;
-        padding: 1.5rem;
-    }
-
-    .metric {
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 0.7rem 0;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
-    }
-
-    .metric:last-child {
-        border-bottom: 0;
-    }
-
-    .metric span:first-child {
-        color: #94a3b8;
-    }
-
-    .metric strong {
-        text-align: right;
-        word-break: break-word;
-    }
-
-    .status-dot {
-        width: 0.7rem;
-        height: 0.7rem;
-        border-radius: 50%;
-        display: inline-block;
-        background: #64748b;
-        margin-right: 0.45rem;
-    }
-
-    .status-dot.ok {
-        background: #22c55e;
-        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.16);
-    }
-
-    .status-dot.warn {
-        background: #f59e0b;
-        box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16);
-    }
-
-    .status-dot.bad {
-        background: #ef4444;
-        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.16);
-    }
-
-    .small-muted {
-        color: #94a3b8;
-        font-size: 0.9rem;
-    }
-
-    .error-box {
-        background: rgba(239, 68, 68, 0.12);
-        border: 1px solid rgba(239, 68, 68, 0.28);
-        color: #fecaca;
-        border-radius: 8px;
-        padding: 0.8rem;
-        min-height: 3rem;
-    }
-</style>
-
-<div class="container live-shell mt-4">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-        <div>
-            <h1 class="mb-1">Live Detection</h1>
-            <div class="small-muted">Direct Django webcam stream with YOLO overlays</div>
+  <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+    <div class="overflow-hidden rounded border border-line bg-panel shadow-2xl shadow-black/30">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
+        <div class="flex items-center gap-3">
+          <span id="cameraDot" class="h-3 w-3 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]"></span>
+          <div>
+            <div id="cameraStatus" class="text-sm font-semibold text-white">Connecting</div>
+            <div id="cameraDetail" class="text-xs text-slate-400">Waiting for camera server</div>
+          </div>
         </div>
-        <div class="d-flex gap-2">
-            <button id="startBtn" class="btn btn-success">Start</button>
-            <button id="stopBtn" class="btn btn-outline-light">Stop</button>
-            <a href="{% url 'dashboard' %}" class="btn btn-outline-light">Dashboard</a>
+        <span id="streamState" class="rounded border border-neon/40 bg-neon/10 px-3 py-1 text-xs font-semibold text-neon">stream on</span>
+      </div>
+      <div class="relative aspect-[4/3] min-h-[320px] bg-black">
+        <img id="liveStream" src="{{ stream_url }}" alt="Live camera stream" class="h-full w-full object-contain">
+        <div id="streamOverlay" class="absolute inset-0 hidden items-center justify-center bg-black/80 p-6 text-center">
+          <div>
+            <div class="text-xl font-semibold text-white">Stream paused</div>
+            <div class="mt-2 text-sm text-slate-400">Camera service remains warm in the background.</div>
+          </div>
         </div>
+      </div>
     </div>
 
-    <div class="row g-3">
-        <div class="col-lg-8">
-            <div class="live-panel p-3">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="h5 mb-0">
-                        <span id="cameraDot" class="status-dot"></span>
-                        <span id="cameraStatus">Connecting</span>
-                    </div>
-                    <span id="streamState" class="badge bg-secondary">stream on</span>
-                </div>
-
-                <div class="stream-wrap">
-                    <img id="liveStream" src="{% url 'video_feed' %}" alt="Live camera stream">
-                    <div id="streamOverlay" class="stream-overlay">
-                        <div>
-                            <div class="h4 mb-2">Stream paused</div>
-                            <div class="small-muted">The backend camera manager stays warm.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <aside class="space-y-5">
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Live metrics</h2>
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div class="rounded border border-line bg-black/25 p-3">
+            <div class="text-xs text-slate-400">FPS</div>
+            <div id="fpsValue" class="mt-1 text-2xl font-semibold text-neon">0.0</div>
+          </div>
+          <div class="rounded border border-line bg-black/25 p-3">
+            <div class="text-xs text-slate-400">Activity</div>
+            <div id="activityValue" class="mt-1 truncate text-lg font-semibold text-white">warming</div>
+          </div>
+          <div class="rounded border border-line bg-black/25 p-3">
+            <div class="text-xs text-slate-400">ID cards</div>
+            <div id="idCountValue" class="mt-1 text-2xl font-semibold text-amber-300">0</div>
+          </div>
+          <div class="rounded border border-line bg-black/25 p-3">
+            <div class="text-xs text-slate-400">Weapons</div>
+            <div id="weaponCountValue" class="mt-1 text-2xl font-semibold text-alert">0</div>
+          </div>
         </div>
+      </div>
 
-        <div class="col-lg-4">
-            <div class="live-panel p-3 mb-3">
-                <h4 class="mb-3">Live Status</h4>
-                <div class="metric">
-                    <span>FPS</span>
-                    <strong id="fpsValue">0.0</strong>
-                </div>
-                <div class="metric">
-                    <span>Activity</span>
-                    <strong id="activityValue">warming</strong>
-                </div>
-                <div class="metric">
-                    <span>Confidence</span>
-                    <strong id="confidenceValue">0.00</strong>
-                </div>
-                <div class="metric">
-                    <span>ID cards</span>
-                    <strong id="idCountValue">0</strong>
-                </div>
-                <div class="metric">
-                    <span>Reconnects</span>
-                    <strong id="reconnectValue">0</strong>
-                </div>
-                <div class="metric">
-                    <span>Anti-spoof</span>
-                    <strong id="spoofValue">disabled</strong>
-                </div>
-            </div>
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Models</h2>
+        <div id="modelChips" class="mt-4 flex flex-wrap gap-2"></div>
+      </div>
 
-            <div class="live-panel p-3 mb-3">
-                <h4 class="mb-3">Models</h4>
-                <div class="metric">
-                    <span>Activity</span>
-                    <strong id="activityModelValue">
-                        {% if activity_model_available %}Available{% else %}Missing{% endif %}
-                    </strong>
-                </div>
-                <div class="metric">
-                    <span>Activity backend</span>
-                    <strong id="activityBackendValue">unknown</strong>
-                </div>
-                <div class="metric">
-                    <span>ID card</span>
-                    <strong id="idModelValue">
-                        {% if id_card_model_available %}Available{% else %}Missing{% endif %}
-                    </strong>
-                </div>
-            </div>
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Connection health</h2>
+        <dl class="mt-4 space-y-3 text-sm">
+          <div class="flex justify-between gap-3"><dt class="text-slate-400">Frame age</dt><dd id="ageValue" class="text-white">--</dd></div>
+          <div class="flex justify-between gap-3"><dt class="text-slate-400">Resolution</dt><dd id="resolutionValue" class="text-white">--</dd></div>
+          <div class="flex justify-between gap-3"><dt class="text-slate-400">Anti-spoof</dt><dd id="spoofValue" class="text-white">disabled</dd></div>
+        </dl>
+      </div>
 
-            <div class="live-panel p-3">
-                <h4 class="mb-3">Error</h4>
-                <div id="errorValue" class="error-box">None</div>
-            </div>
-        </div>
-    </div>
-</div>
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Recent activity</h2>
+        <div id="recentActivity" class="mt-4 space-y-2 text-sm text-slate-300"></div>
+      </div>
+    </aside>
+  </div>
+</section>
 
 <script>
-    const startBtn = document.getElementById('startBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const liveStreamImg = document.getElementById('liveStream');
-    const streamOverlay = document.getElementById('streamOverlay');
-    const streamState = document.getElementById('streamState');
-    const cameraDot = document.getElementById('cameraDot');
-    const cameraStatus = document.getElementById('cameraStatus');
-    const fpsValue = document.getElementById('fpsValue');
-    const activityValue = document.getElementById('activityValue');
-    const confidenceValue = document.getElementById('confidenceValue');
-    const idCountValue = document.getElementById('idCountValue');
-    const reconnectValue = document.getElementById('reconnectValue');
-    const spoofValue = document.getElementById('spoofValue');
-    const activityModelValue = document.getElementById('activityModelValue');
-    const activityBackendValue = document.getElementById('activityBackendValue');
-    const idModelValue = document.getElementById('idModelValue');
-    const errorValue = document.getElementById('errorValue');
-    const streamUrl = "{% url 'video_feed' %}";
+const statusUrl = "{{ status_api_url }}";
+const streamUrl = "{{ stream_url }}";
+const liveStream = document.getElementById('liveStream');
+const streamOverlay = document.getElementById('streamOverlay');
+const streamState = document.getElementById('streamState');
+const cameraDot = document.getElementById('cameraDot');
+const cameraStatus = document.getElementById('cameraStatus');
+const cameraDetail = document.getElementById('cameraDetail');
+const alertBanner = document.getElementById('alertBanner');
+const recentActivity = document.getElementById('recentActivity');
+let streamEnabled = true;
+let lastActivity = '';
 
-    let polling = null;
-    let streamEnabled = true;
+function setStream(enabled) {
+  streamEnabled = enabled;
+  streamOverlay.classList.toggle('hidden', enabled);
+  streamOverlay.classList.toggle('flex', !enabled);
+  streamState.textContent = enabled ? 'stream on' : 'paused';
+  liveStream.src = enabled ? `${streamUrl}?t=${Date.now()}` : '';
+}
 
-    function setCamera(open, hasError) {
-        cameraDot.className = 'status-dot ' + (open ? 'ok' : (hasError ? 'bad' : 'warn'));
-        cameraStatus.textContent = open ? 'Camera online' : (hasError ? 'Camera error' : 'Connecting');
-    }
+function chip(name, model) {
+  const ok = Boolean(model && model.available);
+  return `<span class="rounded border ${ok ? 'border-neon/40 bg-neon/10 text-neon' : 'border-amber-300/40 bg-amber-300/10 text-amber-200'} px-3 py-1 text-xs font-semibold">${name}: ${ok ? 'ready' : 'missing'}</span>`;
+}
 
-    function setStreamEnabled(enabled) {
-        streamEnabled = enabled;
-        startBtn.disabled = enabled;
-        stopBtn.disabled = !enabled;
-        streamOverlay.style.display = enabled ? 'none' : 'flex';
-        streamState.textContent = enabled ? 'stream on' : 'stream paused';
-        streamState.className = enabled ? 'badge bg-success' : 'badge bg-secondary';
-        liveStreamImg.src = enabled ? streamUrl + '?t=' + Date.now() : '';
-    }
+function addActivity(text) {
+  if (!text || text === lastActivity) return;
+  lastActivity = text;
+  const row = document.createElement('div');
+  row.className = 'rounded border border-line bg-black/25 px-3 py-2';
+  row.textContent = `${new Date().toLocaleTimeString()}  ${text}`;
+  recentActivity.prepend(row);
+  while (recentActivity.children.length > 6) recentActivity.removeChild(recentActivity.lastChild);
+}
 
-    async function refreshStatus() {
-        try {
-            const response = await fetch("{% url 'detection_api' %}", { cache: 'no-store' });
-            const data = await response.json();
-            const error = data.last_error || '';
+async function refreshStatus() {
+  try {
+    const res = await fetch(statusUrl, { cache: 'no-store' });
+    const data = await res.json();
+    const overlay = data.overlay || {};
+    const models = data.models || {};
+    const isOpen = Boolean(data.camera_open || data.ok);
+    const weaponCount = Number(overlay.weapon_count || 0);
+    const activity = String(overlay.activity_label || 'unknown');
+    const suspicious = weaponCount > 0 || ['fight', 'violence', 'suspicious', 'weapon'].includes(activity.toLowerCase());
 
-            setCamera(Boolean(data.camera_open), Boolean(error));
-            fpsValue.textContent = Number(data.fps || 0).toFixed(1);
-            activityValue.textContent = data.last_activity_label || 'unknown';
-            confidenceValue.textContent = Number(data.last_activity_confidence || 0).toFixed(2);
-            idCountValue.textContent = data.id_card_count || 0;
-            reconnectValue.textContent = data.reconnect_count || 0;
-            spoofValue.textContent = data.anti_spoof_mode || 'disabled';
-            errorValue.textContent = error || 'None';
+    cameraDot.className = `h-3 w-3 rounded-full ${isOpen ? 'bg-neon shadow-[0_0_18px_rgba(0,255,136,0.8)]' : 'bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]'}`;
+    cameraStatus.textContent = isOpen ? 'Camera online' : 'Camera reconnecting';
+    cameraDetail.textContent = data.last_error || data.status || 'healthy';
+    document.getElementById('fpsValue').textContent = Number(data.capture_fps || 0).toFixed(1);
+    document.getElementById('activityValue').textContent = `${activity} ${(Number(overlay.activity_confidence || 0)).toFixed(2)}`;
+    document.getElementById('idCountValue').textContent = overlay.id_count || 0;
+    document.getElementById('weaponCountValue').textContent = weaponCount;
+    document.getElementById('ageValue').textContent = data.last_frame_age_sec == null ? '--' : `${data.last_frame_age_sec}s`;
+    document.getElementById('resolutionValue').textContent = `${data.capture_width || '--'} x ${data.capture_height || '--'}`;
+    document.getElementById('spoofValue').textContent = (models.anti_spoof && models.anti_spoof.backend) || 'disabled';
+    document.getElementById('modelChips').innerHTML = chip('Activity', models.activity) + chip('ID', models.id_card) + chip('Weapon', models.weapon) + chip('Anti-spoof', models.anti_spoof);
 
-            const activityModel = (data.models && data.models.activity) || {};
-            const idModel = (data.models && data.models.id_card) || {};
-            activityModelValue.textContent = activityModel.available ? 'Available' : 'Missing';
-            activityBackendValue.textContent = activityModel.backend || 'unknown';
-            idModelValue.textContent = idModel.available ? 'Available' : 'Missing';
-        } catch (err) {
-            setCamera(false, true);
-            errorValue.textContent = 'Status endpoint unavailable';
-        }
-    }
+    alertBanner.classList.toggle('hidden', !suspicious);
+    alertBanner.textContent = suspicious ? `Alert: ${weaponCount ? 'weapon detected' : activity}` : '';
+    addActivity(`${activity} | IDs ${overlay.id_count || 0} | Weapons ${weaponCount}`);
+  } catch (err) {
+    cameraStatus.textContent = 'Camera server unavailable';
+    cameraDetail.textContent = 'Waiting for status endpoint';
+  }
+}
 
-    function startPolling() {
-        if (!polling) {
-            polling = setInterval(refreshStatus, 1000);
-        }
-        refreshStatus();
-    }
-
-    startBtn.addEventListener('click', () => {
-        setStreamEnabled(true);
-        startPolling();
-    });
-
-    stopBtn.addEventListener('click', () => {
-        setStreamEnabled(false);
-    });
-
-    liveStreamImg.addEventListener('error', () => {
-        if (streamEnabled) {
-            setCamera(false, true);
-            errorValue.textContent = 'MJPEG stream disconnected. Reconnecting from the browser...';
-            window.setTimeout(() => {
-                if (streamEnabled) {
-                    liveStreamImg.src = streamUrl + '?t=' + Date.now();
-                }
-            }, 1500);
-        }
-    });
-
-    setStreamEnabled(true);
-    startPolling();
+document.getElementById('resumeBtn').addEventListener('click', () => setStream(true));
+document.getElementById('pauseBtn').addEventListener('click', () => setStream(false));
+liveStream.addEventListener('error', () => {
+  if (streamEnabled) setTimeout(() => { liveStream.src = `${streamUrl}?t=${Date.now()}`; }, 1500);
+});
+setInterval(refreshStatus, 1000);
+refreshStatus();
 </script>
 {% endblock %}
-

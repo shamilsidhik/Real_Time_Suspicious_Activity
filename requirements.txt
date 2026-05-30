@@ -35,7 +35,6 @@ mdurl==0.1.2
 nbformat==5.10.4
 numpy==2.4.4
 opencv-python==4.13.0.92
-opencv-python-headless==4.13.0.92
 packaging==26.2
 platformdirs==4.9.6
 prompt_toolkit==3.0.52
