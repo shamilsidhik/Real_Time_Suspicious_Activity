@@ -37,6 +37,7 @@ class OverlayState:
     spoof_confidence: float = 0.0
     id_detections: list[dict[str, Any]] = field(default_factory=list)
     weapon_detections: list[dict[str, Any]] = field(default_factory=list)
+    face_detections: list[dict[str, Any]] = field(default_factory=list)
     updated_at: float = 0.0
 
 
@@ -94,6 +95,7 @@ class CameraService:
         self._model_state = {
             "id_available": False,
             "weapon_available": False,
+            "face_available": False,
             "activity_available": False,
             "anti_spoof_mode": "off",
         }
@@ -164,6 +166,8 @@ class CameraService:
                     "spoof_confidence": round(self._overlay_state.spoof_confidence, 3),
                     "id_count": len(self._overlay_state.id_detections),
                     "weapon_count": len(self._overlay_state.weapon_detections),
+                    "face_count": len(self._overlay_state.face_detections),
+                    "unknown_face_count": sum(1 for det in self._overlay_state.face_detections if det.get("unknown")),
                     "updated_at": self._overlay_state.updated_at,
                 },
             }
@@ -241,12 +245,15 @@ class CameraService:
         try:
             from ml.inference.id_detector import IDDetector
             from ml.inference.weapon_detector import WeaponDetector
+            from ml.inference.face_recognizer import FaceRecognizer
 
             id_detector = IDDetector()
             weapon_detector = WeaponDetector()
+            face_recognizer = FaceRecognizer()
 
             self._set_model_state("id_available", id_detector.is_model_available())
             self._set_model_state("weapon_available", weapon_detector.is_model_available())
+            self._set_model_state("face_available", face_recognizer.is_model_available())
 
             while not self._stop_event.is_set():
                 try:
@@ -256,6 +263,7 @@ class CameraService:
 
                 id_detections: list[dict[str, Any]] = []
                 weapon_detections: list[dict[str, Any]] = []
+                face_detections: list[dict[str, Any]] = []
 
                 if id_detector.is_model_available():
                     out = id_detector.detect_image(frame)
@@ -267,14 +275,21 @@ class CameraService:
                     if out.get("status") == "ok":
                         weapon_detections = out.get("detections", [])
 
+                if face_recognizer.is_model_available():
+                    out = face_recognizer.detect_image(frame)
+                    if out.get("status") == "ok":
+                        face_detections = out.get("detections", [])
+
                 self._update_overlay(
                     id_detections=id_detections,
                     weapon_detections=weapon_detections,
+                    face_detections=face_detections,
                 )
         except Exception:
             logger.exception("Object worker crashed")
             self._set_model_state("id_available", False)
             self._set_model_state("weapon_available", False)
+            self._set_model_state("face_available", False)
 
     def _activity_loop(self) -> None:
         try:
@@ -344,13 +359,13 @@ class CameraService:
             box_w = max(x2 - x1, 1)
             box_h = max(y2 - y1, 1)
             area_ratio = (box_w * box_h) / float(max(frame_w * frame_h, 1))
-            aspect_ratio = max(box_w, box_h) / float(max(min(box_w, box_h), 1))
+            aspect_ratio = box_w / float(max(box_h, 1))
 
-            if box_w < 40 or box_h < 25:
+            if box_w < 60 or box_h < 35:
                 continue
-            if area_ratio < 0.01:
+            if area_ratio < 0.015:
                 continue
-            if not (1.2 <= aspect_ratio <= 2.5):
+            if not (1.25 <= aspect_ratio <= 2.8):
                 continue
 
             filtered.append(det)
@@ -460,12 +475,13 @@ class CameraService:
 
         self._draw_boxes(display, overlay.id_detections, (0, 255, 255), "ID")
         self._draw_boxes(display, overlay.weapon_detections, (0, 0, 255), "WEAPON")
+        self._draw_boxes(display, overlay.face_detections, (0, 0, 255), "FACE")
 
         line1 = f"Activity: {overlay.activity_label} ({overlay.activity_confidence:.2f})"
         line2 = f"Anti-spoof: {overlay.spoof_status} ({overlay.spoof_confidence:.2f})"
         line3 = (
             f"FPS: {capture_fps:.1f} | IDs: {len(overlay.id_detections)} | "
-            f"Weapons: {len(overlay.weapon_detections)}"
+            f"Weapons: {len(overlay.weapon_detections)} | Faces: {len(overlay.face_detections)}"
         )
 
         cv2.putText(display, line1, (16, 32), cv2.FONT_HERSHEY_SIMPLEX, 0.72, (0, 255, 0), 2)

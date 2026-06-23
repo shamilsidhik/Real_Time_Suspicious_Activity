@@ -1,0 +1,186 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    {% block title %}RealTimeSecurity{% endblock %}
+  </title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            night: "#0a0a0f",
+            panel: "#11131a",
+            line: "rgba(255,255,255,0.10)",
+            neon: "#00ff88",
+            alert: "#ff3366"
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Project CSS -->
+  <link
+    href="{% static 'css/style.css' %}"
+    rel="stylesheet"
+  >
+
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="min-h-screen bg-night text-slate-100 antialiased">
+
+  <!-- Navigation -->
+  <nav class="border-b border-line bg-[#0d0d14]/95 backdrop-blur">
+
+    <div class="mx-auto flex max-w-[96rem] flex-wrap items-center justify-between gap-3 px-4 py-3">
+
+      <!-- Logo -->
+      <a
+        href="{% url 'dashboard' %}"
+        class="text-sm font-semibold tracking-[0.24em] text-neon"
+      >
+        REALTIMESecurity
+      </a>
+
+      <!-- Navigation links -->
+      <div class="flex flex-wrap items-center gap-2 text-sm text-slate-300">
+
+        {% if user.is_authenticated %}
+
+          <a
+            href="{% url 'dashboard' %}"
+            class="rounded border border-line px-3 py-1.5 transition hover:border-neon hover:text-neon"
+          >
+            Dashboard
+          </a>
+
+          <a
+            href="{% url 'logs' %}"
+            class="rounded border border-line px-3 py-1.5 transition hover:border-neon hover:text-neon"
+          >
+            Logs
+          </a>
+
+          <a
+            href="{% url 'upload' %}"
+            class="rounded border border-line px-3 py-1.5 transition hover:border-neon hover:text-neon"
+          >
+            Upload
+          </a>
+
+          <a
+            href="{% url 'stream_page' %}"
+            class="rounded border border-line px-3 py-1.5 transition hover:border-neon hover:text-neon"
+          >
+            Live
+          </a>
+
+          <!-- Known-person face enrolment -->
+          <a
+            href="{% url 'known_person_upload' %}"
+            class="rounded border border-sky-400/50 px-3 py-1.5 text-sky-300 transition hover:bg-sky-400/10"
+          >
+            Known Person
+          </a>
+
+          {% if user.is_staff %}
+            <a
+              href="/admin/"
+              class="rounded border border-amber-300/50 px-3 py-1.5 text-amber-200 transition hover:bg-amber-300/10"
+            >
+              Admin
+            </a>
+          {% endif %}
+
+          <!-- Logout must use POST -->
+          <form
+            method="post"
+            action="{% url 'logout' %}"
+            class="inline-flex"
+          >
+            {% csrf_token %}
+
+            <button
+              type="submit"
+              class="rounded border border-line px-3 py-1.5 text-slate-300 transition hover:border-alert hover:text-alert"
+            >
+              Logout
+            </button>
+          </form>
+
+        {% else %}
+
+          <a
+            href="{% url 'login' %}"
+            class="rounded border border-line px-3 py-1.5 transition hover:border-neon hover:text-neon"
+          >
+            Login
+          </a>
+
+          <a
+            href="{% url 'register' %}"
+            class="rounded border border-neon/50 px-3 py-1.5 text-neon transition hover:bg-neon/10"
+          >
+            Register
+          </a>
+
+        {% endif %}
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="mx-auto max-w-[96rem] px-4 py-6">
+
+    <!-- Django messages -->
+    {% if messages %}
+      <div class="mb-5 space-y-2">
+
+        {% for message in messages %}
+          <div
+            class="rounded border px-4 py-3 text-sm
+            {% if message.tags == 'success' %}
+              border-emerald-500/40 bg-emerald-500/10 text-emerald-300
+            {% elif message.tags == 'warning' %}
+              border-amber-500/40 bg-amber-500/10 text-amber-300
+            {% elif message.tags == 'error' %}
+              border-rose-500/40 bg-rose-500/10 text-rose-300
+            {% else %}
+              border-line bg-panel text-slate-200
+            {% endif %}"
+          >
+            {{ message }}
+          </div>
+        {% endfor %}
+
+      </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+  </main>
+
+  <!-- Project JavaScript -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+  {% block extra_js %}{% endblock %}
+
+</body>
+</html>

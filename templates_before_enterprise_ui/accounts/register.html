@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Register | SecureVision{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="glass-panel auth-card">
+    <div class="text-center">
+      <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-cyanx via-blue-500 to-violet-600 shadow-blueglow"><span class="text-xl">👤</span></div>
+      <div class="page-kicker mt-5">New account</div>
+      <h1 class="mt-2 text-3xl font-black tracking-tight text-white">Create your account</h1>
+      <p class="mt-2 text-sm text-slate-500">Register to access SecureVision monitoring tools.</p>
+    </div>
+
+    <form method="post" class="mt-7 space-y-5">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="rounded-2xl border border-alert/35 bg-alert/10 px-4 py-3 text-sm text-rose-200">{% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}</div>
+      {% endif %}
+      {% for field in form %}
+        <div>
+          <label class="field-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<div class="mt-2 text-xs leading-5 text-slate-600">{{ field.help_text|safe }}</div>{% endif %}
+          {% for error in field.errors %}<p class="mt-2 text-xs text-alert">{{ error }}</p>{% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="primary-button w-full">Create Account</button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-slate-500">Already registered? <a href="{% url 'login' %}" class="font-black text-cyanx hover:text-neon">Login</a></p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,110 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Known Persons | SecureVision{% endblock %}
+
+{% block app_content %}
+<section>
+
+  <div class="page-header">
+    <div>
+      <div class="page-eyebrow">Identity management</div>
+      <h1 class="page-title">Known Person Registry</h1>
+      <p class="page-description">
+        Add trusted identities to the live face-recognition gallery.
+      </p>
+    </div>
+
+    <div class="page-actions">
+      <a href="{% url 'dashboard' %}" class="btn btn-primary">
+        Dashboard
+      </a>
+    </div>
+  </div>
+
+  <div class="known-layout">
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Register Identity</div>
+          <div class="panel-subtitle">Upload clear face images</div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label class="form-label">Person name</label>
+            <input
+              type="text"
+              name="person_name"
+              maxlength="80"
+              placeholder="Example: Shamil"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Face images</label>
+            <input
+              type="file"
+              name="images"
+              accept=".jpg,.jpeg,.png,.webp,image/*"
+              multiple
+              required
+            >
+
+            <p class="form-help">
+              Add several clear front-facing images for better recognition.
+            </p>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">
+              Save Person &amp; Reload Gallery
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Registered Identities</div>
+          <div class="panel-subtitle">Available face recognition profiles</div>
+        </div>
+      </div>
+
+      <div class="person-grid">
+        {% for person in known_people %}
+          <article class="person-card">
+            <div class="person-avatar">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 21a8 8 0 0116 0"/>
+              </svg>
+            </div>
+
+            <h3>{{ person.name }}</h3>
+
+            <p>
+              {{ person.image_count }}
+              registered image{{ person.image_count|pluralize }}
+            </p>
+          </article>
+        {% empty %}
+          <div class="empty-state" style="grid-column:1/-1;">
+            No known people have been registered.
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+  </div>
+
+</section>
+{% endblock %}
+

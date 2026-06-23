@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="space-y-6">
+  <div>
+    <p class="text-xs font-semibold uppercase tracking-[0.32em] text-neon">Analysis</p>
+    <h1 class="mt-2 text-3xl font-semibold text-white">Upload Video</h1>
+    <p class="mt-1 text-sm text-slate-400">Upload a video for suspicious activity and ID card detection.</p>
+  </div>
+
+  {% if messages %}
+    <div class="space-y-2">
+      {% for message in messages %}
+        <div class="rounded border border-neon/40 bg-neon/10 px-4 py-3 text-sm text-neon">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)]">
+    <div class="rounded border border-line bg-panel p-6">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400 mb-4">Upload new video</h2>
+      {% if form %}
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+          {% csrf_token %}
+          {% for field in form %}
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">{{ field.label }}</label>
+              <div class="[&>input]:w-full [&>input]:rounded [&>input]:border [&>input]:border-line [&>input]:bg-black/40 [&>input]:px-3 [&>input]:py-2 [&>input]:text-sm [&>input]:text-white [&>input:focus]:border-neon [&>input]:outline-none [&>select]:w-full [&>select]:rounded [&>select]:border [&>select]:border-line [&>select]:bg-black/40 [&>select]:px-3 [&>select]:py-2 [&>select]:text-sm [&>select]:text-white">
+                {{ field }}
+              </div>
+              {% if field.errors %}<p class="mt-1 text-xs text-alert">{{ field.errors|join:", " }}</p>{% endif %}
+            </div>
+          {% endfor %}
+          <button type="submit" class="w-full rounded bg-neon px-4 py-2 text-sm font-semibold text-black hover:brightness-110">Upload Video</button>
+        </form>
+      {% else %}
+        <p class="text-sm text-slate-400">Upload form unavailable.</p>
+      {% endif %}
+    </div>
+
+    <div class="rounded border border-line bg-panel">
+      <div class="border-b border-line px-4 py-3">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Uploaded videos</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm">
+          <thead class="border-b border-line text-xs uppercase tracking-[0.18em] text-slate-500">
+            <tr><th class="px-4 py-3">#</th><th class="px-4 py-3">File</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Uploaded</th></tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            {% for upload in uploads %}
+            <tr class="text-slate-300">
+              <td class="px-4 py-3">{{ forloop.counter }}</td>
+              <td class="px-4 py-3">
+                {% if upload.video %}
+                  <a href="{{ upload.video.url }}" target="_blank" class="text-neon hover:underline">{{ upload.video.name|slice:"7:" }}</a>
+                {% else %}No file{% endif %}
+              </td>
+              <td class="px-4 py-3"><span class="rounded border border-line px-2 py-0.5 text-xs text-slate-300">{{ upload.status|default:"pending" }}</span></td>
+              <td class="px-4 py-3 whitespace-nowrap">{{ upload.uploaded_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="px-4 py-8 text-slate-400 text-center">No videos uploaded yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

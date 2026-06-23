@@ -1,8 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Register</h2>
-<form method="post">{% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Sign Up</button>
-</form>
+<div class="mx-auto max-w-sm mt-16">
+  <div class="rounded border border-line bg-panel p-8">
+    <h1 class="text-xl font-semibold text-white mb-6">Create account</h1>
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      {% for field in form %}
+        <div>
+          <label class="block text-xs text-slate-400 mb-1">{{ field.label }}</label>
+          <div class="[&>input]:w-full [&>input]:rounded [&>input]:border [&>input]:border-line [&>input]:bg-black/40 [&>input]:px-3 [&>input]:py-2 [&>input]:text-sm [&>input]:text-white [&>input]:outline-none [&>input:focus]:border-neon">
+            {{ field }}
+          </div>
+          {% if field.errors %}
+            <p class="mt-1 text-xs text-alert">{{ field.errors|join:", " }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="w-full rounded bg-neon px-4 py-2 text-sm font-semibold text-black hover:brightness-110">Register</button>
+    </form>
+    <p class="mt-4 text-center text-xs text-slate-400">Already have an account? <a href="{% url 'login' %}" class="text-neon hover:underline">Login</a></p>
+  </div>
+</div>
 {% endblock %}
+
+

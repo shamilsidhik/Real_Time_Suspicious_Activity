@@ -1,0 +1,5565 @@
+{
+  "event_count": 382,
+  "total_detections": 399,
+  "updated_at": "2026-06-23T12:51:38",
+  "events": [
+    {
+      "timestamp": "2026-06-19T18:00:26",
+      "event_number": 1,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.6,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:00:37",
+      "event_number": 2,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.261,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:02:08",
+      "event_number": 3,
+      "added_count": 4,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.688,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.426,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.329,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.315,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:02:14",
+      "event_number": 4,
+      "added_count": 2,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.681,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.378,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:10:50",
+      "event_number": 5,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.433,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:11:11",
+      "event_number": 6,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.329,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:11:14",
+      "event_number": 6,
+      "added_count": 1,
+      "additional_in_same_event": true,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.491,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.295,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:13:39",
+      "event_number": 7,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.394,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:15:49",
+      "event_number": 8,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.415,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:15:53",
+      "event_number": 9,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.31,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:16:24",
+      "event_number": 10,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.348,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:16:37",
+      "event_number": 11,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.333,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:20:01",
+      "event_number": 12,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.302,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:20:49",
+      "event_number": 13,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.359,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:22:17",
+      "event_number": 14,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.463,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:22:24",
+      "event_number": 15,
+      "added_count": 2,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.541,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.41,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:22:28",
+      "event_number": 16,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.43,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:22:42",
+      "event_number": 17,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.68,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:22:46",
+      "event_number": 18,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.44,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:23:02",
+      "event_number": 19,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.281,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:23:07",
+      "event_number": 20,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.403,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:23:40",
+      "event_number": 21,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.337,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:24:06",
+      "event_number": 22,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.315,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:24:58",
+      "event_number": 23,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.431,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:37:19",
+      "event_number": 24,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.269,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:37:26",
+      "event_number": 25,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.316,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:37:45",
+      "event_number": 26,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.253,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:37:57",
+      "event_number": 27,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.266,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:38:00",
+      "event_number": 28,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.286,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:40:09",
+      "event_number": 29,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.293,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:40:18",
+      "event_number": 30,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.644,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:41:17",
+      "event_number": 31,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.722,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:44:07",
+      "event_number": 32,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.451,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:46:50",
+      "event_number": 33,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.448,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:46:54",
+      "event_number": 34,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.39,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:47:06",
+      "event_number": 35,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.468,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:47:22",
+      "event_number": 36,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.315,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:47:47",
+      "event_number": 37,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.28,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:48:12",
+      "event_number": 38,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.253,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:48:20",
+      "event_number": 39,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.351,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:48:35",
+      "event_number": 40,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.378,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:48:39",
+      "event_number": 41,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.306,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:48:48",
+      "event_number": 42,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.287,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:48:56",
+      "event_number": 43,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.445,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:49:12",
+      "event_number": 44,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.374,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:49:22",
+      "event_number": 45,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.39,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:49:27",
+      "event_number": 46,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.359,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:49:32",
+      "event_number": 46,
+      "added_count": 1,
+      "additional_in_same_event": true,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.359,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.289,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:49:40",
+      "event_number": 47,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.255,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:50:48",
+      "event_number": 48,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.387,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:58:54",
+      "event_number": 49,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.365,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:59:07",
+      "event_number": 50,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.728,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:59:13",
+      "event_number": 51,
+      "added_count": 2,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.378,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.346,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:59:26",
+      "event_number": 52,
+      "added_count": 3,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.694,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.549,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.461,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:59:35",
+      "event_number": 53,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.486,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T18:59:41",
+      "event_number": 54,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.366,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T19:00:13",
+      "event_number": 55,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.413,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T19:00:21",
+      "event_number": 56,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.637,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T19:09:31",
+      "event_number": 57,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.398,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T19:09:44",
+      "event_number": 58,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.391,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T19:09:51",
+      "event_number": 59,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.461,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T19:10:03",
+      "event_number": 60,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.256,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-19T19:11:10",
+      "event_number": 61,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.262,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:06:09",
+      "event_number": 62,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.369,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:09:54",
+      "event_number": 63,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.459,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:10:02",
+      "event_number": 64,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.256,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:10:13",
+      "event_number": 65,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.356,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:10:28",
+      "event_number": 66,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.28,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:10:30",
+      "event_number": 66,
+      "added_count": 2,
+      "additional_in_same_event": true,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.82,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.466,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.425,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:10:36",
+      "event_number": 66,
+      "added_count": 2,
+      "additional_in_same_event": true,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.663,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.615,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.46,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.444,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.293,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:10:55",
+      "event_number": 67,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.341,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:11:07",
+      "event_number": 68,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.256,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:11:49",
+      "event_number": 69,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.3,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:11:52",
+      "event_number": 70,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.3,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:12:11",
+      "event_number": 71,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.258,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:12:20",
+      "event_number": 72,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.392,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:12:32",
+      "event_number": 73,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.268,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:12:42",
+      "event_number": 74,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.314,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:12:47",
+      "event_number": 75,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.365,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:12:59",
+      "event_number": 76,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.331,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:13:53",
+      "event_number": 77,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.337,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:14:01",
+      "event_number": 78,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.251,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:14:04",
+      "event_number": 79,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.309,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:14:08",
+      "event_number": 80,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.255,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:14:13",
+      "event_number": 81,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.297,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:14:17",
+      "event_number": 82,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.373,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:14:33",
+      "event_number": 83,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.354,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:16:29",
+      "event_number": 84,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.457,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:16:41",
+      "event_number": 85,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.321,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:17:11",
+      "event_number": 86,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.366,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:18:45",
+      "event_number": 87,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.309,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:18:59",
+      "event_number": 88,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.365,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:19:04",
+      "event_number": 88,
+      "added_count": 2,
+      "additional_in_same_event": true,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.827,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.791,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.39,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:19:05",
+      "event_number": 88,
+      "added_count": 1,
+      "additional_in_same_event": true,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.559,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.365,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.319,
+          "source": "id_card",
+          "original_label": "id-card"
+        },
+        {
+          "label": "ID-CARD",
+          "confidence": 0.286,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:19:20",
+      "event_number": 89,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.341,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:19:28",
+      "event_number": 90,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.303,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:19:55",
+      "event_number": 91,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.312,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:20:15",
+      "event_number": 92,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.302,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:20:29",
+      "event_number": 93,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.388,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:20:37",
+      "event_number": 94,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.311,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:22:42",
+      "event_number": 95,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.303,
+          "source": "id_card",
+          "original_label": "id-card"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:40:08",
+      "event_number": 96,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.791,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:40:14",
+      "event_number": 97,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.772,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:40:48",
+      "event_number": 98,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.655,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:40:52",
+      "event_number": 99,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.664,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:41:06",
+      "event_number": 100,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.661,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:41:40",
+      "event_number": 101,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.774,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:41:44",
+      "event_number": 102,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.829,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:41:47",
+      "event_number": 103,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.65,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:42:06",
+      "event_number": 104,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.593,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:42:11",
+      "event_number": 105,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.692,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:42:14",
+      "event_number": 106,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.776,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:42:30",
+      "event_number": 107,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.662,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:42:42",
+      "event_number": 108,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.669,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:42:45",
+      "event_number": 109,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.664,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:43:08",
+      "event_number": 110,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.666,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:43:47",
+      "event_number": 111,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.677,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:44:01",
+      "event_number": 112,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.666,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:44:24",
+      "event_number": 113,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.679,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:45:14",
+      "event_number": 114,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.6,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:45:28",
+      "event_number": 115,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.645,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:45:51",
+      "event_number": 116,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.67,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:46:10",
+      "event_number": 117,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.682,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:46:24",
+      "event_number": 118,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.584,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:46:36",
+      "event_number": 119,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.63,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T11:46:43",
+      "event_number": 120,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.64,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:13:06",
+      "event_number": 121,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.631,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:14:07",
+      "event_number": 122,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.572,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:14:35",
+      "event_number": 123,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.615,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:15:29",
+      "event_number": 124,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.587,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:15:59",
+      "event_number": 125,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.572,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:18:22",
+      "event_number": 126,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.604,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:20:38",
+      "event_number": 127,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.583,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:20:41",
+      "event_number": 128,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.579,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:20:51",
+      "event_number": 129,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.728,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:22:06",
+      "event_number": 130,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.611,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:26:34",
+      "event_number": 131,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.581,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:26:50",
+      "event_number": 132,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.692,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:28:35",
+      "event_number": 133,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.617,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:28:39",
+      "event_number": 134,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.56,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:32:12",
+      "event_number": 135,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.67,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:32:43",
+      "event_number": 136,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.755,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:33:31",
+      "event_number": 137,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.618,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:38:43",
+      "event_number": 138,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.64,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:38:51",
+      "event_number": 139,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.675,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:39:07",
+      "event_number": 140,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.709,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:39:23",
+      "event_number": 141,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.588,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:39:47",
+      "event_number": 142,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.702,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:43:15",
+      "event_number": 143,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.76,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:48:24",
+      "event_number": 144,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.661,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:48:31",
+      "event_number": 145,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.661,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:50:21",
+      "event_number": 146,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.569,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:50:26",
+      "event_number": 147,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.584,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:57:38",
+      "event_number": 148,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.572,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T13:58:27",
+      "event_number": 149,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.704,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:19:29",
+      "event_number": 150,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.675,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:19:36",
+      "event_number": 151,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.665,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:21:04",
+      "event_number": 152,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.572,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:21:10",
+      "event_number": 153,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.674,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:31:53",
+      "event_number": 154,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.641,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:38:50",
+      "event_number": 155,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.672,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:39:39",
+      "event_number": 156,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.591,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:39:49",
+      "event_number": 157,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.596,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:41:17",
+      "event_number": 158,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.561,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:43:58",
+      "event_number": 159,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.589,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:44:25",
+      "event_number": 160,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.67,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:46:13",
+      "event_number": 161,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.567,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:46:35",
+      "event_number": 162,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.59,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-20T14:46:50",
+      "event_number": 163,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.651,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T15:34:56",
+      "event_number": 164,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.719,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T15:52:54",
+      "event_number": 165,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.578,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T15:53:07",
+      "event_number": 166,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.617,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T15:54:04",
+      "event_number": 167,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.566,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T15:56:28",
+      "event_number": 168,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.562,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T15:58:30",
+      "event_number": 169,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.629,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T15:58:34",
+      "event_number": 170,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.639,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T15:59:30",
+      "event_number": 171,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.63,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:03:14",
+      "event_number": 172,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.596,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:03:22",
+      "event_number": 173,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.63,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:05:47",
+      "event_number": 174,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.569,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:06:12",
+      "event_number": 175,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.572,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:13:34",
+      "event_number": 176,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.608,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:14:07",
+      "event_number": 177,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.87,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:14:56",
+      "event_number": 178,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.701,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:15:30",
+      "event_number": 179,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.612,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:16:56",
+      "event_number": 180,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.677,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:18:45",
+      "event_number": 181,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.652,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:39:09",
+      "event_number": 182,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.64,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:40:13",
+      "event_number": 183,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.576,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:40:23",
+      "event_number": 184,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.577,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:40:35",
+      "event_number": 185,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.576,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:40:50",
+      "event_number": 186,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.6,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:40:54",
+      "event_number": 187,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.679,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:40:59",
+      "event_number": 188,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.657,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:52:30",
+      "event_number": 189,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.569,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:52:35",
+      "event_number": 190,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.601,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:53:21",
+      "event_number": 191,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.613,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:55:00",
+      "event_number": 192,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.648,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:55:22",
+      "event_number": 193,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.57,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:55:34",
+      "event_number": 194,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.666,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:55:56",
+      "event_number": 195,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.658,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:56:27",
+      "event_number": 196,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.593,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:57:06",
+      "event_number": 197,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.638,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:57:16",
+      "event_number": 198,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.611,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:57:44",
+      "event_number": 199,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.589,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:58:02",
+      "event_number": 200,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.668,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:58:13",
+      "event_number": 201,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.646,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:58:21",
+      "event_number": 202,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.667,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:58:31",
+      "event_number": 203,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.742,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:59:00",
+      "event_number": 204,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.681,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:59:14",
+      "event_number": 205,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.696,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T16:59:18",
+      "event_number": 206,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.63,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:00:20",
+      "event_number": 207,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.697,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:00:28",
+      "event_number": 208,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.668,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:00:45",
+      "event_number": 209,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.57,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:01:29",
+      "event_number": 210,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.566,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:01:35",
+      "event_number": 211,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.655,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:01:51",
+      "event_number": 212,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.666,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:01:55",
+      "event_number": 213,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.656,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:02:05",
+      "event_number": 214,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.666,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:02:21",
+      "event_number": 215,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.66,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:02:39",
+      "event_number": 216,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.662,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:02:43",
+      "event_number": 217,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.658,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:02:49",
+      "event_number": 218,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.653,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:03:07",
+      "event_number": 219,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.653,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:03:11",
+      "event_number": 220,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.659,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:03:36",
+      "event_number": 221,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.66,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:03:51",
+      "event_number": 222,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.645,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:03:54",
+      "event_number": 223,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.642,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:04:24",
+      "event_number": 224,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.595,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:04:28",
+      "event_number": 225,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.575,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:05:16",
+      "event_number": 226,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.609,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:07:37",
+      "event_number": 227,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.661,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:15:29",
+      "event_number": 228,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.657,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:15:37",
+      "event_number": 229,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.693,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:15:48",
+      "event_number": 230,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.681,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:16:12",
+      "event_number": 231,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.664,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:16:15",
+      "event_number": 232,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.673,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:16:42",
+      "event_number": 233,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.683,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:17:00",
+      "event_number": 234,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.656,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:17:13",
+      "event_number": 235,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.667,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:17:39",
+      "event_number": 236,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.642,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:17:46",
+      "event_number": 237,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.674,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:18:11",
+      "event_number": 238,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.623,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:20:52",
+      "event_number": 239,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.62,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:21:29",
+      "event_number": 240,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.637,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:21:34",
+      "event_number": 241,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.657,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:28:07",
+      "event_number": 242,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.649,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:28:47",
+      "event_number": 243,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.62,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:29:07",
+      "event_number": 244,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.604,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:29:37",
+      "event_number": 245,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.584,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:31:12",
+      "event_number": 246,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.67,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:33:53",
+      "event_number": 247,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.729,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:34:00",
+      "event_number": 248,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.727,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:34:23",
+      "event_number": 249,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.725,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:34:30",
+      "event_number": 250,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.729,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:35:10",
+      "event_number": 251,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.73,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:35:19",
+      "event_number": 252,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.72,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:39:32",
+      "event_number": 253,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.7,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:40:11",
+      "event_number": 254,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.697,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:43:01",
+      "event_number": 255,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.634,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:46:24",
+      "event_number": 256,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.629,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:46:29",
+      "event_number": 257,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.658,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:46:36",
+      "event_number": 258,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.665,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:46:44",
+      "event_number": 259,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.659,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:46:56",
+      "event_number": 260,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.628,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:47:10",
+      "event_number": 261,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.628,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:47:46",
+      "event_number": 262,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.626,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:50:38",
+      "event_number": 263,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.646,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:50:45",
+      "event_number": 264,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.643,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:50:59",
+      "event_number": 265,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.65,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:51:19",
+      "event_number": 266,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.645,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:51:23",
+      "event_number": 267,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.644,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:51:39",
+      "event_number": 268,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.644,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:52:13",
+      "event_number": 269,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.651,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:52:18",
+      "event_number": 270,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.647,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:52:23",
+      "event_number": 271,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.652,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:52:39",
+      "event_number": 272,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.649,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:52:53",
+      "event_number": 273,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.649,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:53:05",
+      "event_number": 274,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.647,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:53:18",
+      "event_number": 275,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.652,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:53:22",
+      "event_number": 276,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.645,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:53:28",
+      "event_number": 277,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.649,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:53:40",
+      "event_number": 278,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.645,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:53:47",
+      "event_number": 279,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.655,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:54:24",
+      "event_number": 280,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.651,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:54:33",
+      "event_number": 281,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.648,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:55:38",
+      "event_number": 282,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.654,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:55:46",
+      "event_number": 283,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.682,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:55:57",
+      "event_number": 284,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.684,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:56:03",
+      "event_number": 285,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.689,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:56:31",
+      "event_number": 286,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.69,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:56:35",
+      "event_number": 287,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.702,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:56:45",
+      "event_number": 288,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.678,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T17:56:58",
+      "event_number": 289,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.699,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T18:51:11",
+      "event_number": 290,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.607,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:09:05",
+      "event_number": 291,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.61,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:09:18",
+      "event_number": 292,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.606,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:09:43",
+      "event_number": 293,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.602,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:13:15",
+      "event_number": 294,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.59,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:13:20",
+      "event_number": 295,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.587,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:13:56",
+      "event_number": 296,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.561,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:14:00",
+      "event_number": 297,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.578,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:15:35",
+      "event_number": 298,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.581,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:15:42",
+      "event_number": 299,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.614,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:15:49",
+      "event_number": 300,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.568,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:16:05",
+      "event_number": 301,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.606,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:17:01",
+      "event_number": 302,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.565,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:17:32",
+      "event_number": 303,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.566,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:17:47",
+      "event_number": 304,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.61,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:18:10",
+      "event_number": 305,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.579,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:18:52",
+      "event_number": 306,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.641,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:19:05",
+      "event_number": 307,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.608,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:19:20",
+      "event_number": 308,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.572,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:19:23",
+      "event_number": 309,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.599,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-21T19:19:33",
+      "event_number": 310,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.583,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:14:07",
+      "event_number": 311,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.645,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:14:41",
+      "event_number": 312,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.667,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:15:30",
+      "event_number": 313,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.579,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:15:36",
+      "event_number": 314,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.627,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:15:46",
+      "event_number": 315,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.602,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:15:54",
+      "event_number": 316,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.656,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:16:14",
+      "event_number": 317,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.57,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:16:17",
+      "event_number": 318,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.632,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:16:37",
+      "event_number": 319,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.633,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:16:42",
+      "event_number": 320,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.601,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:17:01",
+      "event_number": 321,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.649,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:17:31",
+      "event_number": 322,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.623,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:18:08",
+      "event_number": 323,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.678,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:18:22",
+      "event_number": 324,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.68,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:18:30",
+      "event_number": 325,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.664,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:18:56",
+      "event_number": 326,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.678,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:19:44",
+      "event_number": 327,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.738,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:19:59",
+      "event_number": 328,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.59,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:20:13",
+      "event_number": 329,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.71,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:21:29",
+      "event_number": 330,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.684,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:21:48",
+      "event_number": 331,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.653,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:22:08",
+      "event_number": 332,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.627,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:22:33",
+      "event_number": 333,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.624,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:22:43",
+      "event_number": 334,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.692,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:23:07",
+      "event_number": 335,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.648,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:23:10",
+      "event_number": 336,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.663,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:23:35",
+      "event_number": 337,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.631,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:23:42",
+      "event_number": 338,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.575,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:23:55",
+      "event_number": 339,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.646,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:24:09",
+      "event_number": 340,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.586,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:24:46",
+      "event_number": 341,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.7,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:24:57",
+      "event_number": 342,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.597,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:25:12",
+      "event_number": 343,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.722,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:25:19",
+      "event_number": 344,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.686,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:25:39",
+      "event_number": 345,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.726,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:25:49",
+      "event_number": 346,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.726,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:25:58",
+      "event_number": 347,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.715,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:26:48",
+      "event_number": 348,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.563,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:26:54",
+      "event_number": 349,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.686,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:27:13",
+      "event_number": 350,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.564,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:27:21",
+      "event_number": 351,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.685,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:27:41",
+      "event_number": 352,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.734,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:27:45",
+      "event_number": 353,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.689,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:27:49",
+      "event_number": 354,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.686,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:28:04",
+      "event_number": 355,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.655,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:28:13",
+      "event_number": 356,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.698,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:28:18",
+      "event_number": 357,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.69,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:28:53",
+      "event_number": 358,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.678,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:29:29",
+      "event_number": 359,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.702,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:31:10",
+      "event_number": 360,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.725,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:31:38",
+      "event_number": 361,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.727,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:31:52",
+      "event_number": 362,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.654,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:31:58",
+      "event_number": 363,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.722,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:32:15",
+      "event_number": 364,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.716,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:32:35",
+      "event_number": 365,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.605,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:32:44",
+      "event_number": 366,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.682,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:33:19",
+      "event_number": 367,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.594,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:33:22",
+      "event_number": 368,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.661,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:33:53",
+      "event_number": 369,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.689,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:34:21",
+      "event_number": 370,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.698,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:35:36",
+      "event_number": 371,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.629,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:35:44",
+      "event_number": 372,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.673,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:42:09",
+      "event_number": 373,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.637,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:47:57",
+      "event_number": 374,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.635,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:48:38",
+      "event_number": 375,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.653,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:48:50",
+      "event_number": 376,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.671,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:49:07",
+      "event_number": 377,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.622,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:49:19",
+      "event_number": 378,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.683,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:49:45",
+      "event_number": 379,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.666,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:50:11",
+      "event_number": 380,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.642,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:50:32",
+      "event_number": 381,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.704,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-06-23T12:51:38",
+      "event_number": 382,
+      "added_count": 1,
+      "additional_in_same_event": false,
+      "detections": [
+        {
+          "label": "ID-CARD",
+          "confidence": 0.665,
+          "source": "id_card",
+          "original_label": "card-contour"
+        }
+      ]
+    }
+  ]
+}

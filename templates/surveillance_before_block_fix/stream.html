@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Live Monitor | SecureVision{% endblock %}
+
+{% block content %}
+<section>
+
+  <div class="page-header">
+    <div>
+      <div class="page-eyebrow">Live operations</div>
+      <h1 class="page-title">Full Camera Monitor</h1>
+      <p class="page-description">
+        Dedicated real-time camera display with AI detection overlays.
+      </p>
+    </div>
+
+    <div class="page-actions">
+      <a href="{% url 'dashboard' %}" class="btn btn-primary">
+        Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <section class="panel camera-card">
+
+    <div class="camera-toolbar">
+      <div class="camera-status-wrap">
+        <span id="liveDot" class="camera-dot"></span>
+
+        <div class="camera-status-copy">
+          <strong id="liveStatus">Connecting...</strong>
+          <span id="liveDetail">Waiting for camera server</span>
+        </div>
+      </div>
+
+      <span id="liveFps" class="badge">0.0 FPS</span>
+    </div>
+
+    <div class="camera-stage" style="min-height:680px;">
+      <img
+        src="{{ stream_url }}"
+        alt="Live camera stream"
+      >
+    </div>
+
+  </section>
+
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const statusApiUrl = "{{ status_api_url }}";
+
+  async function updateLiveStatus() {
+    try {
+      const response = await fetch(statusApiUrl, {
+        cache: "no-store"
+      });
+
+      const data = await response.json();
+      const open = Boolean(data.camera_open || data.ok);
+
+      const dot = document.getElementById("liveDot");
+      dot.className = open ? "camera-dot online" : "camera-dot";
+
+      document.getElementById("liveStatus").textContent =
+        open ? "Camera online" : "Camera reconnecting";
+
+      document.getElementById("liveDetail").textContent =
+        data.last_error || data.status || "healthy";
+
+      document.getElementById("liveFps").textContent =
+        `${Number(data.capture_fps || 0).toFixed(1)} FPS`;
+
+    } catch (error) {
+      document.getElementById("liveStatus").textContent =
+        "Camera server unavailable";
+
+      document.getElementById("liveDetail").textContent =
+        error.message;
+    }
+  }
+
+  setInterval(updateLiveStatus, 1000);
+  updateLiveStatus();
+</script>
+{% endblock %}

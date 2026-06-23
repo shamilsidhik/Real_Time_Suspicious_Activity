@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="space-y-6">
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.32em] text-neon">Security operations</p>
+      <h1 class="mt-2 text-3xl font-semibold text-white">Surveillance Dashboard</h1>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a href="{% url 'stream_page' %}" class="rounded bg-neon px-4 py-2 text-sm font-semibold text-black transition hover:brightness-110">Open Live View</a>
+      <a href="{% url 'upload' %}" class="rounded border border-line px-4 py-2 text-sm text-slate-200 transition hover:border-neon hover:text-neon">Upload Video</a>
+      <a href="/admin/" class="rounded border border-amber-300/50 px-4 py-2 text-sm text-amber-200 transition hover:bg-amber-300/10">Admin</a>
+    </div>
+  </div>
+
+  <div id="alertBanner" class="hidden rounded border border-alert/50 bg-alert/15 px-4 py-3 text-sm font-semibold text-rose-100">
+    Alert condition detected.
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">Camera FPS</div><div id="fpsValue" class="mt-1 text-3xl font-semibold text-neon">--</div></div>
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">Activity</div><div id="activityValue" class="mt-1 truncate text-2xl font-semibold text-white">--</div></div>
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">ID Cards</div><div id="idCountValue" class="mt-1 text-3xl font-semibold text-amber-300">0</div></div>
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">Weapons</div><div id="weaponCountValue" class="mt-1 text-3xl font-semibold text-alert">0</div></div>
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">Faces</div><div id="faceCountValue" class="mt-1 text-3xl font-semibold text-sky-300">0</div></div>
+    <div class="rounded border border-line bg-panel p-4"><div class="text-xs text-slate-400">Unknown</div><div id="unknownFaceCountValue" class="mt-1 text-3xl font-semibold text-alert">0</div></div>
+  </div>
+
+  <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+    <div class="overflow-hidden rounded border border-line bg-panel">
+      <div class="flex items-center justify-between border-b border-line px-4 py-3">
+        <div class="flex items-center gap-3">
+          <span id="cameraDot" class="h-3 w-3 rounded-full bg-amber-400"></span>
+          <div>
+            <div id="cameraStatus" class="text-sm font-semibold">Connecting...</div>
+            <div id="cameraDetail" class="text-xs text-slate-400">waiting for camera server</div>
+          </div>
+        </div>
+        <a href="{% url 'stream_page' %}" class="rounded border border-line px-3 py-1 text-xs text-slate-300 hover:border-neon hover:text-neon">Monitor</a>
+      </div>
+      <div class="aspect-[16/10] min-h-[560px] bg-black flex items-center justify-center">
+        <img id="streamImg"
+             src="{% url 'stream_proxy' %}"
+             alt="Live stream"
+             class="h-full w-full object-contain"
+             onerror="this.style.display='none'; document.getElementById('streamError').style.display='flex';">
+        <div id="streamError" style="display:none" class="flex-col items-center justify-center text-slate-500 text-sm gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.277A1 1 0 0121 8.677V15.32a1 1 0 01-1.447.894L15 14M4 8h8a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4a2 2 0 012-2z"/></svg>
+          <span>Camera stream unavailable</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="space-y-5">
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Model status</h2>
+        <div id="modelChips" class="mt-4 flex flex-wrap gap-2"><span class="text-xs text-slate-500">loading...</span></div>
+      </div>
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Totals</h2>
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Uploads</div><div id="uploadsTotalValue" class="text-2xl font-semibold">{{ total_uploaded_videos|default:"0" }}</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Logs</div><div id="logsTotalValue" class="text-2xl font-semibold">{{ total_logs|default:"0" }}</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Suspicious</div><div id="suspiciousTotalValue" class="text-2xl font-semibold text-alert">{{ suspicious_count|default:"0" }}</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">ID Events</div><div id="idTotalValue" class="text-2xl font-semibold text-amber-300">{{ id_card_count|default:"0" }}</div></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="rounded border border-line bg-panel">
+    <div class="border-b border-line px-4 py-3">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Recent activity</h2>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-left text-sm">
+        <thead class="border-b border-line text-xs uppercase tracking-[0.18em] text-slate-500">
+          <tr><th class="px-4 py-3">Timestamp</th><th class="px-4 py-3">Type</th><th class="px-4 py-3">Confidence</th><th class="px-4 py-3">Message</th><th class="px-4 py-3">Status</th></tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          {% for log in recent_logs %}
+            <tr class="text-slate-300">
+              <td class="px-4 py-3">{{ log.detected_at|date:"Y-m-d H:i:s" }}</td>
+              <td class="px-4 py-3">{{ log.get_activity_type_display }}</td>
+              <td class="px-4 py-3">{{ log.confidence_score|floatformat:2 }}</td>
+              <td class="px-4 py-3">{{ log.message|default:'-' }}</td>
+              <td class="px-4 py-3">
+                {% if log.activity_type == 'suspicious' %}<span class="text-alert">Alert</span>
+                {% elif log.activity_type == 'id_detected' %}<span class="text-amber-300">ID</span>
+                {% else %}<span class="text-neon">OK</span>{% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="5" class="px-4 py-6 text-slate-400">No logs yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<script>
+const statusUrl = "{% url 'detection_api' %}";
+function chip(name, model) {
+  const ok = Boolean(model && model.available);
+  return `<span class="rounded border ${ok ? 'border-neon/40 bg-neon/10 text-neon' : 'border-amber-300/40 bg-amber-300/10 text-amber-200'} px-3 py-1 text-xs font-semibold">${name}: ${ok ? 'ready' : 'missing'}</span>`;
+}
+async function refreshStatus() {
+  try {
+    const res  = await fetch(statusUrl, { cache: 'no-store' });
+    const data = await res.json();
+    const overlay     = data.overlay  || {};
+    const models      = data.models   || {};
+    const totals      = data.totals   || {};
+    const isOpen      = Boolean(data.camera_open || data.ok);
+    const weaponCount = Number(overlay.weapon_count || 0);
+    const unknownFaceCount = Number(overlay.unknown_face_count || 0);
+    const activity    = String(overlay.activity_label || 'unknown');
+    const suspicious  = weaponCount > 0 || unknownFaceCount > 0 || ['fight','violence','suspicious','weapon','unknown_person'].includes(activity.toLowerCase());
+    document.getElementById('cameraDot').className = `h-3 w-3 rounded-full ${isOpen ? 'bg-neon shadow-[0_0_18px_rgba(0,255,136,0.8)]' : 'bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]'}`;
+    document.getElementById('cameraStatus').textContent     = isOpen ? 'Camera online' : 'Camera reconnecting';
+    document.getElementById('cameraDetail').textContent     = data.last_error || data.status || 'healthy';
+    document.getElementById('fpsValue').textContent         = Number(data.capture_fps || 0).toFixed(1);
+    document.getElementById('activityValue').textContent    = activity;
+    document.getElementById('idCountValue').textContent     = overlay.id_count    || 0;
+    document.getElementById('weaponCountValue').textContent = weaponCount;
+    document.getElementById('faceCountValue').textContent = overlay.face_count || 0;
+    document.getElementById('unknownFaceCountValue').textContent = unknownFaceCount;
+    document.getElementById('uploadsTotalValue').textContent = totals.total_uploaded_videos ?? document.getElementById('uploadsTotalValue').textContent;
+    document.getElementById('logsTotalValue').textContent = totals.total_logs ?? document.getElementById('logsTotalValue').textContent;
+    document.getElementById('suspiciousTotalValue').textContent = totals.suspicious_count ?? document.getElementById('suspiciousTotalValue').textContent;
+    document.getElementById('idTotalValue').textContent = totals.id_card_count ?? document.getElementById('idTotalValue').textContent;
+    document.getElementById('modelChips').innerHTML = chip('Activity', models.activity) + chip('ID', models.id_card) + chip('Weapon', models.weapon) + chip('Face', models.face) + chip('Anti-spoof', models.anti_spoof);
+    document.getElementById('alertBanner').classList.toggle('hidden', !suspicious);
+    document.getElementById('alertBanner').textContent = suspicious ? `Alert: ${weaponCount ? 'weapon detected' : unknownFaceCount ? 'unknown person detected' : activity}` : '';
+  } catch(err) {
+    document.getElementById('cameraStatus').textContent = 'Camera server unavailable';
+    document.getElementById('cameraDetail').textContent = err.message;
+  }
+}
+setInterval(refreshStatus, 1000);
+refreshStatus();
+</script>
+{% endblock %}
+{% if user.is_staff %}
+<a
+  href="{% url 'known_person_upload' %}"
+  class="rounded border border-neon px-4 py-2 text-sm font-semibold text-neon hover:bg-neon hover:text-slate-950"
+>
+  Add Known Person
+</a>
+{% endif %}

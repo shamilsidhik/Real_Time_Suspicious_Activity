@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="space-y-6">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.32em] text-neon">
+        Face Recognition
+      </p>
+      <h1 class="mt-2 text-3xl font-semibold text-white">
+        Add Known Person
+      </h1>
+      <p class="mt-2 max-w-2xl text-sm text-slate-400">
+        Upload clear face photos. The system will use them to recognise this
+        person and label other people as UNKNOWN.
+      </p>
+    </div>
+
+    <a
+      href="{% url 'dashboard' %}"
+      class="rounded border border-line px-4 py-2 text-sm text-slate-200 hover:border-neon hover:text-neon"
+    >
+      Back
+    </a>
+  </div>
+
+  {% if messages %}
+    <div class="space-y-3">
+      {% for message in messages %}
+        <div
+          class="rounded border px-4 py-3 text-sm
+          {% if message.tags == 'success' %}
+            border-emerald-500/40 bg-emerald-500/10 text-emerald-300
+          {% elif message.tags == 'warning' %}
+            border-amber-500/40 bg-amber-500/10 text-amber-300
+          {% else %}
+            border-rose-500/40 bg-rose-500/10 text-rose-300
+          {% endif %}"
+        >
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      class="rounded border border-line bg-panel p-6"
+    >
+      {% csrf_token %}
+
+      <h2 class="text-lg font-semibold text-white">
+        Person Details
+      </h2>
+
+      <div class="mt-5">
+        <label
+          for="person_name"
+          class="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400"
+        >
+          Person Name
+        </label>
+
+        <input
+          id="person_name"
+          name="person_name"
+          type="text"
+          required
+          maxlength="80"
+          placeholder="Example: Sherin Shahana"
+          class="w-full rounded border border-line bg-slate-950/60 px-4 py-3 text-white outline-none placeholder:text-slate-600 focus:border-neon"
+        >
+      </div>
+
+      <div class="mt-5">
+        <label
+          for="images"
+          class="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400"
+        >
+          Face Images
+        </label>
+
+        <input
+          id="images"
+          name="images"
+          type="file"
+          accept=".jpg,.jpeg,.png,.webp,image/*"
+          multiple
+          required
+          class="block w-full rounded border border-dashed border-line bg-slate-950/40 px-4 py-5 text-sm text-slate-300 file:mr-4 file:rounded file:border-0 file:bg-neon file:px-4 file:py-2 file:font-semibold file:text-slate-950 hover:border-neon"
+        >
+
+        <p class="mt-3 text-xs leading-5 text-slate-500">
+          Add 3–5 clear photos with one face only. Use front, slight-left,
+          slight-right, and different lighting. Maximum 10 MB per image.
+        </p>
+      </div>
+
+      <button
+        type="submit"
+        class="mt-6 rounded bg-neon px-5 py-3 text-sm font-semibold text-slate-950 hover:brightness-110"
+      >
+        Save Known Person
+      </button>
+    </form>
+
+    <div class="rounded border border-line bg-panel p-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-white">
+          Enrolled People
+        </h2>
+        <span class="rounded border border-line px-2 py-1 text-xs text-slate-400">
+          {{ known_people|length }}
+        </span>
+      </div>
+
+      <div class="mt-5 space-y-3">
+        {% for person in known_people %}
+          <div class="flex items-center justify-between rounded border border-line bg-slate-950/30 px-4 py-3">
+            <div>
+              <p class="font-medium text-white">
+                {{ person.name }}
+              </p>
+              <p class="mt-1 text-xs text-slate-500">
+                {{ person.image_count }} image{{ person.image_count|pluralize }}
+              </p>
+            </div>
+            <span class="text-xs font-semibold text-neon">
+              KNOWN
+            </span>
+          </div>
+        {% empty %}
+          <div class="rounded border border-dashed border-line px-4 py-8 text-center text-sm text-slate-500">
+            No known people have been added.
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

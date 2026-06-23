@@ -1,0 +1,1099 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SecureVision | AI Surveillance</title>
+
+  <style>
+    :root {
+      --bg-1: #07111f;
+      --bg-2: #0b1328;
+      --panel: rgba(22, 31, 55, 0.78);
+      --panel-soft: rgba(255, 255, 255, 0.045);
+      --border: rgba(148, 163, 184, 0.18);
+      --text: #f8fafc;
+      --muted: #a9b7ce;
+      --cyan: #22d3ee;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+      --green: #2ee59d;
+      --red: #fb7185;
+      --yellow: #facc15;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background:
+        radial-gradient(
+          circle at 12% 10%,
+          rgba(6, 182, 212, 0.16),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 84% 22%,
+          rgba(124, 58, 237, 0.19),
+          transparent 31%
+        ),
+        radial-gradient(
+          circle at 80% 85%,
+          rgba(236, 72, 153, 0.08),
+          transparent 26%
+        ),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.11;
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.045) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.045) 1px,
+          transparent 1px
+        );
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 92%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .site-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1320px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(7, 17, 31, 0.75);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 17px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(34, 211, 238, 0.95),
+          rgba(59, 130, 246, 0.95) 47%,
+          rgba(139, 92, 246, 0.95)
+        );
+      box-shadow:
+        0 14px 40px rgba(59, 130, 246, 0.27),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .brand-icon::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.12);
+    }
+
+    .brand-icon::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .brand-name {
+      line-height: 1;
+      font-size: clamp(1.35rem, 2vw, 1.75rem);
+      font-weight: 900;
+      letter-spacing: -0.045em;
+    }
+
+    .brand-name span {
+      color: var(--cyan);
+    }
+
+    .brand-tagline {
+      margin-top: 7px;
+      color: #8391aa;
+      font-size: 0.69rem;
+      font-weight: 700;
+      letter-spacing: 0.025em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 21px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 14px;
+      color: #f8fafc;
+      font-size: 0.88rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.075);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(34, 211, 238, 0.45);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .nav-button.primary {
+      border-color: rgba(56, 189, 248, 0.58);
+      background:
+        linear-gradient(135deg, #18bff1, #3b82f6 72%);
+      box-shadow: 0 14px 30px rgba(59, 130, 246, 0.25);
+    }
+
+    .hero {
+      min-height: 690px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(420px, 0.88fr);
+      align-items: center;
+      gap: clamp(48px, 7vw, 92px);
+      padding: 74px 0 62px;
+    }
+
+    .status-badge {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border: 1px solid rgba(46, 229, 157, 0.34);
+      border-radius: 999px;
+      color: #9cf6ce;
+      font-size: 0.82rem;
+      font-weight: 850;
+      background: rgba(16, 185, 129, 0.09);
+      box-shadow: 0 0 34px rgba(16, 185, 129, 0.06);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 16px rgba(46, 229, 157, 0.95);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.45);
+        opacity: 0.58;
+      }
+    }
+
+    .hero-title {
+      max-width: 760px;
+      margin-top: 28px;
+      font-size: clamp(3.4rem, 6.7vw, 6.35rem);
+      line-height: 0.94;
+      letter-spacing: -0.075em;
+      font-weight: 950;
+    }
+
+    .hero-title .gradient-line {
+      display: block;
+      color: transparent;
+      background:
+        linear-gradient(
+          100deg,
+          #27c5f6 0%,
+          #4f8cf7 35%,
+          #8b5cf6 66%,
+          #ef5f9e 100%
+        );
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-description {
+      max-width: 720px;
+      margin-top: 28px;
+      color: #b4bfd1;
+      font-size: clamp(1rem, 1.35vw, 1.12rem);
+      line-height: 1.95;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .hero-button {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 24px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 14px;
+      font-size: 0.91rem;
+      font-weight: 850;
+      transition:
+        transform 0.22s ease,
+        filter 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease;
+    }
+
+    .hero-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero-button.primary {
+      color: white;
+      border-color: rgba(34, 211, 238, 0.7);
+      background:
+        linear-gradient(135deg, #15bde9, #3b82f6 72%);
+      box-shadow: 0 16px 38px rgba(37, 99, 235, 0.28);
+    }
+
+    .hero-button.primary:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 18px 48px rgba(37, 99, 235, 0.38);
+    }
+
+    .hero-button.secondary {
+      background: rgba(255, 255, 255, 0.075);
+    }
+
+    .hero-button.secondary:hover {
+      border-color: rgba(34, 211, 238, 0.42);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .mini-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .mini-card {
+      min-height: 88px;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.045),
+        0 18px 45px rgba(0, 0, 0, 0.13);
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+
+    .mini-card span {
+      display: block;
+      margin-top: 8px;
+      color: #8897b0;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .visual-wrap {
+      position: relative;
+    }
+
+    .visual-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 8% -9% -7% 9%;
+      border-radius: 48px;
+      background:
+        radial-gradient(
+          circle at 48% 54%,
+          rgba(34, 211, 238, 0.15),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 88% 82%,
+          rgba(236, 72, 153, 0.16),
+          transparent 34%
+        );
+      filter: blur(36px);
+      pointer-events: none;
+    }
+
+    .surveillance-card {
+      position: relative;
+      overflow: hidden;
+      padding: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 38px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(23, 35, 60, 0.94),
+          rgba(18, 25, 48, 0.86)
+        );
+      box-shadow:
+        0 38px 90px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .surveillance-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -80px -110px auto;
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      background: rgba(236, 72, 153, 0.11);
+      filter: blur(42px);
+    }
+
+    .monitor {
+      position: relative;
+      min-height: 365px;
+      overflow: hidden;
+      padding: 18px;
+      border: 1px solid rgba(59, 130, 246, 0.28);
+      border-radius: 25px;
+      background:
+        radial-gradient(
+          circle at 24% 30%,
+          rgba(8, 145, 178, 0.18),
+          transparent 32%
+        ),
+        linear-gradient(
+          140deg,
+          rgba(1, 15, 30, 0.9),
+          rgba(19, 15, 35, 0.95)
+        );
+    }
+
+    .monitor::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.07) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.07) 1px,
+          transparent 1px
+        );
+      background-size: 32px 32px;
+    }
+
+    .monitor-top {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .monitor-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.19);
+      border-radius: 999px;
+      color: #f8fafc;
+      font-size: 0.72rem;
+      font-weight: 850;
+      background: rgba(9, 15, 29, 0.78);
+    }
+
+    .monitor-title {
+      position: relative;
+      z-index: 2;
+      margin: 14px 0 0 42px;
+      color: #7cf3b7;
+      font-size: 0.79rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .detection-frame {
+      position: absolute;
+      left: 11%;
+      right: 11%;
+      top: 28%;
+      bottom: 18%;
+      border: 3px solid #21df7b;
+      border-radius: 27px;
+      box-shadow:
+        0 0 24px rgba(33, 223, 123, 0.35),
+        inset 0 0 32px rgba(33, 223, 123, 0.05);
+    }
+
+    .detection-frame::after {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 17%;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(34, 211, 238, 0.85),
+        transparent
+      );
+      box-shadow: 0 0 24px rgba(34, 211, 238, 0.65);
+      animation: scan 2.2s ease-in-out infinite;
+    }
+
+    @keyframes scan {
+      0%, 100% {
+        transform: translateY(-58px);
+        opacity: 0.35;
+      }
+      50% {
+        transform: translateY(54px);
+        opacity: 1;
+      }
+    }
+
+    .object-box {
+      position: absolute;
+      border: 2px solid currentColor;
+      border-radius: 17px;
+    }
+
+    .object-box.one {
+      right: 11%;
+      top: 23%;
+      width: 64px;
+      height: 64px;
+      color: #fb7185;
+    }
+
+    .object-box.two {
+      left: 14%;
+      bottom: 12%;
+      width: 66px;
+      height: 66px;
+      color: #38bdf8;
+    }
+
+    .alert-pill {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border: 1px solid rgba(251, 113, 133, 0.35);
+      border-radius: 14px;
+      color: #fecdd3;
+      font-size: 0.76rem;
+      font-weight: 900;
+      background: rgba(127, 29, 29, 0.34);
+      box-shadow: 0 14px 34px rgba(127, 29, 29, 0.2);
+    }
+
+    .monitor-footer {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .monitor-stat {
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.17);
+      border-radius: 19px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .monitor-stat strong {
+      font-size: 1.33rem;
+      font-weight: 950;
+    }
+
+    .monitor-stat span {
+      color: #8c9ab1;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .features {
+      padding: 16px 0 92px;
+    }
+
+    .section-heading {
+      max-width: 780px;
+      margin: 0 auto 34px;
+      text-align: center;
+    }
+
+    .section-eyebrow {
+      color: #7dd3fc;
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin-top: 12px;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      font-weight: 950;
+      letter-spacing: -0.045em;
+    }
+
+    .section-copy {
+      margin-top: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      min-height: 218px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.055);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.045),
+        0 20px 55px rgba(0, 0, 0, 0.13);
+      transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        background 0.22s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(34, 211, 238, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .feature-icon {
+      width: 47px;
+      height: 47px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      font-size: 1.25rem;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(59, 130, 246, 0.18),
+          rgba(139, 92, 246, 0.2)
+        );
+      border: 1px solid rgba(96, 165, 250, 0.21);
+    }
+
+    .feature-card h3 {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .feature-card p {
+      margin-top: 10px;
+      color: #93a1b8;
+      font-size: 0.88rem;
+      line-height: 1.75;
+    }
+
+    .site-footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(3, 10, 20, 0.32);
+    }
+
+    .footer-inner {
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: #7f8ca3;
+      font-size: 0.82rem;
+    }
+
+    .footer-brand {
+      color: #dce6f4;
+      font-weight: 900;
+    }
+
+    @media (max-width: 1080px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 56px;
+      }
+
+      .hero-copy {
+        max-width: 850px;
+      }
+
+      .visual-wrap {
+        width: min(720px, 100%);
+        margin: 0 auto;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .site-shell {
+        width: min(100% - 24px, 1320px);
+      }
+
+      .nav {
+        min-height: auto;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 18px 0;
+      }
+
+      .nav-actions {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .nav-button {
+        flex: 0 0 auto;
+      }
+
+      .hero {
+        min-height: auto;
+        gap: 46px;
+        padding: 50px 0 52px;
+      }
+
+      .hero-title {
+        font-size: clamp(3.05rem, 15vw, 4.65rem);
+      }
+
+      .hero-description {
+        line-height: 1.75;
+      }
+
+      .mini-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .surveillance-card {
+        padding: 14px;
+        border-radius: 26px;
+      }
+
+      .monitor {
+        min-height: 300px;
+      }
+
+      .monitor-title {
+        margin-left: 8px;
+      }
+
+      .monitor-footer {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 26px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand-tagline {
+        display: none;
+      }
+
+      .brand-icon {
+        width: 46px;
+        height: 46px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-button {
+        width: 100%;
+      }
+
+      .monitor-chip:last-child {
+        display: none;
+      }
+
+      .alert-pill {
+        left: 14px;
+        right: 14px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="site-shell nav">
+
+      <a href="{% url 'home' %}" class="brand">
+        <span class="brand-icon" aria-hidden="true"></span>
+
+        <span>
+          <span class="brand-name">
+            Secure<span>Vision</span>
+          </span>
+
+          <span class="brand-tagline">
+            AI Suspicious Activity Detection
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-actions" aria-label="Primary navigation">
+        {% if user.is_authenticated %}
+
+          <a href="{% url 'dashboard' %}" class="nav-button primary">
+            Dashboard
+          </a>
+
+          <a href="{% url 'upload' %}" class="nav-button">
+            Upload
+          </a>
+
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="nav-button">
+              Logout
+            </button>
+          </form>
+
+        {% else %}
+
+          <a href="{% url 'login' %}" class="nav-button">
+            Login
+          </a>
+
+          <a href="{% url 'register' %}" class="nav-button">
+            Register
+          </a>
+
+          <a href="{% url 'login' %}?next={% url 'dashboard' %}" class="nav-button primary">
+            Dashboard
+          </a>
+
+        {% endif %}
+      </nav>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <section class="site-shell hero">
+
+      <div class="hero-copy">
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          Real-Time AI Security System
+        </div>
+
+        <h1 class="hero-title">
+          Suspicious Activity
+          <span class="gradient-line">&amp; Identity</span>
+          <span class="gradient-line">Detection</span>
+        </h1>
+
+        <p class="hero-description">
+          SecureVision monitors live camera feeds, detects suspicious
+          activities and weapons, identifies known and unknown persons,
+          analyses uploaded evidence, stores detection snapshots, records
+          activity logs, and sends instant alarm and email alerts.
+        </p>
+
+        <div class="hero-actions">
+
+          {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="hero-button primary">
+              Open Dashboard
+              <span aria-hidden="true">→</span>
+            </a>
+          {% else %}
+            <a href="{% url 'login' %}?next={% url 'dashboard' %}" class="hero-button primary">
+              Open Dashboard
+              <span aria-hidden="true">→</span>
+            </a>
+          {% endif %}
+
+          <a href="{% url 'stream_page' %}" class="hero-button secondary">
+            Start Live Camera
+          </a>
+
+        </div>
+
+        <div class="mini-cards">
+
+          <div class="mini-card">
+            <strong>AI</strong>
+            <span>Face + Object Detection</span>
+          </div>
+
+          <div class="mini-card">
+            <strong>LIVE</strong>
+            <span>Camera Monitoring</span>
+          </div>
+
+          <div class="mini-card">
+            <strong>ALERT</strong>
+            <span>Email + Dashboard Alarm</span>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="visual-wrap">
+
+        <div class="surveillance-card">
+
+          <div class="monitor">
+
+            <div class="monitor-top">
+              <span class="monitor-chip">● Live Feed</span>
+              <span class="monitor-chip">AI Active</span>
+            </div>
+
+            <div class="monitor-title">
+              FACE + OBJECT DETECTION
+            </div>
+
+            <div class="detection-frame"></div>
+            <div class="object-box one"></div>
+            <div class="object-box two"></div>
+
+            <div class="alert-pill">
+              <span aria-hidden="true">🚨</span>
+              Suspicious Alert Ready
+            </div>
+
+          </div>
+
+          <div class="monitor-footer">
+
+            <div class="monitor-stat">
+              <strong>YOLO</strong>
+              <span>Object Detection</span>
+            </div>
+
+            <div class="monitor-stat">
+              <strong>FACE</strong>
+              <span>Known / Unknown</span>
+            </div>
+
+            <div class="monitor-stat">
+              <strong>LOGS</strong>
+              <span>Evidence Tracking</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="site-shell features" id="features">
+
+      <div class="section-heading">
+        <div class="section-eyebrow">
+          Intelligent Surveillance
+        </div>
+
+        <h2 class="section-title">
+          One platform for complete security monitoring
+        </h2>
+
+        <p class="section-copy">
+          Monitor, detect, identify, document, and respond from one
+          professional security dashboard.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+
+        <article class="feature-card">
+          <div class="feature-icon">🎥</div>
+          <h3>Live Monitoring</h3>
+          <p>
+            View the camera feed in real time with fast AI-assisted
+            activity recognition and detection overlays.
+          </p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">👤</div>
+          <h3>Identity Recognition</h3>
+          <p>
+            Compare detected faces with registered known persons and
+            identify unknown people entering the monitored area.
+          </p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🚨</div>
+          <h3>Instant Alerts</h3>
+          <p>
+            Trigger browser alarms and email notifications with saved
+            detection images when suspicious activity is confirmed.
+          </p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🗂️</div>
+          <h3>Evidence Logs</h3>
+          <p>
+            Preserve detection time, confidence, event information,
+            uploaded media, and captured evidence snapshots.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="site-shell footer-inner">
+      <span class="footer-brand">
+        SecureVision
+      </span>
+
+      <span>
+        AI-powered suspicious activity and identity detection system.
+      </span>
+
+      <span>
+        © {% now "Y" %} SecureVision
+      </span>
+    </div>
+  </footer>
+
+</body>
+</html>

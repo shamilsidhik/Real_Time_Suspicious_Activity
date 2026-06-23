@@ -1,0 +1,120 @@
+/* Advanced UI layer: does not replace Bootstrap, only enhances it. */
+
+:root{
+  --bg0:#070A12;
+  --bg1:#0B1220;
+  --card:#0E1730;
+  --card2:#0A1026;
+  --muted:#A9B4D0;
+  --text:#EAF0FF;
+  --brand:#7C5CFF;
+  --brand2:#23D5FF;
+  --danger:#FF3B6B;
+  --warn:#FFB020;
+  --ok:#23C552;
+  --shadow: 0 14px 40px rgba(0,0,0,.35);
+}
+
+body{
+  background: radial-gradient(1200px 500px at 20% -10%, rgba(124,92,255,.25), transparent 60%),
+              radial-gradient(900px 420px at 90% 0%, rgba(35,213,255,.18), transparent 55%),
+              linear-gradient(180deg, var(--bg0), var(--bg1));
+  color: var(--text);
+}
+
+.navbar{
+  background: rgba(255,255,255,.06) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.navbar .navbar-brand{
+  background: linear-gradient(90deg, var(--brand), var(--brand2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.card{
+  border: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)) !important;
+  box-shadow: var(--shadow);
+  border-radius: 16px;
+}
+
+.card.bg-dark, .card.bg-secondary, .card.bg-warning, .card.bg-danger{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)) !important;
+}
+
+.table{
+  color: var(--text);
+}
+
+.table thead th{
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.85);
+}
+
+.table td, .table th{
+  border-color: rgba(255,255,255,.08) !important;
+}
+
+.badge{
+  border: 1px solid rgba(255,255,255,.12);
+  padding: .55em .85em;
+  border-radius: 999px;
+}
+
+.btn{
+  border-radius: 999px;
+}
+
+/* Stream frame styling */
+img#liveStream{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 16px 60px rgba(0,0,0,.45);
+}
+
+/* Section header */
+.hud-title{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.hud-title .dot{
+  width:10px;height:10px;border-radius:50%;
+  background: linear-gradient(90deg, var(--brand), var(--brand2));
+  box-shadow: 0 0 18px rgba(124,92,255,.65);
+}
+
+/* Signal / alert pills */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:.35rem .7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+}
+
+.pill .icon{
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  box-shadow: 0 0 16px rgba(255,255,255,.2);
+}
+
+.pill.ok .icon{background: rgba(35,197,82,.9); box-shadow: 0 0 18px rgba(35,197,82,.35);} 
+.pill.warn .icon{background: rgba(255,176,32,.95); box-shadow: 0 0 18px rgba(255,176,32,.35);} 
+.pill.danger .icon{background: rgba(255,59,107,.95); box-shadow: 0 0 18px rgba(255,59,107,.35);} 
+
+/* Reduce jitter for MJPEG */
+img[alt="Live stream"], img#liveStream{
+  image-rendering: auto;
+}
+
+

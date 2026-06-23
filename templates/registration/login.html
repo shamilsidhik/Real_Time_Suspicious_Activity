@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Login | SecureVision{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+
+  <div class="auth-layout">
+
+    <div class="auth-visual">
+      <div class="auth-visual-content">
+
+        <div class="auth-kicker">Secure Operations Access</div>
+
+        <h1>
+          Intelligent surveillance starts here.
+        </h1>
+
+        <p>
+          Sign in to monitor the camera, review suspicious events, analyse
+          media, manage known identities, and respond to alerts.
+        </p>
+
+        <div class="auth-feature-list">
+          <div class="auth-feature">
+            <span>✓</span>
+            Real-time suspicious activity monitoring
+          </div>
+
+          <div class="auth-feature">
+            <span>✓</span>
+            Known and unknown face recognition
+          </div>
+
+          <div class="auth-feature">
+            <span>✓</span>
+            Evidence snapshots and email alerts
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="auth-form-panel">
+      <div class="auth-form-wrap">
+
+        <h2>Welcome back</h2>
+        <p>Enter your account details to access SecureVision.</p>
+
+        <form method="post" class="auth-form">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="form-alert">
+              {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% for field in form %}
+            <div class="form-group">
+              <label class="form-label">{{ field.label }}</label>
+              {{ field }}
+
+              {% for error in field.errors %}
+                <div class="form-error">{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+
+          {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+          {% endif %}
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">
+              Login to SecureVision
+            </button>
+          </div>
+        </form>
+
+        <div class="auth-switch">
+          New user?
+          <a href="{% url 'register' %}">Create an account</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+{% endblock %}

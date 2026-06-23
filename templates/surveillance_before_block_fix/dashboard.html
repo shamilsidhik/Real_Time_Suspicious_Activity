@@ -1,0 +1,755 @@
+{% extends "base.html" %}
+
+{% block title %}Security Dashboard | SecureVision{% endblock %}
+
+{% block content %}
+<form id="detectionControlForm" hidden>
+  {% csrf_token %}
+</form>
+
+<section>
+
+  <div class="page-header">
+    <div>
+      <div class="page-eyebrow">Security operations</div>
+      <h1 class="page-title">Surveillance Dashboard</h1>
+      <p class="page-description">
+        Monitor live activity, detection models, events, alarms and evidence
+        from one operational workspace.
+      </p>
+    </div>
+
+    <div class="page-actions">
+      <a href="{% url 'stream_page' %}" class="btn btn-primary">
+        Open Live View
+      </a>
+
+      <button
+        id="detectionToggleButton"
+        type="button"
+        class="btn btn-warning"
+        onclick="toggleDetection()"
+      >
+        Stop Detection
+      </button>
+
+      <a href="{% url 'upload' %}" class="btn">
+        Analyse Media
+      </a>
+
+      <button
+        id="alarmToggleButton"
+        type="button"
+        class="btn btn-danger"
+        onclick="toggleAlarm()"
+      >
+        Enable Alarm
+      </button>
+    </div>
+  </div>
+
+  <div id="alertBanner" class="alert-banner hidden">
+    <span class="alert-banner-icon">!</span>
+    <span id="alertBannerText">Alert condition detected.</span>
+  </div>
+
+  <div class="kpi-grid">
+
+    <article class="kpi-card" style="--kpi-color: var(--green); --kpi-glow: rgba(43,227,160,.10);">
+      <div class="kpi-head">
+        <span class="kpi-label">Camera FPS</span>
+        <span class="kpi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M5 12h2l2-5 4 10 2-5h4"/>
+          </svg>
+        </span>
+      </div>
+      <div id="fpsValue" class="kpi-value">{{ camera.capture_fps|default:"0.0" }}</div>
+      <div class="kpi-meta">Real-time capture speed</div>
+    </article>
+
+    <article class="kpi-card" style="--kpi-color: #f8fafc; --kpi-glow: rgba(255,255,255,.06);">
+      <div class="kpi-head">
+        <span class="kpi-label">Activity</span>
+        <span class="kpi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M8 12h2l1-3 2 6 1-3h2"/>
+          </svg>
+        </span>
+      </div>
+      <div id="activityValue" class="kpi-value">
+        {{ camera.overlay.activity_label|default:"unknown" }}
+      </div>
+      <div class="kpi-meta">Current scene classification</div>
+    </article>
+
+    <article class="kpi-card" style="--kpi-color: var(--yellow); --kpi-glow: rgba(249,200,78,.10);">
+      <div class="kpi-head">
+        <span class="kpi-label">ID Cards</span>
+        <span class="kpi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="5" width="18" height="14" rx="3"/>
+            <circle cx="8" cy="11" r="2"/>
+            <path d="M13 10h5M13 14h4M6 16h4"/>
+          </svg>
+        </span>
+      </div>
+      <div id="idCountValue" class="kpi-value">
+        {{ camera.overlay.id_count|default:"0" }}
+      </div>
+      <div class="kpi-meta">Permanent detection events</div>
+    </article>
+
+    <article class="kpi-card" style="--kpi-color: var(--red); --kpi-glow: rgba(251,82,120,.11);">
+      <div class="kpi-head">
+        <span class="kpi-label">Weapons</span>
+        <span class="kpi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 12h10l3-3h3v5h-4l-2 4H9l1-4H4z"/>
+          </svg>
+        </span>
+      </div>
+      <div id="weaponCountValue" class="kpi-value">
+        {{ camera.overlay.weapon_count|default:"0" }}
+      </div>
+      <div class="kpi-meta">Permanent detection events</div>
+    </article>
+
+    <article class="kpi-card" style="--kpi-color: var(--cyan); --kpi-glow: rgba(39,200,245,.10);">
+      <div class="kpi-head">
+        <span class="kpi-label">Known Faces</span>
+        <span class="kpi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21a8 8 0 0116 0"/>
+          </svg>
+        </span>
+      </div>
+      <div id="faceCountValue" class="kpi-value">
+        {{ camera.overlay.known_faces|default:"0" }}
+      </div>
+      <div class="kpi-meta">Recognised people visible</div>
+    </article>
+
+    <article class="kpi-card" style="--kpi-color: var(--orange); --kpi-glow: rgba(251,146,60,.10);">
+      <div class="kpi-head">
+        <span class="kpi-label">Unknown Faces</span>
+        <span class="kpi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21a8 8 0 0116 0M12 12v2M12 17h.01"/>
+          </svg>
+        </span>
+      </div>
+      <div id="unknownFaceCountValue" class="kpi-value">
+        {{ camera.overlay.unknown_faces|default:"0" }}
+      </div>
+      <div class="kpi-meta">Unrecognised people visible</div>
+    </article>
+
+  </div>
+
+  <div class="dashboard-workspace">
+
+    <section class="panel camera-card">
+
+      <div class="camera-toolbar">
+        <div class="camera-status-wrap">
+          <span id="cameraDot" class="camera-dot"></span>
+
+          <div class="camera-status-copy">
+            <strong id="cameraStatus">Connecting to camera...</strong>
+            <span id="cameraDetail">Waiting for camera server</span>
+          </div>
+        </div>
+
+        <a href="{% url 'stream_page' %}" class="btn">
+          Full Monitor
+        </a>
+      </div>
+
+      <div class="camera-stage">
+        <img
+          id="streamImg"
+          src="{% url 'stream_proxy' %}"
+          alt="Live camera stream"
+          onerror="
+            this.style.display='none';
+            document.getElementById('streamError').style.display='flex';
+          "
+        >
+
+        <div id="streamError" class="camera-unavailable">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="5" width="14" height="14" rx="3"/>
+            <path d="M17 10l4-2v8l-4-2"/>
+          </svg>
+          <span id="streamErrorText">Camera stream unavailable</span>
+        </div>
+      </div>
+
+    </section>
+
+    <aside class="workspace-sidebar">
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Model Health</div>
+            <div class="panel-subtitle">Loaded inference services</div>
+          </div>
+        </div>
+
+        <div class="status-panel-body">
+          <div id="modelChips" class="chip-row">
+            <span class="model-chip">Loading models...</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Alarm Control</div>
+            <div class="panel-subtitle">Browser security siren</div>
+          </div>
+        </div>
+
+        <div class="status-panel-body">
+          <div class="alarm-status">
+            <span>Alarm status</span>
+            <strong id="alarmStatusText">Disabled</strong>
+          </div>
+
+          <p class="form-help">
+            Click Enable Alarm once. Browsers require user interaction before
+            sound can play.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Operational Totals</div>
+            <div class="panel-subtitle">Database activity summary</div>
+          </div>
+        </div>
+
+        <div class="status-panel-body">
+          <div class="totals-grid">
+
+            <div class="total-box">
+              <span>Uploads</span>
+              <strong id="uploadsTotalValue">
+                {{ total_uploaded_videos|default:"0" }}
+              </strong>
+            </div>
+
+            <div class="total-box">
+              <span>Logs</span>
+              <strong id="logsTotalValue">
+                {{ total_logs|default:"0" }}
+              </strong>
+            </div>
+
+            <div class="total-box">
+              <span>Suspicious</span>
+              <strong id="suspiciousTotalValue" class="alert">
+                {{ suspicious_count|default:"0" }}
+              </strong>
+            </div>
+
+            <div class="total-box">
+              <span>ID Events</span>
+              <strong id="idTotalValue" class="warning">
+                {{ id_card_count|default:"0" }}
+              </strong>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+  </div>
+
+  <section class="panel recent-panel">
+
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Recent Activity</div>
+        <div class="panel-subtitle">Latest detection events and alerts</div>
+      </div>
+
+      <a href="{% url 'logs' %}" class="btn">
+        View All Logs
+      </a>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Event Type</th>
+            <th>Confidence</th>
+            <th>Message</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for log in recent_logs %}
+            <tr>
+              <td>{{ log.detected_at|date:"Y-m-d H:i:s" }}</td>
+              <td>{{ log.get_activity_type_display }}</td>
+              <td>{{ log.confidence_score|floatformat:2 }}</td>
+              <td>{{ log.message|default:"-" }}</td>
+              <td>
+                {% if log.activity_type == "suspicious" or log.activity_type == "weapon_detected" or log.activity_type == "fight_detected" or log.activity_type == "spoof_detected" %}
+                  <span class="badge badge-alert">Alert</span>
+                {% elif log.activity_type == "id_detected" %}
+                  <span class="badge badge-warning">ID</span>
+                {% else %}
+                  <span class="badge badge-success">Normal</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="empty-state">
+                No detection activity has been recorded.
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const statusUrl = "{% url 'detection_api' %}";
+  const streamUrl = "{% url 'stream_proxy' %}";
+  const detectionControlUrl = "{% url 'detection_control' %}";
+
+  let detectionRunning = true;
+  let alarmEnabled = false;
+  let alarmAudioContext = null;
+  let alarmInterval = null;
+  let alarmCurrentlyActive = false;
+  let latestSuspiciousState = false;
+
+  function getCsrfToken() {
+    return document.querySelector(
+      "#detectionControlForm input[name='csrfmiddlewaretoken']"
+    )?.value || "";
+  }
+
+  function modelChip(name, model) {
+    const ready = Boolean(model && model.available);
+
+    return `
+      <span class="model-chip ${ready ? "ready" : "missing"}">
+        ${name}: ${ready ? "ready" : "missing"}
+      </span>
+    `;
+  }
+
+  function updateDetectionButton() {
+    const button = document.getElementById("detectionToggleButton");
+
+    if (detectionRunning) {
+      button.textContent = "Stop Detection";
+      button.className = "btn btn-warning";
+    } else {
+      button.textContent = "Start Detection";
+      button.className = "btn btn-primary";
+    }
+  }
+
+  async function setDetectionState(action) {
+    const button = document.getElementById("detectionToggleButton");
+
+    button.disabled = true;
+    button.textContent = action === "stop" ? "Stopping..." : "Starting...";
+
+    try {
+      const body = new URLSearchParams();
+      body.append("action", action);
+
+      const response = await fetch(detectionControlUrl, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCsrfToken(),
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        body: body.toString(),
+        cache: "no-store"
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Detection control failed");
+      }
+
+      detectionRunning = Boolean(result.detection_enabled);
+
+      if (!detectionRunning) {
+        stopAlarm();
+        latestSuspiciousState = false;
+      }
+
+      updateDetectionButton();
+      await refreshStatus();
+
+    } catch (error) {
+      window.alert(`Could not ${action} detection: ${error.message}`);
+    } finally {
+      button.disabled = false;
+      updateDetectionButton();
+    }
+  }
+
+  function toggleDetection() {
+    setDetectionState(detectionRunning ? "stop" : "start");
+  }
+
+  function createAudioContext() {
+    if (!alarmAudioContext) {
+      const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+      if (AudioContextClass) {
+        alarmAudioContext = new AudioContextClass();
+      }
+    }
+
+    if (
+      alarmAudioContext &&
+      alarmAudioContext.state === "suspended"
+    ) {
+      alarmAudioContext.resume();
+    }
+  }
+
+  function playAlarmTone(frequency, duration, delay) {
+    if (!alarmEnabled || !alarmAudioContext) {
+      return;
+    }
+
+    const oscillator = alarmAudioContext.createOscillator();
+    const gain = alarmAudioContext.createGain();
+    const startTime = alarmAudioContext.currentTime + delay;
+
+    oscillator.type = "square";
+    oscillator.frequency.setValueAtTime(frequency, startTime);
+
+    gain.gain.setValueAtTime(0.0001, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.2, startTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      startTime + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(alarmAudioContext.destination);
+
+    oscillator.start(startTime);
+    oscillator.stop(startTime + duration + 0.05);
+  }
+
+  function playAlarmPattern() {
+    if (!alarmEnabled || !alarmCurrentlyActive) {
+      return;
+    }
+
+    playAlarmTone(880, 0.2, 0);
+    playAlarmTone(1180, 0.2, 0.28);
+    playAlarmTone(880, 0.2, 0.56);
+    playAlarmTone(1180, 0.3, 0.84);
+  }
+
+  function startAlarm() {
+    if (!alarmEnabled || alarmCurrentlyActive) {
+      return;
+    }
+
+    alarmCurrentlyActive = true;
+    playAlarmPattern();
+
+    alarmInterval = window.setInterval(
+      playAlarmPattern,
+      3000
+    );
+  }
+
+  function stopAlarm() {
+    alarmCurrentlyActive = false;
+
+    if (alarmInterval) {
+      window.clearInterval(alarmInterval);
+      alarmInterval = null;
+    }
+  }
+
+  function updateAlarmButton() {
+    const button = document.getElementById("alarmToggleButton");
+    const status = document.getElementById("alarmStatusText");
+
+    if (alarmEnabled) {
+      button.textContent = "Disable Alarm";
+      button.className = "btn btn-danger";
+
+      status.textContent = latestSuspiciousState
+        ? "ALARM ACTIVE"
+        : "Enabled";
+
+      status.style.color = latestSuspiciousState
+        ? "var(--red)"
+        : "var(--green)";
+    } else {
+      button.textContent = "Enable Alarm";
+      button.className = "btn btn-danger";
+      status.textContent = "Disabled";
+      status.style.color = "";
+    }
+  }
+
+  function toggleAlarm() {
+    alarmEnabled = !alarmEnabled;
+
+    if (alarmEnabled) {
+      createAudioContext();
+
+      try {
+        localStorage.setItem("securevisionAlarmEnabled", "1");
+      } catch (_) {}
+
+      if (latestSuspiciousState) {
+        startAlarm();
+      }
+    } else {
+      stopAlarm();
+
+      try {
+        localStorage.removeItem("securevisionAlarmEnabled");
+      } catch (_) {}
+    }
+
+    updateAlarmButton();
+  }
+
+  async function refreshStatus() {
+    try {
+      const response = await fetch(statusUrl, {
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        throw new Error(`Status request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const overlay = data.overlay || {};
+      const models = data.models || {};
+      const totals = data.totals || {};
+
+      const cameraOpen = Boolean(data.camera_open || data.ok);
+      detectionRunning = Boolean(data.detection_enabled);
+
+      const permanentWeaponCount = Number(
+        overlay.weapon_count || 0
+      );
+
+      const liveWeaponCount = Number(
+        overlay.weapon_live_count ??
+        overlay.weapons_live ??
+        0
+      );
+
+      const knownFaceCount = Number(
+        overlay.known_faces ??
+        overlay.faces ??
+        0
+      );
+
+      const unknownFaceCount = Number(
+        overlay.unknown_faces ??
+        overlay.unknown ??
+        0
+      );
+
+      const activityRaw = String(
+        overlay.activity_label || "unknown"
+      );
+
+      const activity = activityRaw
+        .trim()
+        .toLowerCase()
+        .replaceAll("_", " ")
+        .replaceAll("-", " ");
+
+      const spoofDetected =
+        Boolean(overlay.spoof_detected) ||
+        String(overlay.anti_spoof || "").toLowerCase() === "spoof";
+
+      const suspiciousLabels = [
+        "fight",
+        "fighting",
+        "violence",
+        "violent",
+        "attack",
+        "assault",
+        "punch",
+        "kick",
+        "suspicious",
+        "weapon",
+        "robbery",
+        "theft",
+        "stealing",
+        "vandalism",
+        "chasing",
+        "falling"
+      ];
+
+      const suspiciousActivity =
+        suspiciousLabels.some(
+          label => activity.includes(label)
+        );
+
+      const suspicious =
+        detectionRunning && (
+          liveWeaponCount > 0 ||
+          unknownFaceCount > 0 ||
+          spoofDetected ||
+          suspiciousActivity
+        );
+
+      latestSuspiciousState = suspicious;
+
+      if (suspicious) {
+        startAlarm();
+      } else {
+        stopAlarm();
+      }
+
+      updateDetectionButton();
+      updateAlarmButton();
+
+      const cameraDot = document.getElementById("cameraDot");
+
+      cameraDot.className = cameraOpen
+        ? detectionRunning
+          ? "camera-dot online"
+          : "camera-dot paused"
+        : "camera-dot";
+
+      document.getElementById("cameraStatus").textContent =
+        !cameraOpen
+          ? "Camera reconnecting"
+          : detectionRunning
+            ? "Camera online · detection active"
+            : "Camera online · detection paused";
+
+      document.getElementById("cameraDetail").textContent =
+        !cameraOpen
+          ? (data.last_error || data.status || "reconnecting")
+          : detectionRunning
+            ? "AI models are analysing the live camera"
+            : "Raw camera is active; AI detection and alerts are paused";
+
+      document.getElementById("fpsValue").textContent =
+        Number(data.capture_fps || 0).toFixed(1);
+
+      document.getElementById("activityValue").textContent =
+        detectionRunning ? activityRaw : "paused";
+
+      document.getElementById("idCountValue").textContent =
+        Number(overlay.id_count || 0);
+
+      document.getElementById("weaponCountValue").textContent =
+        permanentWeaponCount;
+
+      document.getElementById("faceCountValue").textContent =
+        knownFaceCount;
+
+      document.getElementById("unknownFaceCountValue").textContent =
+        unknownFaceCount;
+
+      document.getElementById("uploadsTotalValue").textContent =
+        totals.total_uploaded_videos ??
+        document.getElementById("uploadsTotalValue").textContent;
+
+      document.getElementById("logsTotalValue").textContent =
+        totals.total_logs ??
+        document.getElementById("logsTotalValue").textContent;
+
+      document.getElementById("suspiciousTotalValue").textContent =
+        totals.suspicious_count ??
+        document.getElementById("suspiciousTotalValue").textContent;
+
+      document.getElementById("idTotalValue").textContent =
+        totals.id_card_count ??
+        document.getElementById("idTotalValue").textContent;
+
+      document.getElementById("modelChips").innerHTML =
+        modelChip("Activity", models.activity) +
+        modelChip("ID", models.id_card) +
+        modelChip("Weapon", models.weapon) +
+        modelChip("Face", models.face) +
+        modelChip("Recognition", models.face_recognition) +
+        modelChip("Anti-spoof", models.anti_spoof);
+
+      let alertText = "";
+
+      if (spoofDetected) {
+        alertText = "Spoof face detected";
+      } else if (liveWeaponCount > 0) {
+        alertText = "Weapon detected in the live camera";
+      } else if (unknownFaceCount > 0) {
+        alertText = "Unknown person detected";
+      } else if (suspiciousActivity) {
+        alertText = `${activityRaw} activity detected`;
+      }
+
+      const alertBanner = document.getElementById("alertBanner");
+
+      alertBanner.classList.toggle("hidden", !suspicious);
+      document.getElementById("alertBannerText").textContent =
+        alertText || "Alert condition detected";
+
+    } catch (error) {
+      stopAlarm();
+      latestSuspiciousState = false;
+
+      document.getElementById("cameraStatus").textContent =
+        "Camera server unavailable";
+
+      document.getElementById("cameraDetail").textContent =
+        error.message;
+    }
+  }
+
+  try {
+    alarmEnabled =
+      localStorage.getItem("securevisionAlarmEnabled") === "1";
+  } catch (_) {}
+
+  updateDetectionButton();
+  updateAlarmButton();
+
+  setInterval(refreshStatus, 1000);
+  refreshStatus();
+
+  window.addEventListener("beforeunload", stopAlarm);
+</script>
+{% endblock %}

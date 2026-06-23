@@ -1,0 +1,1001 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="space-y-6">
+
+  <form id="detectionControlForm" class="hidden">
+    {% csrf_token %}
+  </form>
+
+  <!-- Page heading and actions -->
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.32em] text-neon">
+        Security operations
+      </p>
+
+      <h1 class="mt-2 text-3xl font-semibold text-white">
+        Surveillance Dashboard
+      </h1>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+
+      <a
+        href="{% url 'stream_page' %}"
+        class="rounded bg-neon px-4 py-2 text-sm font-semibold text-black transition hover:brightness-110"
+      >
+        Open Live View
+      </a>
+
+      <button
+        id="detectionToggleButton"
+        type="button"
+        onclick="toggleDetection()"
+        class="rounded border border-amber-300/60 px-4 py-2 text-sm font-semibold text-amber-200 transition hover:bg-amber-300/10"
+      >
+        Stop Detection
+      </button>
+
+      <a
+        href="{% url 'upload' %}"
+        class="rounded border border-line px-4 py-2 text-sm text-slate-200 transition hover:border-neon hover:text-neon"
+      >
+        Upload Media
+      </a>
+
+      <a
+        href="{% url 'known_person_upload' %}"
+        class="rounded border border-sky-400/60 px-4 py-2 text-sm font-semibold text-sky-300 transition hover:bg-sky-400/10"
+      >
+        Known Person
+      </a>
+
+      <button
+        id="alarmToggleButton"
+        type="button"
+        onclick="toggleAlarm()"
+        class="rounded border border-alert/60 px-4 py-2 text-sm font-semibold text-alert transition hover:bg-alert/10"
+      >
+        Enable Alarm
+      </button>
+
+      {% if user.is_staff %}
+        <a
+          href="/admin/"
+          class="rounded border border-amber-300/50 px-4 py-2 text-sm text-amber-200 transition hover:bg-amber-300/10"
+        >
+          Admin
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <!-- Alert banner -->
+  <div
+    id="alertBanner"
+    class="hidden rounded border border-alert/50 bg-alert/15 px-4 py-3 text-sm font-semibold text-rose-100"
+  >
+    Alert condition detected.
+  </div>
+
+  <!-- Live metric cards -->
+  <div class="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
+
+    <div class="rounded border border-line bg-panel p-4">
+      <div class="text-xs text-slate-400">Camera FPS</div>
+      <div id="fpsValue" class="mt-1 text-3xl font-semibold text-neon">--</div>
+    </div>
+
+    <div class="rounded border border-line bg-panel p-4">
+      <div class="text-xs text-slate-400">Activity</div>
+      <div id="activityValue" class="mt-1 truncate text-2xl font-semibold text-white">--</div>
+    </div>
+
+    <div class="rounded border border-line bg-panel p-4">
+      <div class="text-xs text-slate-400">ID Cards</div>
+      <div id="idCountValue" class="mt-1 text-3xl font-semibold text-amber-300">0</div>
+    </div>
+
+    <div class="rounded border border-line bg-panel p-4">
+      <div class="text-xs text-slate-400">Weapons</div>
+      <div id="weaponCountValue" class="mt-1 text-3xl font-semibold text-alert">0</div>
+    </div>
+
+    <div class="rounded border border-line bg-panel p-4">
+      <div class="text-xs text-slate-400">Known Faces</div>
+      <div id="faceCountValue" class="mt-1 text-3xl font-semibold text-sky-300">0</div>
+    </div>
+
+    <div class="rounded border border-line bg-panel p-4">
+      <div class="text-xs text-slate-400">Unknown</div>
+      <div id="unknownFaceCountValue" class="mt-1 text-3xl font-semibold text-alert">0</div>
+    </div>
+
+  </div>
+
+  <!-- Camera and side panels -->
+  <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+
+    <!-- Camera panel -->
+    <div class="overflow-hidden rounded border border-line bg-panel">
+
+      <div class="flex items-center justify-between border-b border-line px-4 py-3">
+
+        <div class="flex items-center gap-3">
+          <span id="cameraDot" class="h-3 w-3 rounded-full bg-amber-400"></span>
+
+          <div>
+            <div id="cameraStatus" class="text-sm font-semibold">
+              Connecting...
+            </div>
+
+            <div id="cameraDetail" class="text-xs text-slate-400">
+              Waiting for camera server
+            </div>
+          </div>
+        </div>
+
+        <a
+          href="{% url 'stream_page' %}"
+          class="rounded border border-line px-3 py-1 text-xs text-slate-300 hover:border-neon hover:text-neon"
+        >
+          Monitor
+        </a>
+
+      </div>
+
+      <div class="flex min-h-[560px] aspect-[16/10] items-center justify-center bg-black">
+
+        <img
+          id="streamImg"
+          src="{% url 'stream_proxy' %}"
+          alt="Live stream"
+          class="h-full w-full object-contain"
+          onerror="
+            this.style.display='none';
+            document.getElementById('streamError').style.display='flex';
+          "
+        >
+
+        <div
+          id="streamError"
+          style="display:none"
+          class="flex-col items-center justify-center gap-2 text-sm text-slate-500"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-12 w-12 opacity-30"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1"
+              d="M15 10l4.553-2.277A1 1 0 0121 8.677V15.32a1 1 0 01-1.447.894L15 14M4 8h8a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4a2 2 0 012-2z"
+            />
+          </svg>
+
+          <span id="streamErrorText">Camera stream unavailable</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Side panels -->
+    <aside class="space-y-5">
+
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">
+          Model status
+        </h2>
+
+        <div id="modelChips" class="mt-4 flex flex-wrap gap-2">
+          <span class="text-xs text-slate-500">Loading...</span>
+        </div>
+      </div>
+
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">
+          Alarm status
+        </h2>
+
+        <div class="mt-4 rounded border border-line bg-black/25 p-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-slate-400">Browser alarm</span>
+            <span id="alarmStatusText" class="text-sm font-semibold text-slate-400">
+              Disabled
+            </span>
+          </div>
+
+          <p class="mt-3 text-xs leading-5 text-slate-500">
+            Click Enable Alarm once. The browser requires a user click before it can play sound.
+          </p>
+        </div>
+      </div>
+
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">
+          Totals
+        </h2>
+
+        <div class="mt-4 grid grid-cols-2 gap-3">
+
+          <div class="rounded border border-line bg-black/25 p-3">
+            <div class="text-xs text-slate-400">Uploads</div>
+            <div id="uploadsTotalValue" class="text-2xl font-semibold">
+              {{ total_uploaded_videos|default:"0" }}
+            </div>
+          </div>
+
+          <div class="rounded border border-line bg-black/25 p-3">
+            <div class="text-xs text-slate-400">Logs</div>
+            <div id="logsTotalValue" class="text-2xl font-semibold">
+              {{ total_logs|default:"0" }}
+            </div>
+          </div>
+
+          <div class="rounded border border-line bg-black/25 p-3">
+            <div class="text-xs text-slate-400">Suspicious</div>
+            <div id="suspiciousTotalValue" class="text-2xl font-semibold text-alert">
+              {{ suspicious_count|default:"0" }}
+            </div>
+          </div>
+
+          <div class="rounded border border-line bg-black/25 p-3">
+            <div class="text-xs text-slate-400">ID Events</div>
+            <div id="idTotalValue" class="text-2xl font-semibold text-amber-300">
+              {{ id_card_count|default:"0" }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- Recent logs -->
+  <div class="rounded border border-line bg-panel">
+
+    <div class="border-b border-line px-4 py-3">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">
+        Recent activity
+      </h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-left text-sm">
+
+        <thead class="border-b border-line text-xs uppercase tracking-[0.18em] text-slate-500">
+          <tr>
+            <th class="px-4 py-3">Timestamp</th>
+            <th class="px-4 py-3">Type</th>
+            <th class="px-4 py-3">Confidence</th>
+            <th class="px-4 py-3">Message</th>
+            <th class="px-4 py-3">Status</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-line">
+
+          {% for log in recent_logs %}
+            <tr class="text-slate-300">
+
+              <td class="px-4 py-3">
+                {{ log.detected_at|date:"Y-m-d H:i:s" }}
+              </td>
+
+              <td class="px-4 py-3">
+                {{ log.get_activity_type_display }}
+              </td>
+
+              <td class="px-4 py-3">
+                {{ log.confidence_score|floatformat:2 }}
+              </td>
+
+              <td class="px-4 py-3">
+                {{ log.message|default:'-' }}
+              </td>
+
+              <td class="px-4 py-3">
+                {% if log.activity_type == 'suspicious' %}
+                  <span class="font-semibold text-alert">Alert</span>
+
+                {% elif log.activity_type == 'weapon_detected' %}
+                  <span class="font-semibold text-alert">Alert</span>
+
+                {% elif log.activity_type == 'fight_detected' %}
+                  <span class="font-semibold text-alert">Alert</span>
+
+                {% elif log.activity_type == 'spoof_detected' %}
+                  <span class="font-semibold text-alert">Spoof</span>
+
+                {% elif log.activity_type == 'id_detected' %}
+                  <span class="font-semibold text-amber-300">ID</span>
+
+                {% else %}
+                  <span class="font-semibold text-neon">OK</span>
+                {% endif %}
+              </td>
+
+            </tr>
+
+          {% empty %}
+            <tr>
+              <td colspan="5" class="px-4 py-6 text-slate-400">
+                No logs yet.
+              </td>
+            </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+<script>
+const statusUrl = "{% url 'detection_api' %}";
+const streamUrl = "{% url 'stream_proxy' %}";
+const detectionControlUrl = "{% url 'detection_control' %}";
+
+let detectionRunning = true;
+let statusTimer = null;
+
+let alarmEnabled = false;
+let alarmAudioContext = null;
+let alarmInterval = null;
+let alarmCurrentlyActive = false;
+let latestSuspiciousState = false;
+
+
+/* -------------------------------------------------------------------------
+   Model-status chip
+------------------------------------------------------------------------- */
+
+function chip(name, model) {
+  const ok = Boolean(model && model.available);
+
+  return `
+    <span
+      class="rounded border ${
+        ok
+          ? 'border-neon/40 bg-neon/10 text-neon'
+          : 'border-amber-300/40 bg-amber-300/10 text-amber-200'
+      } px-3 py-1 text-xs font-semibold"
+    >
+      ${name}: ${ok ? 'ready' : 'missing'}
+    </span>
+  `;
+}
+
+
+/* -------------------------------------------------------------------------
+   Detection start / stop controls
+------------------------------------------------------------------------- */
+
+function getCsrfToken() {
+  const input = document.querySelector(
+    "#detectionControlForm input[name='csrfmiddlewaretoken']"
+  );
+
+  return input ? input.value : "";
+}
+
+
+function updateDetectionButton() {
+  const button = document.getElementById(
+    "detectionToggleButton"
+  );
+
+  if (detectionRunning) {
+    button.textContent = "Stop Detection";
+
+    button.className =
+      "rounded border border-amber-300/60 px-4 py-2 " +
+      "text-sm font-semibold text-amber-200 transition " +
+      "hover:bg-amber-300/10";
+
+  } else {
+    button.textContent = "Start Detection";
+
+    button.className =
+      "rounded border border-neon/60 bg-neon/10 px-4 py-2 " +
+      "text-sm font-semibold text-neon transition " +
+      "hover:bg-neon/20";
+  }
+}
+
+
+async function setDetectionState(action) {
+  const button = document.getElementById(
+    "detectionToggleButton"
+  );
+
+  button.disabled = true;
+  button.textContent =
+    action === "stop" ? "Stopping..." : "Starting...";
+
+  try {
+    const body = new URLSearchParams();
+    body.append("action", action);
+
+    const response = await fetch(
+      detectionControlUrl,
+      {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCsrfToken(),
+          "Content-Type": (
+            "application/x-www-form-urlencoded;charset=UTF-8"
+          )
+        },
+        body: body.toString(),
+        cache: "no-store"
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.ok) {
+      throw new Error(
+        result.error || "Detection control failed"
+      );
+    }
+
+    detectionRunning = Boolean(
+      result.detection_enabled
+    );
+
+    if (!detectionRunning) {
+      stopAlarm();
+      latestSuspiciousState = false;
+      updateAlarmButton();
+
+      document.getElementById(
+        "alertBanner"
+      ).classList.add("hidden");
+
+      document.getElementById(
+        "alertBanner"
+      ).textContent = "";
+    }
+
+    updateDetectionButton();
+    await refreshStatus();
+
+  } catch (error) {
+    window.alert(
+      `Could not ${action} detection: ${error.message}`
+    );
+  } finally {
+    button.disabled = false;
+    updateDetectionButton();
+  }
+}
+
+
+async function stopDetection() {
+  await setDetectionState("stop");
+}
+
+
+async function startDetection() {
+  await setDetectionState("start");
+}
+
+
+function toggleDetection() {
+  if (detectionRunning) {
+    stopDetection();
+  } else {
+    startDetection();
+  }
+}
+
+
+/* -------------------------------------------------------------------------
+   Browser alarm
+------------------------------------------------------------------------- */
+
+function createAudioContext() {
+  if (!alarmAudioContext) {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (AudioContextClass) {
+      alarmAudioContext = new AudioContextClass();
+    }
+  }
+
+  if (
+    alarmAudioContext &&
+    alarmAudioContext.state === "suspended"
+  ) {
+    alarmAudioContext.resume();
+  }
+}
+
+
+function playAlarmTone(
+  frequency = 900,
+  duration = 0.22,
+  delay = 0
+) {
+  if (!alarmEnabled) {
+    return;
+  }
+
+  createAudioContext();
+
+  if (!alarmAudioContext) {
+    return;
+  }
+
+  const oscillator =
+    alarmAudioContext.createOscillator();
+
+  const gainNode =
+    alarmAudioContext.createGain();
+
+  const startTime =
+    alarmAudioContext.currentTime + delay;
+
+  oscillator.type = "square";
+
+  oscillator.frequency.setValueAtTime(
+    frequency,
+    startTime
+  );
+
+  gainNode.gain.setValueAtTime(
+    0.0001,
+    startTime
+  );
+
+  gainNode.gain.exponentialRampToValueAtTime(
+    0.24,
+    startTime + 0.02
+  );
+
+  gainNode.gain.exponentialRampToValueAtTime(
+    0.0001,
+    startTime + duration
+  );
+
+  oscillator.connect(gainNode);
+  gainNode.connect(alarmAudioContext.destination);
+
+  oscillator.start(startTime);
+  oscillator.stop(startTime + duration + 0.05);
+}
+
+
+function playAlarmPattern() {
+  if (!alarmEnabled || !alarmCurrentlyActive) {
+    return;
+  }
+
+  playAlarmTone(900, 0.20, 0.00);
+  playAlarmTone(1200, 0.20, 0.28);
+  playAlarmTone(900, 0.20, 0.56);
+  playAlarmTone(1200, 0.30, 0.84);
+}
+
+
+function startAlarm() {
+  if (!alarmEnabled || alarmCurrentlyActive) {
+    return;
+  }
+
+  alarmCurrentlyActive = true;
+
+  playAlarmPattern();
+
+  alarmInterval = window.setInterval(
+    playAlarmPattern,
+    3000
+  );
+}
+
+
+function stopAlarm() {
+  alarmCurrentlyActive = false;
+
+  if (alarmInterval) {
+    window.clearInterval(alarmInterval);
+    alarmInterval = null;
+  }
+}
+
+
+function updateAlarmButton() {
+  const button =
+    document.getElementById("alarmToggleButton");
+
+  const status =
+    document.getElementById("alarmStatusText");
+
+  if (alarmEnabled) {
+    button.textContent = "Disable Alarm";
+
+    button.classList.add(
+      "bg-alert/15",
+      "shadow-[0_0_18px_rgba(255,51,102,0.35)]"
+    );
+
+    status.textContent = latestSuspiciousState
+      ? "ALARM ACTIVE"
+      : "Enabled";
+
+    status.className = latestSuspiciousState
+      ? "text-sm font-semibold text-alert"
+      : "text-sm font-semibold text-neon";
+
+  } else {
+    button.textContent = "Enable Alarm";
+
+    button.classList.remove(
+      "bg-alert/15",
+      "shadow-[0_0_18px_rgba(255,51,102,0.35)]"
+    );
+
+    status.textContent = "Disabled";
+    status.className =
+      "text-sm font-semibold text-slate-400";
+  }
+}
+
+
+function toggleAlarm() {
+  alarmEnabled = !alarmEnabled;
+
+  if (alarmEnabled) {
+    createAudioContext();
+
+    try {
+      localStorage.setItem(
+        "realtimeSecurityAlarmEnabled",
+        "1"
+      );
+    } catch (error) {
+      console.debug(error);
+    }
+
+    if (latestSuspiciousState) {
+      startAlarm();
+    }
+
+  } else {
+    stopAlarm();
+
+    try {
+      localStorage.removeItem(
+        "realtimeSecurityAlarmEnabled"
+      );
+    } catch (error) {
+      console.debug(error);
+    }
+  }
+
+  updateAlarmButton();
+}
+
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+    stopAlarm();
+
+    if (statusTimer) {
+      window.clearInterval(statusTimer);
+      statusTimer = null;
+    }
+  }
+);
+
+
+/* -------------------------------------------------------------------------
+   Live status polling
+------------------------------------------------------------------------- */
+
+async function refreshStatus() {
+  try {
+    const response = await fetch(
+      statusUrl,
+      {
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Status request failed: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+
+    const overlay = data.overlay || {};
+    const models = data.models || {};
+    const totals = data.totals || {};
+
+    const isOpen = Boolean(
+      data.camera_open || data.ok
+    );
+
+    detectionRunning = Boolean(
+      data.detection_enabled
+    );
+
+    updateDetectionButton();
+
+    /*
+     * Permanent totals are displayed in cards.
+     * Live counts are used only for alarm decisions.
+     */
+    const permanentWeaponCount = Number(
+      overlay.weapon_count || 0
+    );
+
+    const liveWeaponCount = Number(
+      overlay.weapon_live_count ??
+      overlay.weapons_live ??
+      overlay.weapons_detected_now ??
+      0
+    );
+
+    const knownFaceCount = Number(
+      overlay.known_faces ??
+      overlay.faces ??
+      overlay.face_count ??
+      0
+    );
+
+    const unknownFaceCount = Number(
+      overlay.unknown_faces ??
+      overlay.unknown ??
+      overlay.unknown_face_count ??
+      0
+    );
+
+    const activityRaw = String(
+      overlay.activity_label || "unknown"
+    );
+
+    const activity = activityRaw
+      .trim()
+      .toLowerCase()
+      .replaceAll("_", " ")
+      .replaceAll("-", " ");
+
+    const spoofDetected = Boolean(
+      overlay.spoof_detected
+    ) || String(
+      overlay.anti_spoof || ""
+    ).toLowerCase() === "spoof";
+
+    const suspiciousActivityLabels = [
+      "fight",
+      "fighting",
+      "violence",
+      "violent",
+      "attack",
+      "assault",
+      "punch",
+      "punching",
+      "kick",
+      "kicking",
+      "suspicious",
+      "weapon",
+      "robbery",
+      "theft",
+      "stealing",
+      "vandalism",
+      "chasing",
+      "falling"
+    ];
+
+    const suspiciousActivityDetected =
+      suspiciousActivityLabels.some(
+        label => activity.includes(label)
+      );
+
+    const suspicious =
+      detectionRunning && (
+        liveWeaponCount > 0 ||
+        unknownFaceCount > 0 ||
+        spoofDetected ||
+        suspiciousActivityDetected
+      );
+
+    latestSuspiciousState = suspicious;
+
+    if (suspicious) {
+      startAlarm();
+    } else {
+      stopAlarm();
+    }
+
+    updateAlarmButton();
+
+    document.getElementById(
+      "cameraDot"
+    ).className =
+      `h-3 w-3 rounded-full ${
+        isOpen
+          ? "bg-neon shadow-[0_0_18px_rgba(0,255,136,0.8)]"
+          : "bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]"
+      }`;
+
+    document.getElementById(
+      "cameraStatus"
+    ).textContent =
+      !isOpen
+        ? "Camera reconnecting"
+        : detectionRunning
+          ? "Camera online - detection active"
+          : "Camera online - detection paused";
+
+    document.getElementById(
+      "cameraDetail"
+    ).textContent =
+      !isOpen
+        ? (
+            data.last_error ||
+            data.status ||
+            "reconnecting"
+          )
+        : detectionRunning
+          ? "AI models are analysing the live camera"
+          : "Raw camera is on; no AI detection, logs, alarms, or emails";
+
+    document.getElementById(
+      "fpsValue"
+    ).textContent =
+      Number(data.capture_fps || 0).toFixed(1);
+
+    document.getElementById(
+      "activityValue"
+    ).textContent =
+      detectionRunning
+        ? activityRaw
+        : "paused";
+
+    document.getElementById(
+      "idCountValue"
+    ).textContent =
+      Number(overlay.id_count || 0);
+
+    document.getElementById(
+      "weaponCountValue"
+    ).textContent =
+      permanentWeaponCount;
+
+    document.getElementById(
+      "faceCountValue"
+    ).textContent =
+      knownFaceCount;
+
+    document.getElementById(
+      "unknownFaceCountValue"
+    ).textContent =
+      unknownFaceCount;
+
+    document.getElementById(
+      "uploadsTotalValue"
+    ).textContent =
+      totals.total_uploaded_videos ??
+      document.getElementById(
+        "uploadsTotalValue"
+      ).textContent;
+
+    document.getElementById(
+      "logsTotalValue"
+    ).textContent =
+      totals.total_logs ??
+      document.getElementById(
+        "logsTotalValue"
+      ).textContent;
+
+    document.getElementById(
+      "suspiciousTotalValue"
+    ).textContent =
+      totals.suspicious_count ??
+      document.getElementById(
+        "suspiciousTotalValue"
+      ).textContent;
+
+    document.getElementById(
+      "idTotalValue"
+    ).textContent =
+      totals.id_card_count ??
+      document.getElementById(
+        "idTotalValue"
+      ).textContent;
+
+    document.getElementById(
+      "modelChips"
+    ).innerHTML =
+      chip("Activity", models.activity) +
+      chip("ID", models.id_card) +
+      chip("Weapon", models.weapon) +
+      chip("Face", models.face) +
+      chip("Recognition", models.face_recognition) +
+      chip("Anti-spoof", models.anti_spoof);
+
+    let alertText = "";
+
+    if (spoofDetected) {
+      alertText = "Alert: spoof face detected";
+
+    } else if (liveWeaponCount > 0) {
+      alertText = "Alert: weapon detected";
+
+    } else if (unknownFaceCount > 0) {
+      alertText = "Alert: unknown person detected";
+
+    } else if (suspiciousActivityDetected) {
+      alertText = `Alert: ${activityRaw} detected`;
+    }
+
+    const alertBanner =
+      document.getElementById("alertBanner");
+
+    alertBanner.classList.toggle(
+      "hidden",
+      !suspicious
+    );
+
+    alertBanner.textContent = alertText;
+
+  } catch (error) {
+    stopAlarm();
+    latestSuspiciousState = false;
+    updateAlarmButton();
+
+    document.getElementById(
+      "cameraStatus"
+    ).textContent =
+      "Camera server unavailable";
+
+    document.getElementById(
+      "cameraDetail"
+    ).textContent =
+      error.message;
+  }
+}
+
+
+/*
+ * Remember the user's preference visually. A fresh browser interaction may
+ * still be required before sound can play because of browser autoplay rules.
+ */
+try {
+  if (
+    localStorage.getItem(
+      "realtimeSecurityAlarmEnabled"
+    ) === "1"
+  ) {
+    alarmEnabled = true;
+  }
+} catch (error) {
+  console.debug(error);
+}
+
+updateAlarmButton();
+updateDetectionButton();
+
+statusTimer = window.setInterval(
+  refreshStatus,
+  1000
+);
+
+refreshStatus();
+</script>
+{% endblock %}

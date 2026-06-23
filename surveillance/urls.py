@@ -1,13 +1,67 @@
 from django.urls import path
 
-from .views import DashboardView, LogsView, UploadView, detection_api, live_detection_view, video_feed
+from surveillance import views
 
 
 urlpatterns = [
-    path("", DashboardView.as_view(), name="dashboard"),
-    path("upload/", UploadView.as_view(), name="upload"),
-    path("stream/", live_detection_view, name="stream_page"),
-    path("video-feed/", video_feed, name="video_feed"),
-    path("logs/", LogsView.as_view(), name="logs"),
-    path("api/detect/", detection_api, name="detection_api"),
+    # Public SecureVision front page
+    path(
+        "",
+        views.home,
+        name="home",
+    ),
+
+    # Authenticated surveillance dashboard
+    path(
+        "dashboard/",
+        views.dashboard,
+        name="dashboard",
+    ),
+
+    # Camera stream
+    path(
+        "stream/",
+        views.stream_proxy,
+        name="stream_proxy",
+    ),
+    path(
+        "live/",
+        views.stream_page,
+        name="stream_page",
+    ),
+
+    # Image and video upload
+    path(
+        "upload/",
+        views.upload,
+        name="upload",
+    ),
+
+    # Detection logs
+    path(
+        "logs/",
+        views.logs,
+        name="logs",
+    ),
+
+    # Live detection API
+    path(
+        "api/status/",
+        views.detection_api,
+        name="detection_api",
+    ),
+
+    # Known-person registration
+    path(
+        "known-person/add/",
+        views.known_person_upload,
+        name="known_person_upload",
+    ),
+
+    # Start or stop AI detection while keeping the camera active
+    path(
+        "api/detection/control/",
+        views.detection_control,
+        name="detection_control",
+    ),
 ]

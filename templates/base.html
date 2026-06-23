@@ -1,57 +1,369 @@
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RealTimeSecurity</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            night: '#0a0a0f',
-            panel: '#11131a',
-            line: 'rgba(255,255,255,0.10)',
-            neon: '#00ff88',
-            alert: '#ff3366'
-          }
-        }
-      }
-    }
-  </script>
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% block title %}SecureVision{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/securevision-enterprise.css' %}">
+
+  {% block extra_head %}{% endblock %}
 </head>
-<body class="min-h-screen bg-night text-slate-100 antialiased">
-  <nav class="border-b border-line bg-[#0d0d14]/95 backdrop-blur">
-    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-      <a class="text-sm font-semibold tracking-[0.24em] text-neon" href="{% url 'dashboard' %}">REALTIMESecurity</a>
-      <div class="flex flex-wrap items-center gap-2 text-sm text-slate-300">
-        {% if user.is_authenticated %}
-          <a class="rounded border border-line px-3 py-1.5 hover:border-neon hover:text-neon" href="{% url 'dashboard' %}">Dashboard</a>
-          <a class="rounded border border-line px-3 py-1.5 hover:border-neon hover:text-neon" href="{% url 'logs' %}">Logs</a>
-          <a class="rounded border border-line px-3 py-1.5 hover:border-neon hover:text-neon" href="{% url 'upload' %}">Upload</a>
-          <a class="rounded border border-line px-3 py-1.5 hover:border-neon hover:text-neon" href="{% url 'stream_page' %}">Live</a>
-          <a class="rounded border border-line px-3 py-1.5 hover:border-alert hover:text-alert" href="{% url 'logout' %}">Logout</a>
-        {% else %}
-          <a class="rounded border border-line px-3 py-1.5 hover:border-neon hover:text-neon" href="{% url 'login' %}">Login</a>
-          <a class="rounded border border-line px-3 py-1.5 hover:border-neon hover:text-neon" href="{% url 'register' %}">Register</a>
+
+<body
+  class="{% if user.is_authenticated and request.resolver_match.url_name != 'home' %}app-body{% else %}public-body{% endif %}"
+>
+
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="grid-overlay"></div>
+
+  {% if user.is_authenticated and request.resolver_match.url_name != 'home' %}
+
+    <div class="app-shell">
+
+      <aside id="appSidebar" class="sidebar">
+
+        <div class="sidebar-brand">
+          <a href="{% url 'home' %}" class="brand-link">
+            <span class="brand-mark" aria-hidden="true">
+              <span class="brand-ring"></span>
+              <span class="brand-dot"></span>
+            </span>
+
+            <span class="brand-copy">
+              <span class="brand-title">
+                Secure<span>Vision</span>
+              </span>
+              <span class="brand-subtitle">
+                AI Security Platform
+              </span>
+            </span>
+          </a>
+
+          <button
+            id="sidebarClose"
+            type="button"
+            class="icon-button sidebar-close"
+            aria-label="Close navigation"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M6 6l12 12M18 6L6 18" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="sidebar-section-label">Workspace</div>
+
+        <nav class="sidebar-nav">
+
+          <a
+            href="{% url 'dashboard' %}"
+            class="sidebar-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+          >
+            <span class="sidebar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="3" width="7" height="7" rx="2"/>
+                <rect x="14" y="3" width="7" height="7" rx="2"/>
+                <rect x="3" y="14" width="7" height="7" rx="2"/>
+                <rect x="14" y="14" width="7" height="7" rx="2"/>
+              </svg>
+            </span>
+            <span>Dashboard</span>
+          </a>
+
+          <a
+            href="{% url 'stream_page' %}"
+            class="sidebar-link {% if request.resolver_match.url_name == 'stream_page' %}active{% endif %}"
+          >
+            <span class="sidebar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="5" width="14" height="14" rx="3"/>
+                <path d="M17 10l4-2v8l-4-2"/>
+              </svg>
+            </span>
+            <span>Live Monitor</span>
+            <span class="live-badge">LIVE</span>
+          </a>
+
+          <a
+            href="{% url 'upload' %}"
+            class="sidebar-link {% if request.resolver_match.url_name == 'upload' %}active{% endif %}"
+          >
+            <span class="sidebar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M12 16V4m0 0L7 9m5-5 5 5"/>
+                <path d="M4 15v4a1 1 0 001 1h14a1 1 0 001-1v-4"/>
+              </svg>
+            </span>
+            <span>Media Analysis</span>
+          </a>
+
+          <a
+            href="{% url 'logs' %}"
+            class="sidebar-link {% if request.resolver_match.url_name == 'logs' %}active{% endif %}"
+          >
+            <span class="sidebar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/>
+                <path d="M9 8h6M9 12h6M9 16h4"/>
+              </svg>
+            </span>
+            <span>Detection Logs</span>
+          </a>
+
+        </nav>
+
+        {% if user.is_staff %}
+          <div class="sidebar-section-label">Administration</div>
+
+          <nav class="sidebar-nav">
+
+            <a
+              href="{% url 'known_person_upload' %}"
+              class="sidebar-link {% if request.resolver_match.url_name == 'known_person_upload' %}active{% endif %}"
+            >
+              <span class="sidebar-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4 21a8 8 0 0116 0"/>
+                  <path d="M19 5v6M16 8h6"/>
+                </svg>
+              </span>
+              <span>Known Persons</span>
+            </a>
+
+            <a href="{% url 'admin:index' %}" class="sidebar-link">
+              <span class="sidebar-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 3l8 4v5c0 5-3.4 8-8 9-4.6-1-8-4-8-9V7l8-4z"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+              </span>
+              <span>Admin Console</span>
+            </a>
+
+          </nav>
         {% endif %}
+
+        <div class="sidebar-spacer"></div>
+
+        <div class="sidebar-system-card">
+          <div class="system-card-head">
+            <span class="system-pulse"></span>
+            <span>System Ready</span>
+          </div>
+
+          <p>
+            Camera, models, alerts and evidence services are connected.
+          </p>
+
+          <a href="{% url 'dashboard' %}" class="system-card-link">
+            View system status
+            <span>â†’</span>
+          </a>
+        </div>
+
+        <div class="sidebar-profile">
+          <span class="profile-avatar">
+            {{ user.username|first|upper }}
+          </span>
+
+          <span class="profile-copy">
+            <strong>{{ user.username }}</strong>
+            <span>
+              {% if user.is_staff %}Administrator{% else %}Security Operator{% endif %}
+            </span>
+          </span>
+
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="icon-button" title="Logout">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M10 5H6a2 2 0 00-2 2v10a2 2 0 002 2h4"/>
+                <path d="M14 8l4 4-4 4M18 12H9"/>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+      </aside>
+
+      <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+      <div class="app-main">
+
+        <header class="topbar">
+
+          <div class="topbar-left">
+            <button
+              id="sidebarOpen"
+              type="button"
+              class="icon-button mobile-menu-button"
+              aria-label="Open navigation"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </button>
+
+            <div>
+              <div class="topbar-label">Security Operations Center</div>
+              <div class="topbar-date">{% now "l, F j, Y" %}</div>
+            </div>
+          </div>
+
+          <div class="topbar-actions">
+
+            <a href="{% url 'stream_page' %}" class="topbar-live">
+              <span></span>
+              Live Camera
+            </a>
+
+            <button type="button" class="icon-button" title="Notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                <path d="M10 21h4"/>
+              </svg>
+              <span class="notification-dot"></span>
+            </button>
+
+            <a href="{% url 'home' %}" class="icon-button" title="Home page">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M3 11l9-8 9 8"/>
+                <path d="M5 10v10h14V10"/>
+              </svg>
+            </a>
+
+          </div>
+
+        </header>
+
+        {% if messages %}
+          <div class="message-stack">
+            {% for message in messages %}
+              <div class="message-card message-{{ message.tags|default:'info' }}">
+                <span class="message-icon">
+                  {% if message.tags == 'success' %}âœ“
+                  {% elif message.tags == 'error' %}!
+                  {% elif message.tags == 'warning' %}âš 
+                  {% else %}i{% endif %}
+                </span>
+
+                <span>{{ message }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+                <main class="app-content">
+          {% block app_content %}{% endblock %}
+        </main>
+
       </div>
     </div>
-  </nav>
 
-  <main class="mx-auto max-w-7xl px-4 py-6">
+  {% else %}
+
+    <header class="public-header">
+      <div class="public-nav">
+
+        <a href="{% url 'home' %}" class="brand-link">
+          <span class="brand-mark">
+            <span class="brand-ring"></span>
+            <span class="brand-dot"></span>
+          </span>
+
+          <span class="brand-copy">
+            <span class="brand-title">
+              Secure<span>Vision</span>
+            </span>
+            <span class="brand-subtitle">
+              AI Suspicious Activity Detection
+            </span>
+          </span>
+        </a>
+
+        <button
+          id="publicMenuButton"
+          type="button"
+          class="icon-button public-menu-button"
+          aria-label="Open menu"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <nav id="publicNavLinks" class="public-nav-links">
+
+          {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="nav-pill nav-pill-primary">
+              Dashboard
+            </a>
+
+            <a href="{% url 'upload' %}" class="nav-pill">
+              Upload
+            </a>
+
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="nav-pill">
+                Logout
+              </button>
+            </form>
+
+          {% else %}
+            <a href="{% url 'login' %}" class="nav-pill">
+              Login
+            </a>
+
+            <a href="{% url 'register' %}" class="nav-pill">
+              Register
+            </a>
+
+            <a
+              href="{% url 'login' %}?next={% url 'dashboard' %}"
+              class="nav-pill nav-pill-primary"
+            >
+              Open Dashboard
+            </a>
+          {% endif %}
+
+        </nav>
+
+      </div>
+    </header>
+
     {% if messages %}
-      <div class="mb-4 space-y-2">
+      <div class="public-message-stack">
         {% for message in messages %}
-          <div class="rounded border border-line bg-panel px-4 py-3 text-sm text-slate-200">{{ message }}</div>
+          <div class="message-card message-{{ message.tags|default:'info' }}">
+            <span>{{ message }}</span>
+          </div>
         {% endfor %}
       </div>
     {% endif %}
-    {% block content %}{% endblock %}
-  </main>
-  <script src="{% static 'js/main.js' %}"></script>
+
+        <main class="public-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="public-footer">
+      <div class="public-footer-inner">
+        <strong>SecureVision</strong>
+        <span>AI-powered suspicious activity and identity detection</span>
+        <span>Â© {% now "Y" %}</span>
+      </div>
+    </footer>
+
+  {% endif %}
+
+  <script src="{% static 'js/securevision-enterprise.js' %}"></script>
+  {% block extra_js %}{% endblock %}
 </body>
 </html>
+
+

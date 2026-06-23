@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}Media Analysis | SecureVision{% endblock %}
+
+{% block content %}
+<section>
+
+  <div class="page-header">
+    <div>
+      <div class="page-eyebrow">AI analysis workspace</div>
+      <h1 class="page-title">Image &amp; Video Analysis</h1>
+      <p class="page-description">
+        Upload one image or video for suspicious activity and weapon analysis.
+      </p>
+    </div>
+
+    <div class="page-actions">
+      <a href="{% url 'logs' %}" class="btn">View Detection Logs</a>
+      <a href="{% url 'dashboard' %}" class="btn btn-primary">Dashboard</a>
+    </div>
+  </div>
+
+  <div class="upload-layout">
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">New Analysis</div>
+          <div class="panel-subtitle">Choose one media file</div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+
+        {% if error %}
+          <div class="form-alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="form-alert">
+              {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="upload-choice">
+
+            <div class="form-group">
+              <label class="form-label">Video file</label>
+              {{ form.video }}
+
+              {% for error in form.video.errors %}
+                <div class="form-error">{{ error }}</div>
+              {% endfor %}
+
+              <p class="form-help">
+                MP4, AVI, MOV, MKV, WEBM or M4V · maximum 500 MB
+              </p>
+            </div>
+
+            <div class="upload-divider">OR</div>
+
+            <div class="form-group">
+              <label class="form-label">Image file</label>
+              {{ form.image }}
+
+              {% for error in form.image.errors %}
+                <div class="form-error">{{ error }}</div>
+              {% endfor %}
+
+              <p class="form-help">
+                JPG, JPEG, PNG, WEBP or BMP · maximum 20 MB
+              </p>
+            </div>
+
+            <div class="form-note">
+              Select only one file at a time. Analysis begins automatically
+              after the upload completes.
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">
+              Upload &amp; Start Analysis
+            </button>
+
+          </div>
+        </form>
+
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Analysis Queue</div>
+          <div class="panel-subtitle">Recent image and video uploads</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>File</th>
+              <th>Status</th>
+              <th>Uploaded</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for item in uploads %}
+              <tr {% if item.status == "Processing" %}data-processing="true"{% endif %}>
+                <td>{{ forloop.counter }}</td>
+
+                <td>
+                  {% if item.image %}
+                    <span class="media-type image">Image</span>
+                  {% elif item.video %}
+                    <span class="media-type video">Video</span>
+                  {% else %}
+                    <span class="badge">Unknown</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if item.file_url %}
+                    <a
+                      href="{{ item.file_url }}"
+                      target="_blank"
+                      class="table-link"
+                    >
+                      {{ item.file_name }}
+                    </a>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if item.status == "Normal" %}
+                    <span class="badge badge-success">Normal</span>
+                  {% elif item.status == "Suspicious" %}
+                    <span class="badge badge-alert">Suspicious</span>
+                  {% elif item.status == "Processing" %}
+                    <span class="badge badge-warning">Processing</span>
+                  {% elif item.status == "Failed" %}
+                    <span class="badge badge-alert">Failed</span>
+                  {% else %}
+                    <span class="badge">{{ item.status }}</span>
+                  {% endif %}
+                </td>
+
+                <td>{{ item.uploaded_at|date:"Y-m-d H:i" }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="empty-state">
+                  No media has been uploaded.
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  if (document.querySelector('[data-processing="true"]')) {
+    setTimeout(() => window.location.reload(), 4000);
+  }
+</script>
+{% endblock %}

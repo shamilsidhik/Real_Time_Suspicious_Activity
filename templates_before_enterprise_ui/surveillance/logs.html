@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Detection Logs | SecureVision{% endblock %}
+{% block content %}
+<section class="space-y-6">
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <div class="page-kicker">Evidence tracking</div>
+      <h1 class="page-title">Detection Logs</h1>
+      <p class="page-copy">Review activity history, confidence, alert messages and saved snapshots.</p>
+    </div>
+    <a href="{% url 'dashboard' %}" class="secondary-button">Back to Dashboard</a>
+  </div>
+
+  <div class="glass-panel overflow-hidden rounded-3xl">
+    <div class="overflow-x-auto">
+      <table class="data-table">
+        <thead><tr><th>Snapshot</th><th>Timestamp</th><th>Type</th><th>Confidence</th><th>Message</th><th>Status</th></tr></thead>
+        <tbody>
+          {% for log in logs_page %}
+            <tr>
+              <td>
+                {% if log.image %}
+                  <a href="{{ log.image.url }}" target="_blank"><img src="{{ log.image.url }}" alt="Detection snapshot" class="h-16 w-24 rounded-xl border border-line object-cover"></a>
+                {% else %}
+                  <div class="grid h-16 w-24 place-items-center rounded-xl border border-line bg-black/20 text-xs text-slate-600">No image</div>
+                {% endif %}
+              </td>
+              <td class="whitespace-nowrap">{{ log.detected_at|date:"Y-m-d H:i:s" }}</td>
+              <td>{{ log.get_activity_type_display }}</td>
+              <td>{{ log.confidence_score|floatformat:2 }}</td>
+              <td class="min-w-[280px] max-w-xl">{{ log.message|default:"-" }}</td>
+              <td>
+                {% if log.activity_type == "suspicious" or log.activity_type == "weapon_detected" or log.activity_type == "fight_detected" or log.activity_type == "spoof_detected" %}
+                  <span class="status-alert">Alert</span>
+                {% elif log.activity_type == "id_detected" %}
+                  <span class="status-processing">ID</span>
+                {% else %}
+                  <span class="status-normal">Normal</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="6" class="py-12 text-center text-slate-500">No detection logs are available.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if logs_page.paginator.num_pages > 1 %}
+      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-4">
+        <span class="text-xs text-slate-500">Page {{ logs_page.number }} of {{ logs_page.paginator.num_pages }}</span>
+        <div class="flex gap-2">
+          {% if logs_page.has_previous %}<a href="?page={{ logs_page.previous_page_number }}" class="secondary-button">Previous</a>{% endif %}
+          {% if logs_page.has_next %}<a href="?page={{ logs_page.next_page_number }}" class="secondary-button">Next</a>{% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SecureVision{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          ink: '#050914', shell: '#08111f', panel: '#0f172a',
+          panel2: '#111c31', line: '#24324a', neon: '#27e7a6',
+          cyanx: '#28c7f7', skyx: '#60a5fa', alert: '#fb4f7a', warn: '#f8c84f'
+        },
+        boxShadow: {
+          glow: '0 0 30px rgba(39,231,166,.18)',
+          blueglow: '0 0 34px rgba(59,130,246,.18)',
+          alertglow: '0 0 34px rgba(251,79,122,.18)'
+        }
+      }}
+    };
+  </script>
+  <link rel="stylesheet" href="{% static 'css/securevision.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen bg-ink text-slate-100">
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -left-40 -top-40 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-3xl"></div>
+    <div class="absolute right-[-120px] top-24 h-[430px] w-[430px] rounded-full bg-violet-600/10 blur-3xl"></div>
+    <div class="absolute bottom-[-180px] left-1/3 h-[420px] w-[420px] rounded-full bg-pink-500/5 blur-3xl"></div>
+  </div>
+
+  <header class="sticky top-0 z-50 border-b border-line/80 bg-ink/85 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-[1420px] items-center justify-between gap-5 px-4 py-3 lg:px-6">
+      <a href="{% url 'home' %}" class="group flex items-center gap-3">
+        <span class="relative grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-cyanx via-blue-500 to-violet-600 shadow-blueglow">
+          <span class="h-4 w-4 rounded-full border-2 border-white"></span>
+          <span class="absolute h-1.5 w-1.5 rounded-full bg-white"></span>
+        </span>
+        <span>
+          <span class="block text-lg font-black tracking-tight text-white">Secure<span class="text-cyanx">Vision</span></span>
+          <span class="block text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">AI Surveillance</span>
+        </span>
+      </a>
+
+      <button id="mobileMenuButton" type="button" class="rounded-xl border border-line bg-panel/80 p-2.5 text-slate-300 lg:hidden" aria-label="Open navigation">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <nav class="hidden items-center gap-2 lg:flex">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+          <a href="{% url 'logs' %}" class="nav-link {% if request.resolver_match.url_name == 'logs' %}active{% endif %}">Logs</a>
+          <a href="{% url 'upload' %}" class="nav-link {% if request.resolver_match.url_name == 'upload' %}active{% endif %}">Upload</a>
+          <a href="{% url 'stream_page' %}" class="nav-link {% if request.resolver_match.url_name == 'stream_page' %}active{% endif %}">Live</a>
+          {% if user.is_staff %}
+            <a href="{% url 'known_person_upload' %}" class="nav-link {% if request.resolver_match.url_name == 'known_person_upload' %}active{% endif %}">Known Person</a>
+            <a href="{% url 'admin:index' %}" class="nav-link nav-admin">Admin</a>
+          {% endif %}
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="nav-link">Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}" class="nav-link">Login</a>
+          <a href="{% url 'register' %}" class="nav-link">Register</a>
+          <a href="{% url 'login' %}?next={% url 'dashboard' %}" class="nav-primary">Open Dashboard</a>
+        {% endif %}
+      </nav>
+    </div>
+
+    <nav id="mobileNav" class="hidden border-t border-line bg-panel/95 px-4 py-4 lg:hidden">
+      <div class="mx-auto grid max-w-[1420px] gap-2">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="mobile-link">Dashboard</a>
+          <a href="{% url 'logs' %}" class="mobile-link">Logs</a>
+          <a href="{% url 'upload' %}" class="mobile-link">Upload</a>
+          <a href="{% url 'stream_page' %}" class="mobile-link">Live</a>
+          {% if user.is_staff %}
+            <a href="{% url 'known_person_upload' %}" class="mobile-link">Known Person</a>
+            <a href="{% url 'admin:index' %}" class="mobile-link">Admin</a>
+          {% endif %}
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="mobile-link w-full text-left">Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}" class="mobile-link">Login</a>
+          <a href="{% url 'register' %}" class="mobile-link">Register</a>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+  {% if messages %}
+    <div class="mx-auto max-w-[1420px] px-4 pt-4 lg:px-6">
+      {% for message in messages %}
+        <div class="mb-3 rounded-2xl border px-4 py-3 text-sm {% if message.tags == 'success' %}border-neon/30 bg-neon/10 text-emerald-200{% elif message.tags == 'error' %}border-alert/40 bg-alert/10 text-rose-200{% elif message.tags == 'warning' %}border-warn/40 bg-warn/10 text-amber-200{% else %}border-skyx/30 bg-skyx/10 text-sky-200{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <main class="mx-auto min-h-[calc(100vh-160px)] max-w-[1420px] px-4 py-6 lg:px-6 lg:py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="border-t border-line/70 bg-shell/70">
+    <div class="mx-auto flex max-w-[1420px] flex-col gap-2 px-4 py-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-6">
+      <span class="font-bold text-slate-300">SecureVision</span>
+      <span>AI-powered suspicious activity and identity detection</span>
+      <span>© {% now 'Y' %} SecureVision</span>
+    </div>
+  </footer>
+
+  <script>
+    const mobileButton = document.getElementById('mobileMenuButton');
+    const mobileNav = document.getElementById('mobileNav');
+    mobileButton?.addEventListener('click', () => mobileNav.classList.toggle('hidden'));
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

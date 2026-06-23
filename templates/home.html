@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}SecureVision | AI Surveillance Platform{% endblock %}
+
+{% block content %}
+<div class="home-container">
+
+  <section class="hero">
+
+    <div>
+      <div class="hero-badge">
+        <span></span>
+        Real-Time AI Security System
+      </div>
+
+      <h1>
+        Suspicious Activity
+        <span class="hero-gradient">&amp; Identity</span>
+        <span class="hero-gradient">Detection</span>
+      </h1>
+
+      <p class="hero-copy">
+        SecureVision monitors live camera feeds, identifies known and unknown
+        people, detects suspicious activity, weapons and ID cards, analyses
+        uploaded evidence, records detection snapshots, and sends instant
+        dashboard and email alerts.
+      </p>
+
+      <div class="hero-actions">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">
+            Open Dashboard
+            <span>→</span>
+          </a>
+        {% else %}
+          <a
+            href="{% url 'login' %}?next={% url 'dashboard' %}"
+            class="btn btn-primary btn-lg"
+          >
+            Open Dashboard
+            <span>→</span>
+          </a>
+        {% endif %}
+
+        <a href="{% url 'stream_page' %}" class="btn btn-lg">
+          Start Live Camera
+        </a>
+      </div>
+
+      <div class="hero-metrics">
+        <div class="hero-metric">
+          <strong>AI Detection</strong>
+          <span>Activity, weapon, ID and face models</span>
+        </div>
+
+        <div class="hero-metric">
+          <strong>Live Security</strong>
+          <span>Continuous camera monitoring</span>
+        </div>
+
+        <div class="hero-metric">
+          <strong>Instant Alerts</strong>
+          <span>Alarm, email and evidence logs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="monitor-mock">
+
+        <div class="mock-screen">
+          <div class="mock-grid"></div>
+
+          <div class="mock-top">
+            <span class="mock-pill">● Live Feed</span>
+            <span class="mock-pill">AI Active</span>
+          </div>
+
+          <div class="mock-frame"></div>
+          <div class="mock-box red"></div>
+          <div class="mock-box blue"></div>
+
+          <div class="mock-alert">
+            🚨 Suspicious Alert Ready
+          </div>
+        </div>
+
+        <div class="mock-footer">
+          <div class="mock-stat">
+            <div>
+              <strong>YOLO</strong>
+              <span>Object Detection</span>
+            </div>
+          </div>
+
+          <div class="mock-stat">
+            <div>
+              <strong>FACE</strong>
+              <span>Known / Unknown</span>
+            </div>
+          </div>
+
+          <div class="mock-stat">
+            <div>
+              <strong>LOGS</strong>
+              <span>Evidence Tracking</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <section class="feature-section">
+
+    <div class="section-heading">
+      <span>Security Intelligence</span>
+      <h2>One professional platform for complete monitoring</h2>
+      <p>
+        Monitor, detect, identify, document and respond from a unified
+        security operations workspace.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+
+      <article class="feature-card">
+        <div class="feature-icon">🎥</div>
+        <h3>Live Monitoring</h3>
+        <p>
+          Real-time camera viewing with activity, object, face and anti-spoof
+          detection overlays.
+        </p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">👤</div>
+        <h3>Identity Recognition</h3>
+        <p>
+          Register trusted people and identify known or unknown faces in the
+          monitored environment.
+        </p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">🚨</div>
+        <h3>Automated Alerts</h3>
+        <p>
+          Trigger browser alarms and email notifications with captured
+          evidence images.
+        </p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">🗂️</div>
+        <h3>Evidence Management</h3>
+        <p>
+          Review timestamps, confidence values, event details, uploaded media
+          and saved snapshots.
+        </p>
+      </article>
+
+    </div>
+
+  </section>
+
+</div>
+{% endblock %}

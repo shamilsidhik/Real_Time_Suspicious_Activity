@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="space-y-6">
+
+  <div>
+    <p class="text-xs font-semibold uppercase tracking-[0.32em] text-neon">
+      Analysis
+    </p>
+
+    <h1 class="mt-2 text-3xl font-semibold text-white">
+      Upload Image or Video
+    </h1>
+
+    <p class="mt-1 text-sm text-sky-300">
+      Upload one image or one video for normal/suspicious activity and weapon detection.
+    </p>
+  </div>
+
+  <div class="grid gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
+
+    <div class="rounded border border-line bg-panel p-5">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-sky-300">
+        Upload New Media
+      </h2>
+
+      {% if error %}
+        <div class="mt-4 rounded border border-alert/50 bg-alert/10 px-3 py-2 text-sm text-rose-300">
+          {{ error }}
+        </div>
+      {% endif %}
+
+      <form
+        method="post"
+        enctype="multipart/form-data"
+        class="mt-5 space-y-5"
+      >
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="rounded border border-alert/50 bg-alert/10 px-3 py-2 text-sm text-rose-300">
+            {% for error in form.non_field_errors %}
+              <div>{{ error }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div>
+          <label class="mb-2 block text-xs text-slate-400">
+            Video
+          </label>
+
+          {{ form.video }}
+
+          {% for error in form.video.errors %}
+            <p class="mt-2 text-xs text-alert">{{ error }}</p>
+          {% endfor %}
+
+          <p class="mt-2 text-xs text-slate-500">
+            MP4, AVI, MOV, MKV, WEBM or M4V
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="h-px flex-1 bg-line"></div>
+          <span class="text-xs font-semibold text-slate-500">OR</span>
+          <div class="h-px flex-1 bg-line"></div>
+        </div>
+
+        <div>
+          <label class="mb-2 block text-xs text-slate-400">
+            Image
+          </label>
+
+          {{ form.image }}
+
+          {% for error in form.image.errors %}
+            <p class="mt-2 text-xs text-alert">{{ error }}</p>
+          {% endfor %}
+
+          <p class="mt-2 text-xs text-slate-500">
+            JPG, JPEG, PNG, WEBP or BMP
+          </p>
+        </div>
+
+        <div class="rounded border border-amber-300/30 bg-amber-300/5 px-3 py-2 text-xs text-amber-200">
+          Choose only one file at a time.
+        </div>
+
+        <button
+          type="submit"
+          class="w-full rounded bg-neon px-4 py-2.5 text-sm font-semibold text-black transition hover:brightness-110"
+        >
+          Upload and Analyse
+        </button>
+      </form>
+    </div>
+
+    <div class="overflow-hidden rounded border border-line bg-panel">
+
+      <div class="border-b border-line px-4 py-3">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-sky-300">
+          Uploaded Media
+        </h2>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm">
+
+          <thead class="border-b border-line text-xs uppercase tracking-[0.18em] text-slate-500">
+            <tr>
+              <th class="px-4 py-3">#</th>
+              <th class="px-4 py-3">Type</th>
+              <th class="px-4 py-3">File</th>
+              <th class="px-4 py-3">Status</th>
+              <th class="px-4 py-3">Uploaded</th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-line">
+            {% for item in uploads %}
+              <tr class="text-slate-300">
+
+                <td class="px-4 py-3">
+                  {{ forloop.counter }}
+                </td>
+
+                <td class="px-4 py-3">
+                  {% if item.image %}
+                    <span class="rounded border border-sky-400/40 bg-sky-400/10 px-2 py-1 text-xs text-sky-300">
+                      Image
+                    </span>
+                  {% elif item.video %}
+                    <span class="rounded border border-neon/40 bg-neon/10 px-2 py-1 text-xs text-neon">
+                      Video
+                    </span>
+                  {% else %}
+                    Unknown
+                  {% endif %}
+                </td>
+
+                <td class="max-w-[480px] px-4 py-3">
+                  {% if item.file_url %}
+                    <a
+                      href="{{ item.file_url }}"
+                      target="_blank"
+                      class="block truncate text-neon hover:underline"
+                      title="{{ item.file_name }}"
+                    >
+                      {{ item.file_name }}
+                    </a>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+
+                <td class="px-4 py-3">
+                  {% if item.status == 'Normal' %}
+                    <span class="rounded border border-neon/40 bg-neon/10 px-2 py-1 text-xs font-semibold text-neon">
+                      Normal
+                    </span>
+
+                  {% elif item.status == 'Suspicious' %}
+                    <span class="rounded border border-alert/40 bg-alert/10 px-2 py-1 text-xs font-semibold text-alert">
+                      Suspicious
+                    </span>
+
+                  {% elif item.status == 'Processing' %}
+                    <span class="rounded border border-amber-300/40 bg-amber-300/10 px-2 py-1 text-xs font-semibold text-amber-200">
+                      Processing
+                    </span>
+
+                  {% elif item.status == 'Failed' %}
+                    <span class="rounded border border-red-500/40 bg-red-500/10 px-2 py-1 text-xs font-semibold text-red-300">
+                      Failed
+                    </span>
+
+                  {% else %}
+                    <span class="rounded border border-line px-2 py-1 text-xs text-slate-300">
+                      {{ item.status }}
+                    </span>
+                  {% endif %}
+                </td>
+
+                <td class="whitespace-nowrap px-4 py-3">
+                  {{ item.uploaded_at|date:"Y-m-d H:i" }}
+                </td>
+
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="px-4 py-8 text-center text-slate-500">
+                  No images or videos uploaded.
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const processingExists = {% if uploads %}{% for item in uploads %}{% if item.status == "Processing" %}true{% endif %}{% endfor %}{% else %}false{% endif %};
+
+  if (processingExists === true) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 4000);
+  }
+</script>
+{% endblock %}

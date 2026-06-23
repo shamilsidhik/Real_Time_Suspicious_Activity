@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="space-y-5">
+  <div id="alertBanner" class="hidden rounded border border-alert/50 bg-alert/15 px-4 py-3 text-sm font-semibold text-rose-100"></div>
+
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.32em] text-neon">Live surveillance</p>
+      <h1 class="mt-2 text-3xl font-semibold text-white">Command View</h1>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button id="resumeBtn" class="rounded bg-neon px-4 py-2 text-sm font-semibold text-black transition hover:brightness-110">Resume</button>
+      <button id="pauseBtn" class="rounded border border-line px-4 py-2 text-sm text-slate-200 transition hover:border-alert hover:text-alert">Pause</button>
+      <a href="{% url 'dashboard' %}" class="rounded border border-line px-4 py-2 text-sm text-slate-200 transition hover:border-neon hover:text-neon">Dashboard</a>
+    </div>
+  </div>
+
+  <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+    <div class="overflow-hidden rounded border border-line bg-panel">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
+        <div class="flex items-center gap-3">
+          <span id="cameraDot" class="h-3 w-3 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]"></span>
+          <div>
+            <div id="cameraStatus" class="text-sm font-semibold text-white">Connecting</div>
+            <div id="cameraDetail" class="text-xs text-slate-400">Waiting for camera server</div>
+          </div>
+        </div>
+        <span id="streamState" class="rounded border border-neon/40 bg-neon/10 px-3 py-1 text-xs font-semibold text-neon">stream on</span>
+      </div>
+      <div class="relative aspect-[4/3] min-h-[620px] bg-black">
+        <img id="liveStream"
+             src="{% url 'stream_proxy' %}"
+             alt="Live camera stream"
+             class="h-full w-full object-contain">
+        <div id="streamOverlay" class="absolute inset-0 hidden items-center justify-center bg-black/80 p-6 text-center">
+          <div>
+            <div class="text-xl font-semibold text-white">Stream paused</div>
+            <div class="mt-2 text-sm text-slate-400">Camera service remains warm in the background.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="space-y-5">
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Live metrics</h2>
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">FPS</div><div id="fpsValue" class="mt-1 text-2xl font-semibold text-neon">0.0</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Activity</div><div id="activityValue" class="mt-1 truncate text-lg font-semibold text-white">warming</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">ID cards</div><div id="idCountValue" class="mt-1 text-2xl font-semibold text-amber-300">0</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Weapons</div><div id="weaponCountValue" class="mt-1 text-2xl font-semibold text-alert">0</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Faces</div><div id="faceCountValue" class="mt-1 text-2xl font-semibold text-sky-300">0</div></div>
+          <div class="rounded border border-line bg-black/25 p-3"><div class="text-xs text-slate-400">Unknown</div><div id="unknownFaceCountValue" class="mt-1 text-2xl font-semibold text-alert">0</div></div>
+        </div>
+      </div>
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Models</h2>
+        <div id="modelChips" class="mt-4 flex flex-wrap gap-2"></div>
+      </div>
+      <div class="rounded border border-line bg-panel p-4">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">Recent activity</h2>
+        <div id="recentActivity" class="mt-4 space-y-2 text-sm text-slate-300"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<script>
+const statusUrl  = "{% url 'detection_api' %}";
+const proxyUrl   = "{% url 'stream_proxy' %}";
+const liveStream = document.getElementById('liveStream');
+const streamOverlay = document.getElementById('streamOverlay');
+const streamState   = document.getElementById('streamState');
+let streamEnabled = true;
+let lastActivity  = '';
+
+function setStream(on) {
+  streamEnabled = on;
+  streamOverlay.classList.toggle('hidden', on);
+  streamOverlay.classList.toggle('flex',  !on);
+  streamState.textContent = on ? 'stream on' : 'paused';
+  liveStream.src = on ? `${proxyUrl}?t=${Date.now()}` : '';
+}
+
+function chip(name, model) {
+  const ok = Boolean(model && model.available);
+  return `<span class="rounded border ${ok ? 'border-neon/40 bg-neon/10 text-neon' : 'border-amber-300/40 bg-amber-300/10 text-amber-200'} px-3 py-1 text-xs font-semibold">${name}: ${ok ? 'ready' : 'missing'}</span>`;
+}
+
+function addActivity(text) {
+  if (!text || text === lastActivity) return;
+  lastActivity = text;
+  const row = document.createElement('div');
+  row.className = 'rounded border border-line bg-black/25 px-3 py-2';
+  row.textContent = `${new Date().toLocaleTimeString()}  ${text}`;
+  document.getElementById('recentActivity').prepend(row);
+  const ra = document.getElementById('recentActivity');
+  while (ra.children.length > 6) ra.removeChild(ra.lastChild);
+}
+
+async function refreshStatus() {
+  try {
+    const data    = await fetch(statusUrl, { cache: 'no-store' }).then(r => r.json());
+    const overlay = data.overlay || {};
+    const models  = data.models  || {};
+    const isOpen  = Boolean(data.camera_open || data.ok);
+    const weapons = Number(overlay.weapon_count || 0);
+    const unknownFaces = Number(overlay.unknown_face_count || 0);
+    const activity = String(overlay.activity_label || 'unknown');
+    const suspicious = weapons > 0 || unknownFaces > 0 || ['fight','violence','suspicious','weapon','unknown_person'].includes(activity.toLowerCase());
+
+    document.getElementById('cameraDot').className = `h-3 w-3 rounded-full ${isOpen ? 'bg-neon shadow-[0_0_18px_rgba(0,255,136,0.8)]' : 'bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]'}`;
+    document.getElementById('cameraStatus').textContent  = isOpen ? 'Camera online' : 'Camera reconnecting';
+    document.getElementById('cameraDetail').textContent  = data.last_error || data.status || 'healthy';
+    document.getElementById('fpsValue').textContent      = Number(data.capture_fps || 0).toFixed(1);
+    document.getElementById('activityValue').textContent = `${activity} ${Number(overlay.activity_conf || 0).toFixed(2)}`;
+    document.getElementById('idCountValue').textContent  = overlay.id_count || 0;
+    document.getElementById('weaponCountValue').textContent = weapons;
+    document.getElementById('faceCountValue').textContent = overlay.face_count || 0;
+    document.getElementById('unknownFaceCountValue').textContent = unknownFaces;
+    document.getElementById('modelChips').innerHTML = chip('Activity', models.activity) + chip('ID', models.id_card) + chip('Weapon', models.weapon) + chip('Face', models.face) + chip('Anti-spoof', models.anti_spoof);
+    document.getElementById('alertBanner').classList.toggle('hidden', !suspicious);
+    document.getElementById('alertBanner').textContent = suspicious ? `Alert: ${weapons ? 'weapon detected' : unknownFaces ? 'unknown person detected' : activity}` : '';
+    addActivity(`${activity} | IDs ${overlay.id_count || 0} | Weapons ${weapons} | Faces ${overlay.face_count || 0} | Unknown ${unknownFaces}`);
+  } catch(err) {
+    document.getElementById('cameraStatus').textContent = 'Camera server unavailable';
+  }
+}
+
+document.getElementById('resumeBtn').addEventListener('click', () => setStream(true));
+document.getElementById('pauseBtn').addEventListener('click',  () => setStream(false));
+liveStream.addEventListener('error', () => {
+  if (streamEnabled) setTimeout(() => { liveStream.src = `${proxyUrl}?t=${Date.now()}`; }, 1500);
+});
+setInterval(refreshStatus, 1000);
+refreshStatus();
+</script>
+{% endblock %}

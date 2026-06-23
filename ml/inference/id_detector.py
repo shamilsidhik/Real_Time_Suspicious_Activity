@@ -31,7 +31,7 @@ def _class_name(names: Any, class_id: int) -> str:
 
 
 class IDDetector:
-    def __init__(self, weights_path: str | None = None, conf: float = 0.35, imgsz: int = 640) -> None:
+    def __init__(self, weights_path: str | None = None, conf: float = 0.50, imgsz: int = 640) -> None:
         self.weights_path = weights_path or os.environ.get(
             "ID_CARD_MODEL_PATH",
             "ml/models/id_card_yolov5/best.pt",

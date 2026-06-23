@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Known Persons | SecureVision{% endblock %}
+{% block content %}
+<section class="space-y-6">
+  <div>
+    <div class="page-kicker">Face recognition</div>
+    <h1 class="page-title">Known Person Registration</h1>
+    <p class="page-copy">Upload clear face images so the live camera can recognise trusted people.</p>
+  </div>
+
+  <div class="grid gap-5 xl:grid-cols-[360px_minmax(0,1fr)]">
+    <div class="glass-panel rounded-3xl p-5">
+      <h2 class="text-sm font-black uppercase tracking-[.18em] text-slate-300">Add Known Person</h2>
+      <form method="post" enctype="multipart/form-data" class="mt-5 space-y-5">
+        {% csrf_token %}
+        <div><label class="field-label">Person name</label><input type="text" name="person_name" maxlength="80" placeholder="Example: Shamil" required></div>
+        <div>
+          <label class="field-label">Face images</label>
+          <input type="file" name="images" accept=".jpg,.jpeg,.png,.webp,image/*" multiple required>
+          <p class="mt-2 text-xs leading-5 text-slate-500">Use clear front-facing photos. Multiple images improve recognition.</p>
+        </div>
+        <button type="submit" class="primary-button w-full">Save and Reload Faces</button>
+      </form>
+    </div>
+
+    <div class="glass-panel overflow-hidden rounded-3xl">
+      <div class="border-b border-line px-5 py-4"><h2 class="text-sm font-black uppercase tracking-[.18em] text-slate-300">Registered People</h2></div>
+      <div class="grid gap-4 p-5 sm:grid-cols-2 xl:grid-cols-3">
+        {% for person in known_people %}
+          <article class="rounded-2xl border border-line bg-black/20 p-4">
+            <div class="grid h-12 w-12 place-items-center rounded-2xl bg-cyanx/10 text-xl">👤</div>
+            <h3 class="mt-4 font-black text-white">{{ person.name }}</h3>
+            <p class="mt-1 text-xs text-slate-500">{{ person.image_count }} registered image{{ person.image_count|pluralize }}</p>
+          </article>
+        {% empty %}
+          <div class="col-span-full rounded-2xl border border-dashed border-line p-10 text-center text-sm text-slate-500">No known people registered yet.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

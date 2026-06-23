@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}SecureVision | AI Surveillance{% endblock %}
+{% block content %}
+<section class="grid min-h-[680px] items-center gap-14 py-8 lg:grid-cols-[1.06fr_.94fr] lg:py-14">
+  <div>
+    <div class="inline-flex items-center gap-2 rounded-full border border-neon/30 bg-neon/10 px-4 py-2 text-xs font-black text-emerald-200">
+      <span class="h-2 w-2 animate-pulse rounded-full bg-neon shadow-glow"></span>
+      Real-Time AI Security System
+    </div>
+
+    <h1 class="mt-7 max-w-4xl text-5xl font-black leading-[.94] tracking-[-.065em] text-white sm:text-6xl lg:text-7xl">
+      Suspicious Activity
+      <span class="block bg-gradient-to-r from-cyanx via-blue-500 to-violet-500 bg-clip-text text-transparent">&amp; Identity</span>
+      <span class="block bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text text-transparent">Detection</span>
+    </h1>
+
+    <p class="mt-7 max-w-2xl text-base leading-8 text-slate-400 lg:text-lg">
+      SecureVision monitors live camera feeds, detects suspicious activity,
+      weapons and ID cards, identifies known and unknown people, records
+      evidence snapshots, analyses uploaded media, and sends instant alarms
+      and email alerts.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}" class="primary-button px-6">Open Dashboard →</a>
+      {% else %}
+        <a href="{% url 'login' %}?next={% url 'dashboard' %}" class="primary-button px-6">Open Dashboard →</a>
+      {% endif %}
+      <a href="{% url 'stream_page' %}" class="secondary-button px-6">Start Live Camera</a>
+    </div>
+
+    <div class="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
+      <div class="glass-panel rounded-2xl p-4"><div class="text-lg font-black text-white">AI</div><div class="mt-2 text-xs font-bold text-slate-500">Face + Object Detection</div></div>
+      <div class="glass-panel rounded-2xl p-4"><div class="text-lg font-black text-white">LIVE</div><div class="mt-2 text-xs font-bold text-slate-500">Camera Monitoring</div></div>
+      <div class="glass-panel rounded-2xl p-4"><div class="text-lg font-black text-white">ALERT</div><div class="mt-2 text-xs font-bold text-slate-500">Alarm + Email</div></div>
+    </div>
+  </div>
+
+  <div class="relative">
+    <div class="absolute -inset-10 -z-10 rounded-full bg-blue-500/10 blur-3xl"></div>
+    <div class="glass-panel overflow-hidden rounded-[2rem] p-4 sm:p-6">
+      <div class="relative min-h-[390px] overflow-hidden rounded-3xl border border-blue-500/25 bg-slate-950">
+        <div class="absolute inset-0 opacity-20" style="background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:34px 34px;"></div>
+        <div class="relative z-10 flex items-center justify-between p-4">
+          <span class="rounded-full border border-line bg-ink/80 px-3 py-1.5 text-[11px] font-black text-white">● Live Feed</span>
+          <span class="rounded-full border border-line bg-ink/80 px-3 py-1.5 text-[11px] font-black text-neon">AI Active</span>
+        </div>
+        <div class="absolute left-[10%] right-[10%] top-[25%] bottom-[18%] rounded-3xl border-2 border-neon shadow-glow">
+          <div class="absolute left-[8%] right-[8%] top-1/2 h-1 rounded-full bg-gradient-to-r from-transparent via-cyanx to-transparent shadow-blueglow"></div>
+        </div>
+        <div class="absolute right-[11%] top-[20%] h-16 w-16 rounded-2xl border-2 border-alert"></div>
+        <div class="absolute bottom-[12%] left-[12%] h-16 w-16 rounded-2xl border-2 border-cyanx"></div>
+        <div class="absolute bottom-4 right-4 rounded-xl border border-alert/35 bg-alert/15 px-4 py-3 text-xs font-black text-rose-200">🚨 Suspicious Alert Ready</div>
+      </div>
+      <div class="mt-4 grid gap-3 sm:grid-cols-3">
+        <div class="rounded-2xl border border-line bg-white/5 p-4 text-center"><div class="text-xl font-black text-white">YOLO</div><div class="mt-1 text-xs text-slate-500">Object Detection</div></div>
+        <div class="rounded-2xl border border-line bg-white/5 p-4 text-center"><div class="text-xl font-black text-white">FACE</div><div class="mt-1 text-xs text-slate-500">Known / Unknown</div></div>
+        <div class="rounded-2xl border border-line bg-white/5 p-4 text-center"><div class="text-xl font-black text-white">LOGS</div><div class="mt-1 text-xs text-slate-500">Evidence Tracking</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pb-14">
+  <div class="mx-auto max-w-3xl text-center">
+    <div class="page-kicker">Professional Surveillance</div>
+    <h2 class="page-title">Everything needed for intelligent monitoring</h2>
+    <p class="page-copy">One consistent platform for detection, identity recognition, evidence, uploads, logs, alarms and notifications.</p>
+  </div>
+  <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <article class="glass-panel rounded-3xl p-6"><div class="grid h-12 w-12 place-items-center rounded-2xl bg-cyanx/10 text-xl">🎥</div><h3 class="mt-5 text-lg font-black text-white">Live Monitoring</h3><p class="mt-3 text-sm leading-7 text-slate-400">Monitor the camera with real-time activity and object detection.</p></article>
+    <article class="glass-panel rounded-3xl p-6"><div class="grid h-12 w-12 place-items-center rounded-2xl bg-violet-500/10 text-xl">👤</div><h3 class="mt-5 text-lg font-black text-white">Identity Recognition</h3><p class="mt-3 text-sm leading-7 text-slate-400">Recognise registered people and highlight unknown faces.</p></article>
+    <article class="glass-panel rounded-3xl p-6"><div class="grid h-12 w-12 place-items-center rounded-2xl bg-alert/10 text-xl">🚨</div><h3 class="mt-5 text-lg font-black text-white">Instant Alerts</h3><p class="mt-3 text-sm leading-7 text-slate-400">Trigger alarms and email alerts with detection snapshots.</p></article>
+    <article class="glass-panel rounded-3xl p-6"><div class="grid h-12 w-12 place-items-center rounded-2xl bg-warn/10 text-xl">🗂️</div><h3 class="mt-5 text-lg font-black text-white">Evidence Logs</h3><p class="mt-3 text-sm leading-7 text-slate-400">Preserve confidence, timestamps, messages, uploads and evidence images.</p></article>
+  </div>
+</section>
+{% endblock %}
